@@ -1,21 +1,27 @@
 package top.bootz.commons.constant;
 
+/**
+ * 符号常量
+ * 
+ * @author John
+ * 
+ */
 public final class SymbolicConstants {
-
+	
 	private SymbolicConstants() {
-
+		
 	}
 
 	/**
 	 * 右向箭头[->]
 	 */
 	public static final String RIGHT_ARROW = "->";
-
+	
 	/**
 	 * 左向箭头[->]
 	 */
 	public static final String LEFT_ARROW = "<-";
-
+	
 	/**
 	 * 等于[=]
 	 */
@@ -125,12 +131,12 @@ public final class SymbolicConstants {
 	 * 反斜杠[\]
 	 */
 	public static final String BACK_SLASH = "\\";
-
+	
 	/**
 	 * 双正斜杠[\]
 	 */
 	public static final String DOUBLE_FORWARD_SLASH = "//";
-
+	
 	/**
 	 * 双反斜杠[\]
 	 */

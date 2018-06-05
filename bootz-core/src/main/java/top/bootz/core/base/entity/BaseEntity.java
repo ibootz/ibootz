@@ -1,15 +1,16 @@
-package top.bootz.core.biz.entity;
+package top.bootz.core.base.entity;
 
 import java.beans.Transient;
 import java.io.Serializable;
 
-import net.minidev.json.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import top.bootz.commons.helper.JsonHelper;
 import top.bootz.commons.helper.SerializableHelper;
 
 public class BaseEntity implements Serializable {
 
-	private static final long serialVersionUID = -3685750813388436101L;
+	private static final long serialVersionUID = 3426943173573046791L;
 
 	@Override
 	public String toString() {
