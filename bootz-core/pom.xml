@@ -20,15 +20,19 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis</artifactId>
-			<version>2.0.2.RELEASE</version>
-		</dependency>
-
-		<dependency>
 			<groupId>top.bootz</groupId>
 			<artifactId>bootz-commons</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+		
+		<!-- spring boot -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 	</dependencies>
 

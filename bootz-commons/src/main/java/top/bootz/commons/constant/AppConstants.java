@@ -15,7 +15,7 @@ public final class AppConstants {
 	/**
 	 * spring mvc dispatcher servlet name
 	 */
-	public static final String DEFAULT_SERVLET_NAME = "Orion";
+	public static final String DEFAULT_SERVLET_NAME = "Bootz";
 
 	/**
 	 * API请求路径前缀

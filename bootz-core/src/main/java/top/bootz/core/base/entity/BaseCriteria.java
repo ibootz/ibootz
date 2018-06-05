@@ -1,11 +1,12 @@
-package com.orion.common.base;
+package top.bootz.core.base.entity;
 
 import java.beans.Transient;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.orion.common.utils.JsonUtil;
-import com.orion.common.utils.ToStringUtil;
+
+import top.bootz.commons.helper.JsonHelper;
+import top.bootz.commons.helper.SerializableHelper;
 
 public class BaseCriteria implements Serializable {
 
@@ -15,13 +16,13 @@ public class BaseCriteria implements Serializable {
 	@JsonIgnore
 	@Override
 	public String toString() {
-		return ToStringUtil.toJSON(this);
+		return SerializableHelper.toJSON(this);
 	}
 
 	@Transient
 	@JsonIgnore
 	public String toJson() {
-		return JsonUtil.toJSON(this);
+		return JsonHelper.toJSON(this);
 	}
 
 }

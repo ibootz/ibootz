@@ -1,4 +1,4 @@
-package com.orion.common.dic;
+package top.bootz.core.dic;
 
 /**
  * 请求方的标识

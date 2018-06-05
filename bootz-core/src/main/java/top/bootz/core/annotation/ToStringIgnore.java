@@ -1,4 +1,4 @@
-package com.orion.common.annotation;
+package top.bootz.core.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

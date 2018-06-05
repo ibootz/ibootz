@@ -1,48 +1,27 @@
 package top.bootz.commons.helper;
 
 import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
+import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
-import top.bootz.commons.constant.AppConstants;
-
+@Slf4j
 public final class AesHelper {
 
-	private static final Logger LOGGER = LogManager.getLogger(AesHelper.class);
+	private static final String ALGORITHM = "AES";
 
-	private static final String ALGORITHM = "AES/ECB/PKCS5Padding";
+	private static final String ALGORITHM_MODE = "AES/ECB/PKCS5Padding";
 
-	private static final String SECRETKEY = "bjCUctiRaE1J1zJ0hEdwjrM82WKEmcm7SYhg=";
-
-	private static SecretKeySpec keySpec = null;
+	private static final String ENCODE_RULES = "bjCUctiRaE1J1zJ0hEdwjrM82WKEmcm7SYhg=";
 
 	private AesHelper() {
-	}
-
-	static {
-		try {
-			keySpec = shaSecretKey();
-		} catch (UnsupportedEncodingException | NoSuchAlgorithmException e) {
-			LOGGER.error("init keySpec failed!", e);
-		}
-	}
-
-	/**
-	 * 使用SHA-256加密AES密钥
-	 * 
-	 * @throws NoSuchAlgorithmException
-	 * @throws UnsupportedEncodingException
-	 */
-	private static SecretKeySpec shaSecretKey() throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		MessageDigest md = MessageDigest.getInstance("SHA-256");
-		byte[] data = md.digest(SECRETKEY.getBytes(AppConstants.CHARSET_UTF_8));
-		return new SecretKeySpec(data, "AES");
 	}
 
 	/**
@@ -53,11 +32,12 @@ public final class AesHelper {
 	public static byte[] encrypt(byte[] source) {
 		byte[] result = null;
 		try {
-			Cipher cipher = Cipher.getInstance(ALGORITHM);
-			cipher.init(Cipher.ENCRYPT_MODE, keySpec);
+			SecretKey key = buildSecretKey();
+			Cipher cipher = Cipher.getInstance(ALGORITHM_MODE);
+			cipher.init(Cipher.ENCRYPT_MODE, key);
 			result = cipher.doFinal(source);
 		} catch (Exception e) {
-			LOGGER.error("AES encode failed!", e);
+			log.error("AES encode failed!", e);
 		}
 		return result;
 	}
@@ -68,15 +48,7 @@ public final class AesHelper {
 	 * @return String 加密后经过base64编码的字符串
 	 */
 	public static String encryptToBase64(String source) {
-		String result = null;
-		try {
-			Cipher cipher = Cipher.getInstance(ALGORITHM);
-			cipher.init(Cipher.ENCRYPT_MODE, keySpec);
-			result = CodecHelper.toBase64(cipher.doFinal(source.getBytes(AppConstants.CHARSET_UTF_8)));
-		} catch (Exception e) {
-			LOGGER.error("AES encode failed!", e);
-		}
-		return result;
+		return CodecHelper.toBase64(AesHelper.encrypt(source.getBytes(StandardCharsets.UTF_8)));
 	}
 
 	/**
@@ -87,11 +59,12 @@ public final class AesHelper {
 	public static byte[] decrypt(byte[] encryptedContent) {
 		byte[] result = null;
 		try {
-			Cipher cipher = Cipher.getInstance(ALGORITHM);
-			cipher.init(Cipher.DECRYPT_MODE, keySpec);
+			SecretKey key = buildSecretKey();
+			Cipher cipher = Cipher.getInstance(ALGORITHM_MODE);
+			cipher.init(Cipher.DECRYPT_MODE, key);
 			result = cipher.doFinal(encryptedContent);
 		} catch (Exception e) {
-			LOGGER.error("AES decode failed!", e);
+			log.error("AES decode failed!", e);
 		}
 		return result;
 	}
@@ -104,17 +77,34 @@ public final class AesHelper {
 	public static String decryptFromBase64(String base64Encrypted) {
 		String result = StringHelper.EMPTY;
 		try {
-			Cipher cipher = Cipher.getInstance(ALGORITHM);
-			cipher.init(Cipher.DECRYPT_MODE, keySpec);
-			result = new String(cipher.doFinal(CodecHelper.fromBase64(base64Encrypted)), AppConstants.CHARSET_UTF_8);
+			result = new String(decrypt(CodecHelper.fromBase64(base64Encrypted)), StandardCharsets.UTF_8);
 		} catch (Exception e) {
-			LOGGER.error("AES decode failed!", e);
+			log.error("AES decode failed!", e);
 		}
 		return result;
 	}
 
+	private static SecretKey buildSecretKey() throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		// 构造密钥生成器，指定为AES算法,不区分大小写
+		KeyGenerator keygen = KeyGenerator.getInstance(ALGORITHM);
+
+		// 根据ecnodeRules规则初始化密钥生成器，生成一个128位的随机源,根据传入的字节数组
+		SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+		random.setSeed(ENCODE_RULES.getBytes(StandardCharsets.UTF_8));
+		keygen.init(128, random);
+
+		// 产生原始对称密钥
+		SecretKey originalKey = keygen.generateKey();
+
+		// 获得原始对称密钥的字节数组
+		byte[] raw = originalKey.getEncoded();
+
+		// 根据字节数组生成AES密钥
+		return new SecretKeySpec(raw, ALGORITHM);
+	}
+
 	public static void main(String[] args) {
-		String source = "中文English*&&$uawhuh2138761872akwhukh21379287dawkuhku2h1312983717dasjHLIJl213028^%$#（*781=2dawkuhadwadwduukw&*(*(7";
+		String source = "中文English*&&$uawhuh2138761872ak97892389749(*&*(^@%^&%@!<>?<>:\"\"P{{P;,<，；’。；；】【132897897*（&……&！%@！）（*@！……%whukh21379287dawkuhku2h太多太多的中文需要测试1312983717dasjHLIJl213028^%$#（*781=2dawkuhadwadwduukw&*(*(7";
 		String after = encryptToBase64(source);
 		String before = decryptFromBase64(after);
 		System.out.println(after);

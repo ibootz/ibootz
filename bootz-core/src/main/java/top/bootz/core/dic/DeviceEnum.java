@@ -1,4 +1,4 @@
-package com.orion.common.dic;
+package top.bootz.core.dic;
 
 /**
  * 硬件设备类型

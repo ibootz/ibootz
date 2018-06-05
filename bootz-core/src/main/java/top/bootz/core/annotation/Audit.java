@@ -1,4 +1,4 @@
-package com.orion.common.annotation;
+package top.bootz.core.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -6,8 +6,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.orion.common.constant.audit.AuditLogObject;
-import com.orion.common.constant.audit.AuditLogOperation;
+import top.bootz.commons.constant.audit.AuditLogObject;
+import top.bootz.commons.constant.audit.AuditLogOperation;
 
 /**
  * 审计注解，方法级注解，凡是标注上该注解的方法，都需要在切面方法中进行审计统计，打印出日志
