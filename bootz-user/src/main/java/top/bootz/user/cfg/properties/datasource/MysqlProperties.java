@@ -1,5 +1,5 @@
 package top.bootz.user.cfg.properties.datasource;
-/**
- * git keep file
- * 
- */
+
+public class MysqlProperties {
+
+}

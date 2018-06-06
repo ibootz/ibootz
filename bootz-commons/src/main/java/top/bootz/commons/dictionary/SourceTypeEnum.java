@@ -1,4 +1,4 @@
-package top.bootz.core.dic;
+package top.bootz.commons.dictionary;
 
 /**
  * 请求方的标识

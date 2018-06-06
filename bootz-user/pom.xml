@@ -34,10 +34,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jdbc</artifactId>
-		</dependency>
 
 		<!-- mysql connector -->
 		<dependency>
@@ -46,10 +42,10 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- druid -->
+		<!-- druid-spring-boot-starter -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
-			<artifactId>druid</artifactId>
+			<artifactId>druid-spring-boot-starter</artifactId>
 		</dependency>
 	</dependencies>
 

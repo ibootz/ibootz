@@ -1,4 +1,4 @@
-package top.bootz.core.exception;
+package top.bootz.commons.exception;
 
 public enum ExceptionType {
 

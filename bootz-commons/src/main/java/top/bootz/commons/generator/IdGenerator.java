@@ -1,9 +1,17 @@
 package top.bootz.commons.generator;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
+
+import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import com.google.common.base.Preconditions;
+
+import top.bootz.commons.exception.BaseRuntimeException;
 
 /**
  * 衍生于Twitter_Snowflake<br>
@@ -19,10 +27,10 @@ import java.util.concurrent.CountDownLatch;
  * 加起来刚好64位，为一个Long型。<br>
  * SnowFlake的优点是，整体上按照时间自增排序，并且整个分布式系统内不会产生ID碰撞(由数据中心ID和机器ID作区分)，并且效率较高，经测试，SnowFlake每秒能够产生26万ID左右。
  */
-public class SnowflakeIdWorker {
+public class IdGenerator {
 
 	/** 起始时间戳，用于用当前时间戳减去这个时间戳，算出偏移量 */
-	private static final long START_REF_TIME = 1528210757547L;
+	private static final long EPOCH;
 
 	/** workerId占用的位数5（表示只允许workId的范围为：0-1023） */
 	private static final long WORKER_ID_BITS = 5L;
@@ -52,10 +60,10 @@ public class SnowflakeIdWorker {
 	private static final long SEQUENCE_MASK = -1L ^ (-1L << SEQUENCE_BITS);
 
 	/** 工作机器ID(0~31) */
-	private long workerId;
+	private static long workerId;
 
 	/** 数据中心ID(0~31) */
-	private long datacenterId;
+	private static long dataCenterId;
 
 	/** 毫秒内序列(0~4095) */
 	private long sequence = 0L;
@@ -66,25 +74,60 @@ public class SnowflakeIdWorker {
 	/** 是否使用时间戳优化 */
 	private boolean isClock = false;
 
+	static {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2016, Calendar.NOVEMBER, 1);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		EPOCH = calendar.getTimeInMillis();
+		initWorkerId();
+		initDataCenterId();
+	}
+
+	static void initWorkerId() {
+		String workerId = System.getProperty("bootz.id.generator.worker.id");
+		if (StringUtils.isNotBlank(workerId)) {
+			setWorkerId(Long.valueOf(workerId));
+			return;
+		}
+		workerId = System.getenv("BOOTZ_ID_GENERATOR_WORKER_ID");
+		if (StringUtils.isBlank(workerId)) {
+			throw new IllegalArgumentException("workerId must not be null or blank!");
+		}
+		setWorkerId(Long.valueOf(workerId));
+	}
+
+	static void initDataCenterId() {
+		String dataCenterId = System.getProperty("bootz.id.generator.datacenter.id");
+		if (StringUtils.isNotBlank(dataCenterId)) {
+			setDataCenterId(Long.valueOf(dataCenterId));
+			return;
+		}
+		dataCenterId = System.getenv("BOOTZ_ID_GENERATOR_DATACENTER_ID");
+		if (StringUtils.isBlank(dataCenterId)) {
+			throw new IllegalArgumentException("dataCenter Id must not be null or blank!");
+		}
+		setDataCenterId(Long.valueOf(dataCenterId));
+	}
+
 	/**
-	 * 构造函数
-	 *
+	 * 设置工作进程Id.
+	 * 
 	 * @param workerId
-	 *            工作ID (0~31)
-	 * @param datacenterId
-	 *            数据中心ID (0~31)
+	 *            工作进程Id
 	 */
-	public SnowflakeIdWorker(long workerId, long datacenterId) {
-		if (workerId > MAX_WORKER_ID || workerId < 0) {
-			throw new IllegalArgumentException(
-					String.format("worker id can't be greater than %d or less than 0", MAX_WORKER_ID));
-		}
-		if (datacenterId > MAX_DATACENTER_ID || datacenterId < 0) {
-			throw new IllegalArgumentException(
-					String.format("datacenter Id can't be greater than %d or less than 0", MAX_DATACENTER_ID));
-		}
-		this.workerId = workerId;
-		this.datacenterId = datacenterId;
+	public static void setWorkerId(final Long workerId) {
+		Preconditions.checkArgument(workerId >= 0L && workerId < MAX_WORKER_ID,
+				String.format("worker id can't be greater than %d or less than 0", MAX_WORKER_ID));
+		IdGenerator.workerId = workerId;
+	}
+
+	public static void setDataCenterId(final Long dataCenterId) {
+		Preconditions.checkArgument(dataCenterId >= 0L && dataCenterId < MAX_DATACENTER_ID,
+				String.format("dataCenter id can't be greater than %d or less than 0", MAX_DATACENTER_ID));
+		IdGenerator.dataCenterId = dataCenterId;
 	}
 
 	public void setClock(boolean clock) {
@@ -99,26 +142,6 @@ public class SnowflakeIdWorker {
 	public synchronized long nextId() {
 		long timestamp = timeGen();
 
-		// // 如果当前时间小于上一次ID生成的时间戳，说明系统时钟回退过这个时候应当抛出异常
-		// if (timestamp < lastTimestamp) {
-		// throw new RuntimeException(String.format(
-		// "Clock moved backwards. Refusing to generate id for %d milliseconds",
-		// lastTimestamp - timestamp));
-		// }
-		//
-		// // 如果是同一时间生成的，则进行毫秒内序列
-		// if (lastTimestamp == timestamp) {
-		// sequence = (sequence + 1) & SEQUENCE_MASK;
-		// // 毫秒内序列溢出
-		// if (sequence == 0) {
-		// // 阻塞到下一个毫秒,获得新的时间戳
-		// timestamp = tilNextMillis(lastTimestamp);
-		// }
-		// } else {
-		// // 时间戳改变，毫秒内序列重置
-		// sequence = 0L;
-		// }
-
 		// 闰秒：如果当前时间小于上一次ID生成的时间戳，说明系统时钟回退过这个时候应当抛出异常
 		if (timestamp < lastTimestamp) {
 			long offset = lastTimestamp - timestamp;
@@ -127,38 +150,40 @@ public class SnowflakeIdWorker {
 					this.wait(offset << 1);
 					timestamp = this.timeGen();
 					if (timestamp < lastTimestamp) {
-						throw new RuntimeException(String
-								.format("Clock moved backwards.  Refusing to generate id for %d milliseconds", offset));
+						throw new BaseRuntimeException(String.format(
+								"Clock is moving backwards, last time is %d milliseconds, current time is %d milliseconds",
+								lastTimestamp, timestamp));
 					}
 				} catch (Exception e) {
-					throw new RuntimeException(e);
+					throw new BaseRuntimeException(e);
 				}
 			} else {
-				throw new RuntimeException(
-						String.format("Clock moved backwards.  Refusing to generate id for %d milliseconds", offset));
+				throw new BaseRuntimeException(String.format(
+						"Clock is moving backwards, last time is %d milliseconds, current time is %d milliseconds",
+						lastTimestamp, timestamp));
 			}
 		}
 
 		// 解决跨毫秒生成ID序列号始终为偶数的缺陷:如果是同一时间生成的，则进行毫秒内序列
 		if (lastTimestamp == timestamp) {
 			// 通过位与运算保证计算的结果范围始终是 0-4095
-			sequence = (sequence + 1) & SEQUENCE_MASK;
-			if (sequence == 0) {
+			if (0L == (sequence = ++sequence & SEQUENCE_MASK)) {
 				timestamp = this.tilNextMillis(lastTimestamp);
 			}
 		} else {
-			// 时间戳改变，毫秒内序列重置
-			sequence = 0L;
+			/*
+			 * 时间戳改变，毫秒内序列重置，这里之所以生成随机数，是为了保证id末尾一个数字在0-9上分布均匀，
+			 * 数据库分库分表时，不至于出现数据分布不均匀
+			 */
+			sequence = RandomUtils.nextLong(0, 9);
 		}
 
 		// 上次生成ID的时间截
 		lastTimestamp = timestamp;
 
 		// 移位并通过或运算拼到一起组成64位的ID
-		return ((timestamp - START_REF_TIME) << TIMESTAMP_LEFT_SHIFT) //
-				| (datacenterId << DATACENTER_ID_SHIFT) //
-				| (workerId << WORKER_ID_SHIFT) //
-				| sequence;
+		return ((timestamp - EPOCH) << TIMESTAMP_LEFT_SHIFT) | (dataCenterId << DATACENTER_ID_SHIFT)
+				| (workerId << WORKER_ID_SHIFT) | sequence;
 	}
 
 	/**
@@ -192,11 +217,11 @@ public class SnowflakeIdWorker {
 
 	// 测试
 	public static void main(String[] args) throws InterruptedException {
-		int counts = 2000000;
-		int tCounts = 32;
+		int counts = 1000000;
+		int tCounts = 16;
 		final Set<Long> set = Collections.synchronizedSet(new HashSet<>(counts));
 		CountDownLatch latch = new CountDownLatch(tCounts);
-		final SnowflakeIdWorker idWorker0 = new SnowflakeIdWorker(0, 0);
+		final IdGenerator idWorker0 = new IdGenerator();
 		for (int i = 0; i < tCounts; i++) {
 			new Thread(new Runnable() {
 				@Override

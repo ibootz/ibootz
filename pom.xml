@@ -35,9 +35,10 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- druid-spring-boot-starter -->
 			<dependency>
 				<groupId>com.alibaba</groupId>
-				<artifactId>druid</artifactId>
+				<artifactId>druid-spring-boot-starter</artifactId>
 				<version>${druid.version}</version>
 			</dependency>
 
@@ -135,6 +136,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-logging</artifactId>
+		</dependency>
 
 		<!-- lombok -->
 		<dependency>
@@ -161,18 +166,18 @@
 	</build>
 
 	<repositories>
+<!-- 		<repository> -->
+<!-- 			<id>nexus</id> -->
+<!-- 			<name>Nexus Repository</name> -->
+<!-- 			<url>http://192.168.199.201:8081/repository/maven-public/</url> -->
+<!-- 			<releases> -->
+<!-- 				<enabled>true</enabled> -->
+<!-- 			</releases> -->
+<!-- 			<snapshots> -->
+<!-- 				<enabled>true</enabled> -->
+<!-- 			</snapshots> -->
+<!-- 		</repository> -->
 		<repository>
-			<id>nexus</id>
-			<name>Nexus Repository</name>
-			<url>http://192.168.199.201:8081/repository/maven-public/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<!-- <repository>
 			<id>spring-milestones</id>
 			<name>Spring Milestones</name>
 			<url>https://repo.spring.io/libs-milestone</url>
@@ -186,11 +191,11 @@
 			<id>aliyun</id>
 			<name>aliyun</name>
 			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-		</repository> -->
+		</repository>
 	</repositories>
 
 	<distributionManagement>
-		<!-- <repository>
+		<repository>
 			<id>repo.spring.io</id>
 			<name>Spring Release Repository</name>
 			<url>https://repo.spring.io/libs-release-local</url>
@@ -199,7 +204,7 @@
 			<id>repo.spring.io</id>
 			<name>Spring Snapshot Repository</name>
 			<url>https://repo.spring.io/libs-snapshot-local</url>
-		</snapshotRepository> -->
+		</snapshotRepository>
 	</distributionManagement>
 
 </project>

@@ -1,4 +1,4 @@
-package top.bootz.core.exception;
+package top.bootz.commons.exception;
 
 public class BaseRuntimeException extends RuntimeException {
 
@@ -6,6 +6,10 @@ public class BaseRuntimeException extends RuntimeException {
 
 	public BaseRuntimeException() {
 		super();
+	}
+
+	public BaseRuntimeException(Exception e) {
+		super(e);
 	}
 
 	public BaseRuntimeException(String errMsg, Throwable cause) {
