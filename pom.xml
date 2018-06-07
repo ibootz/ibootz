@@ -42,6 +42,18 @@
 				<version>${druid.version}</version>
 			</dependency>
 
+			<!--hibernate 依赖 -->
+			<dependency>
+				<groupId>org.hibernate.javax.persistence</groupId>
+				<artifactId>hibernate-jpa-2.1-api</artifactId>
+				<version>1.0.2.Final</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>5.3.1.Final</version>
+			</dependency>
+
 			<!-- apache commons -->
 			<dependency>
 				<groupId>commons-beanutils</groupId>
@@ -140,6 +152,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-logging</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+		</dependency>
 
 		<!-- lombok -->
 		<dependency>
@@ -166,17 +182,17 @@
 	</build>
 
 	<repositories>
-<!-- 		<repository> -->
-<!-- 			<id>nexus</id> -->
-<!-- 			<name>Nexus Repository</name> -->
-<!-- 			<url>http://192.168.199.201:8081/repository/maven-public/</url> -->
-<!-- 			<releases> -->
-<!-- 				<enabled>true</enabled> -->
-<!-- 			</releases> -->
-<!-- 			<snapshots> -->
-<!-- 				<enabled>true</enabled> -->
-<!-- 			</snapshots> -->
-<!-- 		</repository> -->
+		<!-- <repository> -->
+		<!-- <id>nexus</id> -->
+		<!-- <name>Nexus Repository</name> -->
+		<!-- <url>http://192.168.199.201:8081/repository/maven-public/</url> -->
+		<!-- <releases> -->
+		<!-- <enabled>true</enabled> -->
+		<!-- </releases> -->
+		<!-- <snapshots> -->
+		<!-- <enabled>true</enabled> -->
+		<!-- </snapshots> -->
+		<!-- </repository> -->
 		<repository>
 			<id>spring-milestones</id>
 			<name>Spring Milestones</name>

@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -24,7 +25,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import top.bootz.commons.constant.AppConstants;
 import top.bootz.commons.constant.SecurityConstants;
 
 /**
@@ -292,7 +292,7 @@ public class RsaHelper {
 	}
 
 	private static void writeToFile(String publicKeyStr, String filePath) throws IOException {
-		FileUtils.write(new File(filePath), publicKeyStr, AppConstants.CHARSET_UTF_8);
+		FileUtils.write(new File(filePath), publicKeyStr, StandardCharsets.UTF_8);
 	}
 
 	public static void main(String[] args) {
