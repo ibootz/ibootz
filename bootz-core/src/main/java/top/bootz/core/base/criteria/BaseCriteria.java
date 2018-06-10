@@ -1,4 +1,4 @@
-package top.bootz.core.base.entity;
+package top.bootz.core.base.criteria;
 
 import java.beans.Transient;
 import java.io.Serializable;
@@ -8,10 +8,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import top.bootz.commons.helper.JsonHelper;
 import top.bootz.commons.helper.ToStringHelper;
 
-public class BaseEntity implements Serializable {
+public class BaseCriteria implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 8591142014745925855L;
 
+	@Transient
+	@JsonIgnore
 	@Override
 	public String toString() {
 		return ToStringHelper.toJSON(this);
