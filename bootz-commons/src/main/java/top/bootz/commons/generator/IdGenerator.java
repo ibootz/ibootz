@@ -1,10 +1,6 @@
 package top.bootz.commons.generator;
 
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.CountDownLatch;
 
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -216,7 +212,7 @@ public class IdGenerator {
 	}
 
 	// 测试
-	public static void main(String[] args) throws InterruptedException {
+	/*public static void main(String[] args) throws InterruptedException {
 		int counts = 1000000;
 		int tCounts = 16;
 		final Set<Long> set = Collections.synchronizedSet(new HashSet<>(counts));
@@ -242,6 +238,6 @@ public class IdGenerator {
 		}
 		latch.await();
 		System.out.println("set.size：" + set.size());
-	}
+	}*/
 
 }

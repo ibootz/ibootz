@@ -295,7 +295,7 @@ public class RsaHelper {
 		FileUtils.write(new File(filePath), publicKeyStr, StandardCharsets.UTF_8);
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		try {
 			String privateKeyPath = "I:/git_repository/orion/orion-pms/src/main/resources/keystore/privateKey.keystore";
 			String publicKeyPath = "I:/git_repository/orion/orion-pms/src/main/resources/keystore/publicKey.keystore";
@@ -303,6 +303,6 @@ public class RsaHelper {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 }

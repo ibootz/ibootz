@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: BOOTZ-USER
+  cache:
+    type: redis
+    redis:
+      key-prefix: ${apring.application.name}

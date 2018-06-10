@@ -103,12 +103,12 @@ public final class AesHelper {
 		return new SecretKeySpec(raw, ALGORITHM);
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		String source = "中文English*&&$uawhuh2138761872ak97892389749(*&*(^@%^&%@!<>?<>:\"\"P{{P;,<，；’。；；】【132897897*（&……&！%@！）（*@！……%whukh21379287dawkuhku2h太多太多的中文需要测试1312983717dasjHLIJl213028^%$#（*781=2dawkuhadwadwduukw&*(*(7";
 		String after = encryptToBase64(source);
 		String before = decryptFromBase64(after);
 		System.out.println(after);
 		System.out.println(source);
 		System.out.println(before);
-	}
+	}*/
 }

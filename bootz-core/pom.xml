@@ -11,7 +11,7 @@
 	</parent>
 
 	<artifactId>bootz-core</artifactId>
-	<name>${project.artifactId}}</name>
+	<name>${project.artifactId}</name>
 	<url>http://www.bootz.top</url>
 
 	<properties>

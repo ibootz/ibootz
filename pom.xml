@@ -7,7 +7,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>${project.artifactId}}</name>
+	<name>${project.artifactId}</name>
 	<description>Bootz project for Spring Boot</description>
 	<url>http://www.bootz.top</url>
 
@@ -23,7 +23,6 @@
 		<module>bootz-commons</module>
 		<module>bootz-security</module>
 		<module>bootz-user</module>
-		<module>bootz-user-rest</module>
 	</modules>
 
 	<properties>
@@ -147,6 +146,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -1,0 +1,81 @@
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.199.111:3306/orion?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=round&rewriteBatchedStatements=true
+    username: readwrite
+    password: nkEs8h6MdH!
+    driver-class-name: com.mysql.jdbc.Driver
+    druid:
+      initial-size: 1
+      max-active: 20
+      min-idle: 1
+      max-wait: 60000
+      pool-prepared-statements: false
+      validation-query: SELECT 'x'
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      use-global-data-source-stat: true
+      filters: stat,wall,slf4j
+      filter:
+        stat:
+          enabled: true
+          db-type: mysql
+          log-slow-sql: true
+          slow-sql-millis: 2000
+          merge-sql: true
+        wall:
+          enabled: true
+          db-type: mysql
+          config:
+            delete-allow: false
+            selelct-allow: true
+        slf4j:
+          enabled: true
+          data-source-log-enabled: true
+          connection-log-enabled: true
+          connection-log-error-enabled: true
+          statement-log-enabled: true
+          statement-log-error-enabled: true
+      web-stat-filter:
+        enabled: true
+        exclusions: '*.js, *.gif, *.jpg, *.png, *.css, *.ico, /druid/*'
+        principal-session-name: username
+        url-pattern: /api/v1/*
+        profile-enable: true
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: druid
+        login-password: 1990912
+        reset-enable: false
+  redis:
+    cluster:
+      nodes:
+      - 192.168.199.119:6379
+      - 192.168.199.119:6380
+      - 192.168.199.119:6381
+      - 192.168.199.120:6379
+      - 192.168.199.120:6380
+      - 192.168.199.120:6381
+      max-redirects: 3
+    jedis:
+      pool:
+        max-active: 10
+        max-wait: 10000
+        max-idle: 8
+        min-idle: 2
+    password: nkEs8h6MdH!
+    timeout: 10000
+  data:
+    mongodb:
+      uri: mongodb://readwrite:nkEs8h6MdH!@192.168.199.115:27017,192.168.199.116:27017,192.168.199.151:27017/bootz_v1
+    elasticsearch:
+      cluster-name: null
+      cluster-nodes: null
+  rabbitmq:
+    addresses: 192.168.199.113:5672,192.168.199.114:5672
+    username: bootz
+    password: 1990912
+    virtual-host: demo
+    connection-timeout: 60000

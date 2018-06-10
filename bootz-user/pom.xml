@@ -1,8 +1,13 @@
-<?xml version="1.0"?>
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>bootz-user</artifactId>
+	<packaging>pom</packaging>
+
+	<name>${project.artifactId}</name>
+	<description>Bootz project for Spring Boot</description>
+	<url>http://www.bootz.top</url>
 
 	<parent>
 		<groupId>top.bootz</groupId>
@@ -10,63 +15,18 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>bootz-user</artifactId>
-	<name>${project.artifactId}}</name>
-	<url>http://www.bootz.top</url>
+	<modules>
+		<module>bootz-user-commons</module>
+		<module>bootz-user-dao</module>
+		<module>bootz-user-service</module>
+		<module>bootz-user-web</module>
+	</modules>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<druid.version>1.1.10</druid.version>
 	</properties>
-
-	<dependencies>
-		<dependency>
-			<groupId>top.bootz</groupId>
-			<artifactId>bootz-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
-		<!-- spring boot -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-aop</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-amqp</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-cache</artifactId>
-		</dependency>
-
-		<!-- mysql connector -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-
-		<!-- druid-spring-boot-starter -->
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>druid-spring-boot-starter</artifactId>
-		</dependency>
-	</dependencies>
 
 </project>

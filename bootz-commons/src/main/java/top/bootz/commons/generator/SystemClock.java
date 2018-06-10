@@ -1,8 +1,6 @@
 package top.bootz.commons.generator;
 
 import java.sql.Timestamp;
-import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -79,7 +77,7 @@ public class SystemClock {
 		return new Timestamp(instance().currentTimeMillis()).toString();
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		Properties props = System.getProperties();
 		for (Object propKey : props.keySet()) {
 			System.out.println(propKey + " <> " + props.get(propKey));
@@ -89,6 +87,6 @@ public class SystemClock {
 		for (Map.Entry<String, String> env : envs.entrySet()) {
 			System.out.println(env.getKey() + " <> " + env.getValue());
 		}
-	}
+	}*/
 	
 }
