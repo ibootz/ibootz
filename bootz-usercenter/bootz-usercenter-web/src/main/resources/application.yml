@@ -4,6 +4,24 @@ spring:
   profiles:
     active:
     - home
+  cache:
+    type: redis
+    cache-names:
+    - userCache
+    - authCache
+    - resourceCache
+    redis:
+      key-prefix: 'usercenter:'
+      time-to-live:
+        seconds: 86400
+  task:
+    pool:
+      custom:
+        thread-name-prefix: Bootz-Executor-
+        core-pool-size: 5
+        max-pool-size: 20
+        keep-alive-seconds: 120
+        queue-capacity: 10
 server:
   port: 6080
   tomcat:

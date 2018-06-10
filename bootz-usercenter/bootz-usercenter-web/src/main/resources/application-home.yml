@@ -69,7 +69,9 @@ spring:
     timeout: 10000
   data:
     mongodb:
-      uri: mongodb://readwrite:nkEs8h6MdH!@192.168.199.115:27017,192.168.199.116:27017,192.168.199.151:27017/bootz_v1
+      custom:
+        uri: mongodb://readwrite:nkEs8h6MdH!@192.168.199.115:27017,192.168.199.116:27017,192.168.199.151:27017/bootz_v1
+      
     elasticsearch:
       cluster-name: null
       cluster-nodes: null
