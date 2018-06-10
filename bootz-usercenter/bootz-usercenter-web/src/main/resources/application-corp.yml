@@ -1,0 +1,72 @@
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.1.128:3306/orion?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=round&rewriteBatchedStatements=true
+    username: root
+    password: 1990912
+    driver-class-name: com.mysql.jdbc.Driver
+    druid:
+      initial-size: 1
+      max-active: 20
+      min-idle: 1
+      max-wait: 60000
+      pool-prepared-statements: false
+      validation-query: SELECT 'x'
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      use-global-data-source-stat: true
+      filters: stat,wall,slf4j
+      filter:
+        stat:
+          enabled: true
+          db-type: mysql
+          log-slow-sql: true
+          slow-sql-millis: 2000
+          merge-sql: true
+        wall:
+          enabled: true
+          db-type: mysql
+          config:
+            delete-allow: false
+            selelct-allow: true
+        slf4j:
+          enabled: true
+          data-source-log-enabled: true
+          connection-log-enabled: true
+          connection-log-error-enabled: true
+          statement-log-enabled: true
+          statement-log-error-enabled: true
+      web-stat-filter:
+        enabled: true
+        exclusions: '*.js, *.gif, *.jpg, *.png, *.css, *.ico, /druid/*'
+        principal-session-name: username
+        url-pattern: /api/v1/*
+        profile-enable: true
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: druid
+        login-password: 1990912
+        reset-enable: false
+  redis:
+    cluster:
+      nodes:
+      - 192.168.1.128:6379
+      - 192.168.1.128:6380
+      - 192.168.1.128:6381
+      - 192.168.1.128:6382
+      - 192.168.1.128:6383
+      - 192.168.1.128:6384
+      max-redirects: 3
+    jedis:
+      pool:
+        max-active: 10
+        max-wait: 10000
+        max-idle: 8
+        min-idle: 2
+    password: null
+    timeout: 10000
+  data:
+    mongodb:
+      uri: mongodb://root:1990912@192.168.1.128:27017/orion_v1

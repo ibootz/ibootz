@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: BOOTZ-USER
+  profiles:
+    active:
+    - home
+server:
+  port: 6080
+  tomcat:
+    accesslog:
+      enabled: true
+      request-attributes-enabled: true
+    min-spare-threads: 25
+    max-threads: 800
+    uri-encoding: UTF-8
+  connection-timeout:
+    seconds: 60

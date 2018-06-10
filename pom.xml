@@ -21,7 +21,7 @@
 	<modules>
 		<module>bootz-core</module>
 		<module>bootz-commons</module>
-		<module>bootz-user</module>
+		<module>bootz-usercenter</module>
 	</modules>
 
 	<repositories>
@@ -53,18 +53,18 @@
 		</repository>
 	</repositories>
 
-	<distributionManagement>
-		<repository>
-			<id>maven-releases</id>
-			<name>Nexus Repository</name>
-			<url>http://192.168.199.201:8081/repository/maven-releases/</url>
-		</repository>
-		<snapshotRepository>
-			<id>maven-snapshots</id>
-			<name>Nexus Repository</name>
-			<url>http://192.168.199.201:8081/repository/maven-snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
+<!-- 	<distributionManagement> -->
+<!-- 		<repository> -->
+<!-- 			<id>maven-releases</id> -->
+<!-- 			<name>Nexus Repository</name> -->
+<!-- 			<url>http://192.168.199.201:8081/repository/maven-releases/</url> -->
+<!-- 		</repository> -->
+<!-- 		<snapshotRepository> -->
+<!-- 			<id>maven-snapshots</id> -->
+<!-- 			<name>Nexus Repository</name> -->
+<!-- 			<url>http://192.168.199.201:8081/repository/maven-snapshots/</url> -->
+<!-- 		</snapshotRepository> -->
+<!-- 	</distributionManagement> -->
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
