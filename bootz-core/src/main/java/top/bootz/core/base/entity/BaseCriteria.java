@@ -6,7 +6,7 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import top.bootz.commons.helper.JsonHelper;
-import top.bootz.commons.helper.SerializableHelper;
+import top.bootz.commons.helper.ToStringHelper;
 
 public class BaseCriteria implements Serializable {
 
@@ -16,7 +16,7 @@ public class BaseCriteria implements Serializable {
 	@JsonIgnore
 	@Override
 	public String toString() {
-		return SerializableHelper.toJSON(this);
+		return ToStringHelper.toJSON(this);
 	}
 
 	@Transient
