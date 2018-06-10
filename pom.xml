@@ -21,7 +21,6 @@
 	<modules>
 		<module>bootz-core</module>
 		<module>bootz-commons</module>
-		<module>bootz-security</module>
 		<module>bootz-user</module>
 	</modules>
 
