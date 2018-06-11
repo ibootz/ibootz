@@ -128,7 +128,7 @@ public class JpaConfig {
 
 			@Override
 			public Optional<String> getCurrentAuditor() {
-				return Optional.of("");
+				return Optional.of("TODO");
 			}
 
 		};

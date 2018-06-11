@@ -1,9 +1,6 @@
 spring:
   application:
     name: BOOTZ-USER
-  profiles:
-    active:
-    - home
   cache:
     type: redis
     cache-names:
@@ -14,6 +11,70 @@ spring:
       key-prefix: 'usercenter:'
       time-to-live:
         seconds: 86400
+  datasource:
+    druid:
+      initial-size: 1
+      max-active: 20
+      min-idle: 1
+      max-wait: 60000
+      pool-prepared-statements: false
+      validation-query: SELECT 'x'
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      use-global-data-source-stat: true
+      filters: stat,wall,slf4j
+      filter:
+        stat:
+          enabled: true
+          db-type: mysql
+          log-slow-sql: true
+          slow-sql-millis: 2000
+          merge-sql: true
+        wall:
+          enabled: true
+          db-type: mysql
+          config:
+            delete-allow: false
+            selelct-allow: true
+        slf4j:
+          enabled: true
+          data-source-log-enabled: true
+          connection-log-enabled: true
+          connection-log-error-enabled: true
+          statement-log-enabled: true
+          statement-log-error-enabled: true
+      web-stat-filter:
+        enabled: true
+        exclusions: '*.js, *.gif, *.jpg, *.png, *.css, *.ico, /druid/*'
+        principal-session-name: username
+        url-pattern: /api/v1/*
+        profile-enable: true
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: druid
+        login-password: 1990912
+        reset-enable: false
+  gson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  http:
+    converters:
+      preferred-json-mapper: null
+  jackson:
+    date-format: null
+  jpa:
+    database: mysql
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
+    locale: zh_CN
+  messages:
+    basename: i18n/messages,i18n/messages
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
   task:
     pool:
       custom:
