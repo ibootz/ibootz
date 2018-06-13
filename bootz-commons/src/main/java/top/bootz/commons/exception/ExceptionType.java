@@ -22,12 +22,7 @@ public enum ExceptionType {
 				return type;
 			}
 		}
-		throw new IllegalArgumentException("No matching ExceptionType by desc [" + desc + "]");
-	}
-
-	@Override
-	public String toString() {
-		return this.desc;
+		return ExceptionType.WARNING;
 	}
 
 }

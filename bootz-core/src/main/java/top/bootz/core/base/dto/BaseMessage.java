@@ -6,24 +6,23 @@ import lombok.Getter;
 import lombok.Setter;
 import top.bootz.core.base.entity.BaseEntity;
 
-/**
- * 异常消息传递实体
- * @author John
- *
- */
 @Getter
 @Setter
 public class BaseMessage extends BaseEntity {
 
-	private static final long serialVersionUID = 223716659621719263L;
+	private static final long serialVersionUID = 1L;
 
-	private String type; // 异常类型(WARNNING, ERROR)
+	/** 异常类型(WARNNING, ERROR) */
+	private String type;
 
-	private String code; // 应用内部自定义错误代码
+	/** 应用内部自定义错误代码 */
+	private String code;
 
-	private String message; // 错误信息
+	/** 错误信息 */
+	private String message;
 
-	private String moreInfo; // 额外信息
+	/** 附加说明 */
+	private String moreInfo;
 
 	@JsonIgnore
 	private Throwable throwable;
@@ -47,7 +46,7 @@ public class BaseMessage extends BaseEntity {
 		this.setCode(code);
 		this.setType(type);
 		this.setMessage(message);
-		this.setThrowable(throwable);
+		this.throwable = throwable;
 	}
 
 }

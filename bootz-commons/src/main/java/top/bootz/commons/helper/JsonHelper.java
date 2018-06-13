@@ -67,11 +67,7 @@ public final class JsonHelper {
 
 	public static boolean isJsonStr(String content) {
 		boolean isJsonStr = true;
-		try {
-			getJSONObject(content);
-		} catch (Exception e) {
-			isJsonStr = false;
-		}
+		getJSONObject(content);
 		return isJsonStr;
 	}
 
