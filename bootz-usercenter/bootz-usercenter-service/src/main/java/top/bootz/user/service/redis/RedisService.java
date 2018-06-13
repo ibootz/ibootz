@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class RedisService {
 
 	@Autowired
-	private RedisTemplate<String, Object> redisTemplate;
+	private RedisTemplate<Object, Object> redisTemplate;
 
 	public <T> void setKey(String key, T value) {
 		redisTemplate.opsForValue().set(key, value);

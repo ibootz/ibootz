@@ -8,24 +8,21 @@ import org.springframework.context.annotation.Import;
 import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import lombok.extern.slf4j.Slf4j;
+import top.bootz.user.config.app.AsyncConfig;
+import top.bootz.user.config.app.IdGeneratorConfig;
 import top.bootz.user.config.app.JpaConfig;
-import top.bootz.user.properties.MongoConfigProperties;
+import top.bootz.user.properties.IdGeneratorProperties;
 import top.bootz.user.properties.TaskThreadPoolConfigProperties;
 
-@Slf4j
 @EnableRetry
 @EnableCaching
 @EnableScheduling
+@Import(value = { AsyncConfig.class, JpaConfig.class, IdGeneratorConfig.class })
+@EnableConfigurationProperties({ TaskThreadPoolConfigProperties.class, IdGeneratorProperties.class })
 @SpringBootApplication
-// @Import(value = { AsyncConfig.class, ElasticConfig.class, JpaConfig.class,
-// MongoConfig.class, RabbitmqConfig.class })
-@Import(value = { JpaConfig.class })
-@EnableConfigurationProperties({ TaskThreadPoolConfigProperties.class, MongoConfigProperties.class })
 public class UserCenterApplication {
 
 	public static void main(String[] args) {
-		log.debug("test logback log ... ");
 		SpringApplication.run(UserCenterApplication.class, args);
 	}
 

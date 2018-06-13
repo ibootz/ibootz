@@ -38,7 +38,7 @@ public class Menu extends BaseMysqlEntity {
 
 	private Integer orderIndex;
 
-	private String desc;
+	private String description;
 
 	@Column(name = "code", nullable = false, columnDefinition = "varchar(32) default '' comment '菜单编号'")
 	public String getCode() {
@@ -75,9 +75,9 @@ public class Menu extends BaseMysqlEntity {
 		return orderIndex;
 	}
 
-	@Column(name = "desc", nullable = false, columnDefinition = "varchar(512) default '' comment '描述'")
-	public String getDesc() {
-		return desc;
+	@Column(name = "description", nullable = false, columnDefinition = "varchar(512) default '' comment '描述'")
+	public String getDescription() {
+		return description;
 	}
 
 }

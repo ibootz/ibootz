@@ -16,6 +16,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<logstash-logback-encoder.version>5.1</logstash-logback-encoder.version>
 	</properties>
 
 	<dependencies>
@@ -55,16 +56,8 @@
 			<artifactId>jackson-module-jaxb-annotations</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.fasterxml.jackson.jaxrs</groupId>
-			<artifactId>jackson-jaxrs-json-provider</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.datatype</groupId>
-			<artifactId>jackson-datatype-joda</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
@@ -118,6 +111,14 @@
 			<groupId>com.thetransactioncompany</groupId>
 			<artifactId>java-property-utils</artifactId>
 		</dependency>
+
+		<!-- logstash-logback-encoder -->
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<version>${logstash-logback-encoder.version}</version>
+		</dependency>
+
 	</dependencies>
 
 </project>

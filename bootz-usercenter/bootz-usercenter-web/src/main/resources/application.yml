@@ -1,16 +1,19 @@
 spring:
+  profiles:
+    active:
+    - home
   application:
-    name: BOOTZ-USER
-#  cache:
-#    type: redis
-#    cache-names:
-#    - userCache
-#    - authCache
-#    - resourceCache
-#    redis:
-#      key-prefix: 'usercenter:'
-#      time-to-live:
-#        seconds: 86400
+    name: bootz-user
+  cache:
+    type: redis
+    cache-names:
+    - userCache
+    - authCache
+    - resourceCache
+    redis:
+      key-prefix: 'usercenter:'
+      time-to-live:
+        seconds: 86400
   datasource:
     druid:
       initial-size: 1
@@ -63,7 +66,7 @@ spring:
     converters:
       preferred-json-mapper: null
   jackson:
-    date-format: yyyy-MM-dd HH:mm:ss      
+    date-format: yyyy-MM-dd HH:mm:ss
     deserialization:
       fail-on-unknown-properties: false
     serialization:
@@ -71,6 +74,17 @@ spring:
       write-dates-as-timestamps: false
   jpa:
     database: mysql
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.dialect.storage_engine: innodb
+      hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+      hibernate.ejb.naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      hibernate.cache.provider_class: org.hibernate.cache.NoCacheProvider
+      hibernate.show_sql: false
+      hibernate.format_sql: false
+      hibernate.ejb.entitymanager_factory_name: entityManagerFactory
   mvc:
     date-format: yyyy-MM-dd HH:mm:ss
     locale: zh_CN
@@ -99,3 +113,6 @@ server:
     uri-encoding: UTF-8
   connection-timeout:
     seconds: 60
+id-generator:
+  work-id: 0
+  data-center-id: 0

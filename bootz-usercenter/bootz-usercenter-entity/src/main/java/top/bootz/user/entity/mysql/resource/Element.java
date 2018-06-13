@@ -34,7 +34,7 @@ public class Element extends BaseMysqlEntity {
 	private String path;
 
 	/** 描述 */
-	private String desc;
+	private String description;
 
 	@Column(name = "code", nullable = false, columnDefinition = "varchar(32) default '' comment '页面元素编号'")
 	public String getCode() {
@@ -51,9 +51,9 @@ public class Element extends BaseMysqlEntity {
 		return path;
 	}
 
-	@Column(name = "desc", nullable = false, columnDefinition = "varchar(128) default '' comment '描述'")
-	public String getDesc() {
-		return desc;
+	@Column(name = "description", nullable = false, columnDefinition = "varchar(128) default '' comment '描述'")
+	public String getDescription() {
+		return description;
 	}
 
 }

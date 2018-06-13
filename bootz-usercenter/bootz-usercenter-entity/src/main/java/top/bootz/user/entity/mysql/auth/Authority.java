@@ -31,7 +31,7 @@ public class Authority extends BaseMysqlEntity {
 	private AuthorityEnum type;
 
 	/** 权限描述 */
-	private String desc;
+	private String description;
 
 	@Convert(converter = AuthorityAttributeConverter.class)
 	@Column(name = "type", nullable = false, columnDefinition = "tinyint(1) default 0 comment '权限类型(menu, element, file, operation等)'")
@@ -39,9 +39,9 @@ public class Authority extends BaseMysqlEntity {
 		return type;
 	}
 
-	@Column(name = "desc", nullable = false, columnDefinition = "varchar(255) default '' comment '权限描述'")
-	public String getDesc() {
-		return desc;
+	@Column(name = "description", nullable = false, columnDefinition = "varchar(255) default '' comment '权限描述'")
+	public String getDescription() {
+		return description;
 	}
 
 }

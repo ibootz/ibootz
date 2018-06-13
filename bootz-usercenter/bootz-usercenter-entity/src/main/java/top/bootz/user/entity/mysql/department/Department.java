@@ -34,7 +34,7 @@ public class Department extends BaseMysqlEntity {
 	private Long parentId;
 
 	/** 部门职能描述 */
-	private String desc;
+	private String description;
 
 	@Column(name = "name", nullable = false, columnDefinition = "varchar(32) default '' comment '部门名'")
 	public String getName() {
@@ -51,9 +51,9 @@ public class Department extends BaseMysqlEntity {
 		return parentId;
 	}
 
-	@Column(name = "desc", nullable = false, columnDefinition = "varchar(255) default '' comment '部门职能描述'")
-	public String getDesc() {
-		return desc;
+	@Column(name = "description", nullable = false, columnDefinition = "varchar(255) default '' comment '部门职能描述'")
+	public String getDescription() {
+		return description;
 	}
 
 }

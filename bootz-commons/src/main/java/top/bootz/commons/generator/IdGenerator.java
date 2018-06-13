@@ -3,7 +3,6 @@ package top.bootz.commons.generator;
 import java.util.Calendar;
 
 import org.apache.commons.lang3.RandomUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.base.Preconditions;
 
@@ -35,10 +34,10 @@ public class IdGenerator {
 	private static final long DATACENTER_ID_BITS = 5L;
 
 	/** 支持的最大机器id，结果是31 (这个移位算法可以很快的计算出几位二进制数所能表示的最大十进制数) */
-	private static final long MAX_WORKER_ID = -1L ^ (-1L << WORKER_ID_BITS);
+	public static final long MAX_WORKER_ID = -1L ^ (-1L << WORKER_ID_BITS);
 
 	/** 支持的最大数据标识id，结果是31 */
-	private static final long MAX_DATACENTER_ID = -1L ^ (-1L << DATACENTER_ID_BITS);
+	public static final long MAX_DATACENTER_ID = -1L ^ (-1L << DATACENTER_ID_BITS);
 
 	/** 序列在id中占的位数 */
 	private static final long SEQUENCE_BITS = 12L;
@@ -78,35 +77,40 @@ public class IdGenerator {
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
 		EPOCH = calendar.getTimeInMillis();
-		initWorkerId();
-		initDataCenterId();
+//		initWorkerId();
+//		initDataCenterId();
 	}
 
-	static void initWorkerId() {
-		String workerId = System.getProperty("bootz.id.generator.worker.id");
-		if (StringUtils.isNotBlank(workerId)) {
-			setWorkerId(Long.valueOf(workerId));
-			return;
-		}
-		workerId = System.getenv("BOOTZ_ID_GENERATOR_WORKER_ID");
-		if (StringUtils.isBlank(workerId)) {
-			throw new IllegalArgumentException("workerId must not be null or blank!");
-		}
-		setWorkerId(Long.valueOf(workerId));
-	}
-
-	static void initDataCenterId() {
-		String dataCenterId = System.getProperty("bootz.id.generator.datacenter.id");
-		if (StringUtils.isNotBlank(dataCenterId)) {
-			setDataCenterId(Long.valueOf(dataCenterId));
-			return;
-		}
-		dataCenterId = System.getenv("BOOTZ_ID_GENERATOR_DATACENTER_ID");
-		if (StringUtils.isBlank(dataCenterId)) {
-			throw new IllegalArgumentException("dataCenter Id must not be null or blank!");
-		}
-		setDataCenterId(Long.valueOf(dataCenterId));
-	}
+	/**
+	 * 此处注销掉，是因为要通过另外一种方式初始化workId和dataCenterId, 即Spring boot注入。  
+	 */
+//	static void initWorkerId() {
+//		String workerId = System.getProperty("bootz.id.generator.worker.id");
+//		if (StringUtils.isNotBlank(workerId)) {
+//			setWorkerId(Long.valueOf(workerId));
+//			return;
+//		}
+//		workerId = System.getenv("BOOTZ_ID_GENERATOR_WORKER_ID");
+//		if (StringUtils.isNotBlank(workerId)) {
+//			setWorkerId(Long.valueOf(workerId));
+//			return;
+//		}
+//		throw new IllegalArgumentException("workerId must not be null or blank!");
+//	}
+//
+//	static void initDataCenterId() {
+//		String dataCenterId = System.getProperty("bootz.id.generator.datacenter.id");
+//		if (StringUtils.isNotBlank(dataCenterId)) {
+//			setDataCenterId(Long.valueOf(dataCenterId));
+//			return;
+//		}
+//		dataCenterId = System.getenv("BOOTZ_ID_GENERATOR_DATACENTER_ID");
+//		if (StringUtils.isNotBlank(dataCenterId)) {
+//			setDataCenterId(Long.valueOf(dataCenterId));
+//			return;
+//		}
+//		throw new IllegalArgumentException("dataCenter Id must not be null or blank!");
+//	}
 
 	/**
 	 * 设置工作进程Id.
@@ -114,13 +118,19 @@ public class IdGenerator {
 	 * @param workerId
 	 *            工作进程Id
 	 */
-	public static void setWorkerId(final Long workerId) {
+	public void setWorkerId(final Long workerId) {
 		Preconditions.checkArgument(workerId >= 0L && workerId < MAX_WORKER_ID,
 				String.format("worker id can't be greater than %d or less than 0", MAX_WORKER_ID));
 		IdGenerator.workerId = workerId;
 	}
 
-	public static void setDataCenterId(final Long dataCenterId) {
+	/**
+	 * 设置数据中心Id.
+	 * 
+	 * @param dataCenterId
+	 *            数据中心Id
+	 */
+	public void setDataCenterId(final Long dataCenterId) {
 		Preconditions.checkArgument(dataCenterId >= 0L && dataCenterId < MAX_DATACENTER_ID,
 				String.format("dataCenter id can't be greater than %d or less than 0", MAX_DATACENTER_ID));
 		IdGenerator.dataCenterId = dataCenterId;

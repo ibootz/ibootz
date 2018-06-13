@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -25,7 +26,8 @@ import top.bootz.core.dictionary.LockStatusEnum;
  *
  */
 @Entity
-@Table(name = "uc_user")
+@Table(name = "uc_user", indexes = { @Index(columnList = "username", name = "idx_uc_user_username", unique = true),
+		@Index(columnList = "password", name = "idx_uc_user_password") })
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -72,7 +74,7 @@ public class User extends BaseMysqlEntity {
 	/** 上次重置密码的时间 */
 	private LocalDateTime lastPasswordResetTime;
 
-	@Column(name = "username", nullable = false, unique = true, columnDefinition = "varchar(64) default '' comment '用户名'")
+	@Column(name = "username", nullable = false, columnDefinition = "varchar(64) default '' comment '用户名'")
 	public String getUsername() {
 		return this.username;
 	}

@@ -27,16 +27,16 @@ public class RoleGroup extends BaseMysqlEntity {
 
 	private String groupName;
 
-	private String desc;
+	private String description;
 
 	@Column(name = "group_name", nullable = false, columnDefinition = "varchar(20) default '' comment '角色组中文名'")
 	public String getGroupName() {
 		return groupName;
 	}
 
-	@Column(name = "desc", nullable = false, columnDefinition = "varchar(256) default '' comment '角色中文描述'")
-	public String getDesc() {
-		return desc;
+	@Column(name = "description", nullable = false, columnDefinition = "varchar(256) default '' comment '角色中文描述'")
+	public String getDescription() {
+		return description;
 	}
 
 }

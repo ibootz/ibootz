@@ -31,7 +31,7 @@ public class File extends BaseMysqlEntity {
 	private String path;
 
 	/** 文件描述 */
-	private String desc;
+	private String description;
 
 	@Column(name = "name", nullable = false, columnDefinition = "varchar(32) default '' comment '文件名'")
 	public String getName() {
@@ -43,9 +43,9 @@ public class File extends BaseMysqlEntity {
 		return path;
 	}
 
-	@Column(name = "desc", nullable = false, columnDefinition = "varchar(255) default '' comment '文件描述'")
-	public String getDesc() {
-		return desc;
+	@Column(name = "description", nullable = false, columnDefinition = "varchar(255) default '' comment '文件描述'")
+	public String getDescription() {
+		return description;
 	}
 
 }
