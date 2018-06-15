@@ -41,7 +41,7 @@ import top.bootz.core.aspect.AdviceException;
 @Slf4j
 public class AccessHandleAdvice {
 
-	private static final String CONTROLLER_EXECUTION = "execution(public * com.orion.manage.web.controller..*.*(..))";
+	private static final String CONTROLLER_EXECUTION = "execution(public * com.orion.manage.user.controller..*.*(..))";
 
 	@Autowired
 	private MessageSource messageSource;

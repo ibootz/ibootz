@@ -4,7 +4,7 @@ package top.bootz.core.dictionary;
  * Desc: 锁定状态枚举
  * 
  * @author John
- * @dateTime: 2018年6月10日 下午7:51:30 <br/>
+ * 2018年6月10日 下午7:51:30 <br/>
  */
 public enum LockStatusEnum {
 

@@ -25,7 +25,7 @@ public class MessageChecker {
 	}
 
 	// 国际化资源文件路径，需根据实际情况自己配置。
-	private static final String MESSAGE_FILE_PATH = "I:/git_repository/orion/orion-manage/orion-web/src/main/resources/i18n/message.properties";
+	private static final String MESSAGE_FILE_PATH = "I:/git_repository/orion/orion-manage/orion-user/src/main/resources/i18n/message.properties";
 
 	public static void main(String[] args) {
 		Properties prop = new Properties();

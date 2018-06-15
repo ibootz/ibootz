@@ -8,7 +8,7 @@ import top.bootz.core.dictionary.DeleteTypeEnum;
  * Desc: 删除枚举与数据库字典映射
  * 
  * @author John
- * @dateTime: 2018年6月10日 下午7:31:28 <br/>
+ * 2018年6月10日 下午7:31:28 <br/>
  */
 public class DeleteTypeAttributeConverter implements AttributeConverter<DeleteTypeEnum, Integer> {
 

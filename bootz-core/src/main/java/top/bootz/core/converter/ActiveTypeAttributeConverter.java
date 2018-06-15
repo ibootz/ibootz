@@ -8,7 +8,7 @@ import top.bootz.core.dictionary.ActiveTypeEnum;
  * Desc: 激活枚举与数据库字典映射
  * 
  * @author John
- * @dateTime: 2018年6月10日 下午7:31:28 <br/>
+ * 2018年6月10日 下午7:31:28 <br/>
  */
 public class ActiveTypeAttributeConverter implements AttributeConverter<ActiveTypeEnum, Integer> {
 

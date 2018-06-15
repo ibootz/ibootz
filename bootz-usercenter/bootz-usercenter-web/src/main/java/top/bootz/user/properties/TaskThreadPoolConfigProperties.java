@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
  * Desc: 读取自定义ExecutorTask配置文件
  * 
  * @author John
- * @dateTime: 2018年6月10日 下午10:08:51
+ * 2018年6月10日 下午10:08:51
  */
 
 @Data
 @NoArgsConstructor
-@ConfigurationProperties(prefix = "spring.task.pool.custom")
+@ConfigurationProperties(prefix = "custom.task.pool")
 public class TaskThreadPoolConfigProperties {
 
 	private String threadNamePrefix;

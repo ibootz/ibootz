@@ -1,4 +1,4 @@
-package top.bootz.commons.generator;
+package top.bootz.commons.snowflake;
 
 import java.sql.Timestamp;
 import java.util.concurrent.ExecutorService;

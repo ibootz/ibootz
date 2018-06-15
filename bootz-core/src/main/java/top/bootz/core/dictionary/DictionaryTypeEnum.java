@@ -4,7 +4,7 @@ package top.bootz.core.dictionary;
  * Desc: 字典类型枚举
  * 
  * @author John
- * @dateTime: 2018年6月10日 下午7:07:56 <br/>
+ * 2018年6月10日 下午7:07:56 <br/>
  */
 public enum DictionaryTypeEnum {
 

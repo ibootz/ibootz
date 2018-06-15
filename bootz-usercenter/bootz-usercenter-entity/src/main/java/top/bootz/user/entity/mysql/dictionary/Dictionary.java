@@ -18,7 +18,7 @@ import top.bootz.core.dictionary.DictionaryTypeEnum;
  * Desc: 通用字典表
  * 
  * @author John
- * @dateTime: 2018年6月10日 下午7:02:28 <br/>
+ * 2018年6月10日 下午7:02:28 <br/>
  */
 
 @Entity

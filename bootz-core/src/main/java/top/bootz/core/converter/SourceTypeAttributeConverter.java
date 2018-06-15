@@ -8,7 +8,7 @@ import top.bootz.core.dictionary.SourceTypeEnum;
  * Desc: 字典类型枚举类与数据库值转换类
  * 
  * @author John
- * @dateTime: 2018年6月10日 下午7:31:28 <br/>
+ * 2018年6月10日 下午7:31:28 <br/>
  */
 public class SourceTypeAttributeConverter implements AttributeConverter<SourceTypeEnum, Integer> {
 

@@ -8,16 +8,17 @@ import org.springframework.context.annotation.Import;
 import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import top.bootz.user.config.app.AsyncConfig;
-import top.bootz.user.config.app.IdGeneratorConfig;
-import top.bootz.user.config.app.JpaConfig;
+import top.bootz.user.config.AsyncConfig;
+import top.bootz.user.config.CorsConfig;
+import top.bootz.user.config.IdGeneratorConfig;
+import top.bootz.user.config.JpaConfig;
 import top.bootz.user.properties.IdGeneratorProperties;
 import top.bootz.user.properties.TaskThreadPoolConfigProperties;
 
 @EnableRetry
 @EnableCaching
 @EnableScheduling
-@Import(value = { AsyncConfig.class, JpaConfig.class, IdGeneratorConfig.class })
+@Import(value = { AsyncConfig.class, JpaConfig.class, IdGeneratorConfig.class, CorsConfig.class })
 @EnableConfigurationProperties({ TaskThreadPoolConfigProperties.class, IdGeneratorProperties.class })
 @SpringBootApplication
 public class UserCenterApplication {

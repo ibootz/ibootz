@@ -10,7 +10,7 @@ import top.bootz.user.commons.dictionary.OperationEnum;
  * Desc: 权限类型枚举类与数据库值转换类
  * 
  * @author John
- * @dateTime: 2018年6月10日 下午7:31:28 <br/>
+ * 2018年6月10日 下午7:31:28 <br/>
  */
 public class OperationAttributeConverter implements AttributeConverter<OperationEnum, Integer> {
 

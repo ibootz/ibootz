@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 
  * @author John
- * @dateTime: 2018年6月13日 下午8:37:18
+ * 2018年6月13日 下午8:37:18
  */
 
 public final class HttpHelper {

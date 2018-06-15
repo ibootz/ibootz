@@ -1,19 +1,11 @@
 spring:
-  profiles:
-    active:
-    - home
   application:
     name: bootz-user
   cache:
     type: redis
-    cache-names:
-    - userCache
-    - authCache
-    - resourceCache
     redis:
-      key-prefix: 'usercenter:'
-      time-to-live:
-        seconds: 86400
+      key-prefix: 'cache:usercenter:'
+      time-to-live: 12h
   datasource:
     druid:
       initial-size: 1
@@ -64,7 +56,9 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
   http:
     converters:
-      preferred-json-mapper: null
+      preferred-json-mapper: jackson
+    encoding:
+      force: true
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     deserialization:
@@ -94,14 +88,6 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 20MB
-  task:
-    pool:
-      custom:
-        thread-name-prefix: Bootz-Executor-
-        core-pool-size: 5
-        max-pool-size: 20
-        keep-alive-seconds: 120
-        queue-capacity: 10
 server:
   port: 6080
   tomcat:
@@ -111,8 +97,24 @@ server:
     min-spare-threads: 25
     max-threads: 800
     uri-encoding: UTF-8
-  connection-timeout:
-    seconds: 60
-id-generator:
-  work-id: 0
-  data-center-id: 0
+  connection-timeout: 60s
+  servlet:
+    context-path: /user-center/api/v1
+custom:
+  task:
+    pool:
+      thread-name-prefix: Bootz-Executor-
+      core-pool-size: 5
+      max-pool-size: 20
+      keep-alive-seconds: 120
+      queue-capacity: 10
+  id-snowflake:
+    workerId: 0
+    dataCenterId: 0
+  cors:
+    allow-credentials: true
+    allowed-header: *
+    allowed-method: GET,PUT,POST,DELETE,OPTIONS,HEAD
+    allowed-origin: .bootz.com
+    exposed-headers: *
+    max-age: 86400

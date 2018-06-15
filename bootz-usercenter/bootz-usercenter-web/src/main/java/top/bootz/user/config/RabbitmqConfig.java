@@ -1,4 +1,4 @@
-package top.bootz.user.config.app;
+package top.bootz.user.config;
 
 //@Configuration
 //@EnableRabbit

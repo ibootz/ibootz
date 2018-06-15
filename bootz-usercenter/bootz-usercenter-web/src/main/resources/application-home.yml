@@ -17,11 +17,11 @@ spring:
     jedis:
       pool:
         max-active: 10
-        max-wait: 10000
+        max-wait: 10s
         max-idle: 8
         min-idle: 2
     password: nkEs8h6MdH!
-    timeout: 10000
+    timeout: 10s
 #  data:
 #    mongodb:
 #      uri: mongodb://readwrite:nkEs8h6MdH!@192.168.199.115:27017,192.168.199.116:27017,192.168.199.151:27017/bootz_v1

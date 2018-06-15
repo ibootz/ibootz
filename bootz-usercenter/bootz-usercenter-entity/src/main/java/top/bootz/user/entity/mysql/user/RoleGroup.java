@@ -13,7 +13,7 @@ import top.bootz.core.base.entity.BaseMysqlEntity;
  * Desc: 角色组
  * 
  * @author John
- * @dateTime: 2018年6月10日 下午6:53:40 <br/>
+ * 2018年6月10日 下午6:53:40 <br/>
  */
 
 @Entity
