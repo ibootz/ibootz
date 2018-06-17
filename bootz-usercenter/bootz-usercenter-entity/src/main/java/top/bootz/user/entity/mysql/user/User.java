@@ -10,7 +10,6 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.bootz.core.base.entity.BaseMysqlEntity;
@@ -34,7 +33,6 @@ import top.bootz.core.dictionary.LockStatusEnum;
 		@Index(columnList = "mobile", name = "idx_uc_user_mobile"),
 		@Index(columnList = "email", name = "idx_uc_user_email") })
 @Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = { "username" }, callSuper = false)

@@ -7,7 +7,6 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.bootz.core.base.entity.BaseMysqlEntity;
@@ -25,7 +24,6 @@ import top.bootz.core.dictionary.DisableTypeEnum;
 		@Index(columnList = "path", name = "idx_uc_department_path"),
 		@Index(columnList = "parent_id", name = "idx_uc_department_parentid") })
 @Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Department extends BaseMysqlEntity {

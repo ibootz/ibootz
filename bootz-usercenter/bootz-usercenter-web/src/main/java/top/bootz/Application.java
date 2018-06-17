@@ -16,7 +16,6 @@ import top.bootz.user.config.AsyncConfig;
 import top.bootz.user.config.CorsConfig;
 import top.bootz.user.config.IdGeneratorConfig;
 import top.bootz.user.config.JpaConfig;
-import top.bootz.user.config.RedisConfig;
 import top.bootz.user.config.properties.CorsConfigProperties;
 import top.bootz.user.config.properties.IdGeneratorProperties;
 import top.bootz.user.config.properties.TaskThreadPoolConfigProperties;
@@ -26,7 +25,7 @@ import top.bootz.user.config.properties.TaskThreadPoolConfigProperties;
 @EnableCaching
 @EnableScheduling
 @EnableSpringDataWebSupport
-@Import(value = { AsyncConfig.class, CorsConfig.class, IdGeneratorConfig.class, JpaConfig.class, RedisConfig.class })
+@Import(value = { AsyncConfig.class, CorsConfig.class, IdGeneratorConfig.class, JpaConfig.class })
 @EnableConfigurationProperties({ TaskThreadPoolConfigProperties.class, IdGeneratorProperties.class,
 		CorsConfigProperties.class })
 @SpringBootApplication

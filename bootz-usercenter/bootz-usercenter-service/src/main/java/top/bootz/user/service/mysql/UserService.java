@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import top.bootz.user.entity.mysql.user.User;
-import top.bootz.user.repository.mysql.user.UserDao;
+import top.bootz.user.repository.mysql.user.UserRepository;
 
 /**
  * 
@@ -16,7 +16,7 @@ import top.bootz.user.repository.mysql.user.UserDao;
 public class UserService {
 
 	@Autowired
-	private UserDao userDao;
+	private UserRepository userDao;
 	
 	public void saveUser(User user) {
 		userDao.save(user);

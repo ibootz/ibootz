@@ -1,4 +1,4 @@
-package top.bootz.user.entity.mysql.user;
+package top.bootz.user.entity.mysql.role;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -7,7 +7,6 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.bootz.core.base.entity.BaseMysqlEntity;
@@ -24,7 +23,6 @@ import top.bootz.core.dictionary.DisableTypeEnum;
 @Table(name = "uc_role_group", indexes = { @Index(columnList = "name", name = "idx_uc_rolegroup_name", unique = true),
 		@Index(columnList = "parent_id", name = "idx_uc_rolegroup_parentid") })
 @Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoleGroup extends BaseMysqlEntity {

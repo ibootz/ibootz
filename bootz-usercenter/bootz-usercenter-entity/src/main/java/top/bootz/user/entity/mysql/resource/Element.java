@@ -8,7 +8,6 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.bootz.core.base.entity.BaseMysqlEntity;
@@ -25,7 +24,6 @@ import top.bootz.core.dictionary.DisableTypeEnum;
 @Table(name = "uc_element", indexes = { @Index(columnList = "code", name = "idx_uc_element_code", unique = true),
 		@Index(columnList = "paren_id", name = "idx_uc_element_parenid") })
 @Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = { "code" }, callSuper = false)

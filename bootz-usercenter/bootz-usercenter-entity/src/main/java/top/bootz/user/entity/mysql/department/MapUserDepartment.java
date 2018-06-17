@@ -7,7 +7,6 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.bootz.core.base.entity.BaseMysqlEntity;
@@ -23,7 +22,6 @@ import top.bootz.core.base.entity.BaseMysqlEntity;
 		@Index(columnList = "user_id,department_id", name = "idx_uc_mud_userid_departmentid", unique = true),
 		@Index(columnList = "department_id", name = "idx_uc_mud_departmentid") })
 @Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = { "userId", "departmentId" }, callSuper = false)

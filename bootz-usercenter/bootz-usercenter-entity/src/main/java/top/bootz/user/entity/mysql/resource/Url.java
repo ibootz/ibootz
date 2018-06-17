@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.bootz.core.base.entity.BaseMysqlEntity;
@@ -22,7 +21,6 @@ import top.bootz.core.dictionary.DisableTypeEnum;
 @Entity
 @Table(name = "uc_url")
 @Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Url extends BaseMysqlEntity {

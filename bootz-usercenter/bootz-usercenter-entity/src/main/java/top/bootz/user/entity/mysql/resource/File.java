@@ -7,7 +7,6 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.bootz.core.base.entity.BaseMysqlEntity;
@@ -23,7 +22,6 @@ import top.bootz.core.dictionary.DisableTypeEnum;
 @Entity
 @Table(name = "uc_file", indexes = { @Index(columnList = "name", name = "idx_uc_file_name", unique = true) })
 @Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class File extends BaseMysqlEntity {

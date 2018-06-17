@@ -1,4 +1,4 @@
-package top.bootz.user.entity.mysql.auth;
+package top.bootz.user.entity.mysql.role;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,7 +7,6 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.bootz.core.base.entity.BaseMysqlEntity;
@@ -20,25 +19,24 @@ import top.bootz.core.base.entity.BaseMysqlEntity;
  */
 
 @Entity
-@Table(name = "uc_map_user_authority", indexes = {
-		@Index(columnList = "user_id,auth_id", name = "idx_uc_mua_userid_authid", unique = true),
-		@Index(columnList = "auth_id", name = "idx_uc_mua_authid") })
+@Table(name = "uc_map_role_authority", indexes = {
+		@Index(columnList = "role_id,auth_id", name = "idx_uc_mra_roleid_authid", unique = true),
+		@Index(columnList = "auth_id", name = "idx_uc_mra_authid") })
 @Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = { "userId", "authId" }, callSuper = false)
-public class MapUserAuthority extends BaseMysqlEntity {
+@EqualsAndHashCode(of = { "roleId", "authId" }, callSuper = false)
+public class MapRoleAuthority extends BaseMysqlEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long userId;
+	private Long roleId;
 
 	private Long authId;
 
-	@Column(name = "user_id", nullable = false, columnDefinition = "bigint(64) default 0 comment '用户ID'")
-	public Long getUserId() {
-		return userId;
+	@Column(name = "role_id", nullable = false, columnDefinition = "bigint(64) default 0 comment '角色ID'")
+	public Long getRoleId() {
+		return roleId;
 	}
 
 	@Column(name = "auth_id", nullable = false, columnDefinition = "bigint(64) default 0 comment '权限ID'")

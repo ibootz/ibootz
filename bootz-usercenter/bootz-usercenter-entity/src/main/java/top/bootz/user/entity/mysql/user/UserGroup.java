@@ -7,7 +7,6 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.bootz.core.base.entity.BaseMysqlEntity;
@@ -15,7 +14,7 @@ import top.bootz.core.converter.DisableTypeAttributeConverter;
 import top.bootz.core.dictionary.DisableTypeEnum;
 
 /**
- * 用户组
+ * 用户组(岗位，自定义用户组)
  * 
  * @author John 2018年6月10日 下午6:53:40 <br/>
  */
@@ -24,7 +23,6 @@ import top.bootz.core.dictionary.DisableTypeEnum;
 @Table(name = "uc_user_group", indexes = { @Index(columnList = "name", name = "idx_uc_usergroup_name", unique = true),
 		@Index(columnList = "parent_id", name = "idx_uc_usergroup_parentid") })
 @Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserGroup extends BaseMysqlEntity {

@@ -7,7 +7,6 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.bootz.core.base.entity.BaseMysqlEntity;
@@ -26,7 +25,6 @@ import top.bootz.core.dictionary.DisableTypeEnum;
 @Table(name = "uc_dictionary", indexes = {
 		@Index(columnList = "name,type", name = "idx_uc_dictionary_name_type", unique = true) })
 @Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Dictionary extends BaseMysqlEntity {

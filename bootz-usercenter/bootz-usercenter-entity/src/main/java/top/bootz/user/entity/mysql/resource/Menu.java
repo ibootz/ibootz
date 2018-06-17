@@ -10,7 +10,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.bootz.core.base.entity.BaseMysqlEntity;
@@ -28,7 +27,6 @@ import top.bootz.core.dictionary.DisableTypeEnum;
 		@Index(columnList = "parent_id", name = "idx_uc_menu_parentid"),
 		@Index(columnList = "path", name = "idx_uc_menu_path") })
 @Setter
-@Getter
 @EqualsAndHashCode(of = { "code" }, callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor

@@ -1,5 +1,6 @@
 package top.bootz.user.entity.redis;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashSet;
@@ -11,11 +12,12 @@ import org.springframework.data.redis.core.index.Indexed;
 
 import lombok.Getter;
 import lombok.Setter;
-import top.bootz.core.base.entity.BaseRedisEntity;
+import top.bootz.commons.helper.BeanHelper;
 import top.bootz.core.dictionary.DisableTypeEnum;
 import top.bootz.core.dictionary.GenderEnum;
 import top.bootz.core.dictionary.LockStatusEnum;
 import top.bootz.user.entity.mysql.auth.Authority;
+import top.bootz.user.entity.mysql.user.User;
 
 /**
  * 
@@ -24,8 +26,8 @@ import top.bootz.user.entity.mysql.auth.Authority;
  */
 @Setter
 @Getter
-@RedisHash(timeToLive = 7200)
-public class UserCache extends BaseRedisEntity {
+@RedisHash(timeToLive = 86400) // 缓存一天
+public class UserCache implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -75,8 +77,13 @@ public class UserCache extends BaseRedisEntity {
 	/** 上次重置密码的时间 */
 	private LocalDateTime lastPasswordResetTime;
 
-	/** 权限 */
+	/** 用户拥有的权限分类合集(key为AuthorityEnum中的desc字段，代表相应类型的权限) */
 	@Indexed
 	private Set<Authority> authorities = Collections.synchronizedSet(new HashSet<>());
+
+	public UserCache(User user, Set<Authority> authorities) {
+		BeanHelper.copyProperties(user, this);
+		this.authorities = authorities;
+	}
 
 }

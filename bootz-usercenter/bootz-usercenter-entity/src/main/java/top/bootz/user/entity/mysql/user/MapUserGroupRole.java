@@ -7,7 +7,6 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.bootz.core.base.entity.BaseMysqlEntity;
@@ -24,7 +23,6 @@ import top.bootz.core.base.entity.BaseMysqlEntity;
 		@Index(columnList = "usergroup_id,role_id", name = "idx_uc_mugr_usergroupid_roleid", unique = true),
 		@Index(columnList = "role_id", name = "idx_uc_mugr_roleid") })
 @Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = { "userGroupId", "roleId" }, callSuper = false)
