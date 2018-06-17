@@ -1,4 +1,4 @@
-package top.bootz.user.controller;
+package top.bootz.usercenter.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

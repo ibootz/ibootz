@@ -3,7 +3,11 @@ package top.bootz.core.supporter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PagingSupport<T> {
+import top.bootz.core.base.entity.BaseEntity;
+
+public class PagingSupport<T> extends BaseEntity {
+	
+	private static final long serialVersionUID = 1L;
 
 	private List<T> results = new ArrayList<>();
 

@@ -1,4 +1,4 @@
-package top.bootz.user.aspect;
+package top.bootz.usercenter.aspect;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -62,7 +63,7 @@ public class ExceptionHandleAdvice {
 		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
 		String message = messageSource.getMessage(e.getErrorKey(), e.getArgs(), locale);
 		if (StringUtils.isBlank(message)) {
-			message = messageSource.getMessage(ExceptionConstants.API_EXCEPTION, null, null);
+			message = messageSource.getMessage(ExceptionConstants.API_EXCEPTION, e.getArgs(), null);
 		}
 		RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
 		restMessage.setMoreInfo(e.getMessage());
@@ -139,6 +140,21 @@ public class ExceptionHandleAdvice {
 			HttpServletRequest request, HttpServletResponse response) {
 		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
 		String message = messageSource.getMessage(ExceptionConstants.INDEX_OUT_OF_BOUNDS_EXCEPTION, null, locale);
+		RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
+		restMessage.setMoreInfo(e.getMessage());
+		restMessage.setThrowable(e);
+		return new ResponseEntity<>(restMessage, HttpStatus.valueOf(restMessage.getHttpStatus()));
+	}
+
+	/**
+	 * 数据库访问异常异常
+	 * 
+	 */
+	@ExceptionHandler(DataAccessException.class)
+	public ResponseEntity<RestMessage> dataAccessExceptionHandler(DataAccessException e, HttpServletRequest request,
+			HttpServletResponse response) {
+		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
+		String message = messageSource.getMessage(ExceptionConstants.DATA_ACCESS_EXCEPTION, null, locale);
 		RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
 		restMessage.setMoreInfo(e.getMessage());
 		restMessage.setThrowable(e);
@@ -272,6 +288,10 @@ public class ExceptionHandleAdvice {
 		RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
 		restMessage.setMoreInfo(e.getMessage());
 		restMessage.setThrowable(e);
+		List<MediaType> mediaTypes = e.getSupportedMediaTypes();
+		if (!CollectionUtils.isEmpty(mediaTypes)) {
+			response.setHeader("Accept", MediaType.toString(mediaTypes));
+		}
 		return new ResponseEntity<>(restMessage, HttpStatus.valueOf(restMessage.getHttpStatus()));
 	}
 
@@ -294,7 +314,7 @@ public class ExceptionHandleAdvice {
 	}
 
 	/**
-	 * 500 - 处理其他层抛过来的经过封装的异常，通过在AccessHandleAdvice中拦截封装，可以拦截绝大部分应用内抛出来的异常
+	 * 500 - 处理应用内部自定义的全局异常
 	 * 
 	 * @param e
 	 * @return
@@ -323,7 +343,7 @@ public class ExceptionHandleAdvice {
 	public ResponseEntity<RestMessage> exceptionHandler(Exception e, HttpServletRequest request,
 			HttpServletResponse response) {
 		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
-		String message = messageSource.getMessage(ExceptionConstants.UNKNOWN_EXCEPTION, null, locale);
+		String message = messageSource.getMessage(ExceptionConstants.INTERNAL_SERVER_ERROR, null, locale);
 		RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
 		restMessage.setMoreInfo(e.getMessage());
 		restMessage.setThrowable(e);

@@ -1,4 +1,4 @@
-package top.bootz.user.config;
+package top.bootz.usercenter.config;
 
 import java.util.Optional;
 
@@ -32,13 +32,13 @@ public class JpaConfig {
 	 */
 	@Bean
 	@ConditionalOnMissingBean
-	public AuditorAware<String> auditorProvider() {
+	public AuditorAware<Long> auditorProvider() {
 		// TODO 暂未填充操作人的审计信息
-		return new AuditorAware<String>() {
+		return new AuditorAware<Long>() {
 
 			@Override
-			public Optional<String> getCurrentAuditor() {
-				return Optional.of("TODO");
+			public Optional<Long> getCurrentAuditor() {
+				return Optional.of(0L);
 			}
 
 		};

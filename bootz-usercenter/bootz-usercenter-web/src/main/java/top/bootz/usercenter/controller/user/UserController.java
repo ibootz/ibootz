@@ -1,4 +1,4 @@
-package top.bootz.user.controller.user;
+package top.bootz.usercenter.controller.user;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.extern.slf4j.Slf4j;
 import top.bootz.commons.helper.BeanHelper;
 import top.bootz.commons.helper.SpringHelper;
-import top.bootz.user.controller.BaseController;
 import top.bootz.user.entity.mysql.user.User;
 import top.bootz.user.service.mysql.UserService;
-import top.bootz.user.view.user.User4Add;
+import top.bootz.usercenter.controller.BaseController;
+import top.bootz.usercenter.view.user.User4Add;
 
 @Slf4j
 @RestController
@@ -34,7 +34,7 @@ public class UserController extends BaseController {
 		BeanHelper.copyProperties(user4Add, user);
 		userService.saveUser(user);
 
-		log.debug("springHelper [{}]", (SpringHelper.getBean("useService") == userService));
+		log.debug("springHelper [{}]", (SpringHelper.getBean("userService") == userService));
 	}
 
 }

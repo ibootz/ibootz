@@ -12,13 +12,13 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import top.bootz.commons.helper.SpringHelper;
-import top.bootz.user.config.AsyncConfig;
-import top.bootz.user.config.CorsConfig;
-import top.bootz.user.config.IdGeneratorConfig;
-import top.bootz.user.config.JpaConfig;
-import top.bootz.user.config.properties.CorsConfigProperties;
-import top.bootz.user.config.properties.IdGeneratorProperties;
-import top.bootz.user.config.properties.TaskThreadPoolConfigProperties;
+import top.bootz.usercenter.config.AsyncConfig;
+import top.bootz.usercenter.config.CorsConfig;
+import top.bootz.usercenter.config.IdGeneratorConfig;
+import top.bootz.usercenter.config.JpaConfig;
+import top.bootz.usercenter.config.properties.CorsConfigProperties;
+import top.bootz.usercenter.config.properties.IdGeneratorProperties;
+import top.bootz.usercenter.config.properties.TaskThreadPoolConfigProperties;
 
 @EnableRetry
 @EnableWebMvc

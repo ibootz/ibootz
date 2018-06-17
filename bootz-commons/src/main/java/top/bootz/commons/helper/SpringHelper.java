@@ -21,8 +21,9 @@ public class SpringHelper {
 		return applicationContext;
 	}
 
-	public static Object getBean(String beanName) {
-		return getApplicationContext().getBean(beanName);
+	@SuppressWarnings("unchecked")
+	public static <T> T getBean(String beanName) {
+		return (T) getApplicationContext().getBean(beanName);
 	}
 
 }

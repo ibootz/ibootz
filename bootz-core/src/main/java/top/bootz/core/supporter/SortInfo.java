@@ -1,6 +1,10 @@
 package top.bootz.core.supporter;
 
-public class SortInfo {
+import top.bootz.core.base.entity.BaseEntity;
+
+public class SortInfo extends BaseEntity {
+
+	private static final long serialVersionUID = 1L;
 
 	private String sortFiled;
 

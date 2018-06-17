@@ -1,4 +1,4 @@
-package top.bootz.user.config;
+package top.bootz.usercenter.config;
 
 //@Configuration
 //@EnableMongoRepositories(basePackages = { "top.bootz.user.service.mongo" })
@@ -19,13 +19,13 @@ public class MongoConfig {
 //	 * 添加操作人审计 <br/>
 //	 */
 //	@Bean
-//	public AuditorAware<String> mongoAuditorProvider() {
+//	public AuditorAware<Long> mongoAuditorProvider() {
 //		// TODO 暂时没有实现登录授权功能,所以这里暂时没法获取当前用户
-//		return new AuditorAware<String>() {
+//		return new AuditorAware<Long>() {
 //
 //			@Override
-//			public Optional<String> getCurrentAuditor() {
-//				return Optional.of("TODO");
+//			public Optional<Long> getCurrentAuditor() {
+//				return Optional.of(0L);
 //			}
 //		};
 //	}

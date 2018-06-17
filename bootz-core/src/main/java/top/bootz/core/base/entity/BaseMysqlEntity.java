@@ -36,11 +36,11 @@ public class BaseMysqlEntity extends BaseEntity {
 
 	protected Long id;
 
-	protected String creator; // 创建者
+	protected Long creator; // 创建者
 
 	protected LocalDateTime createTime; // 创建时间
 
-	protected String updater; // 更新者
+	protected Long updater; // 更新者
 
 	protected LocalDateTime updateTime; // 更新时间
 
@@ -54,7 +54,7 @@ public class BaseMysqlEntity extends BaseEntity {
 
 	@CreatedBy
 	@Column(name = "creator", nullable = false, columnDefinition = "bigint(64) default 0 comment '创建人ID'")
-	public String getCreator() {
+	public Long getCreator() {
 		return creator;
 	}
 
@@ -66,7 +66,7 @@ public class BaseMysqlEntity extends BaseEntity {
 
 	@LastModifiedBy
 	@Column(name = "updater", nullable = false, columnDefinition = "bigint(64) default 0 comment '更新人ID'")
-	public String getUpdater() {
+	public Long getUpdater() {
 		return updater;
 	}
 

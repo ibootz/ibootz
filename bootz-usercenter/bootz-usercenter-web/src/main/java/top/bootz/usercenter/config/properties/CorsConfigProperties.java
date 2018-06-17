@@ -1,4 +1,4 @@
-package top.bootz.user.config.properties;
+package top.bootz.usercenter.config.properties;
 
 import java.util.List;
 

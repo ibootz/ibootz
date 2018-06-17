@@ -1,4 +1,4 @@
-package top.bootz.user.config;
+package top.bootz.usercenter.config;
 
 import java.lang.reflect.Method;
 import java.util.concurrent.Executor;
@@ -13,7 +13,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import lombok.extern.slf4j.Slf4j;
-import top.bootz.user.config.properties.TaskThreadPoolConfigProperties;
+import top.bootz.usercenter.config.properties.TaskThreadPoolConfigProperties;
 
 @Slf4j
 @Configuration

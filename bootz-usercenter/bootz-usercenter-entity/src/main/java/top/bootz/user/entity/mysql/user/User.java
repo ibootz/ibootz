@@ -89,12 +89,12 @@ public class User extends BaseMysqlEntity {
 		return this.password;
 	}
 
-	@Column(name = "mobile", nullable = false, columnDefinition = "varchar(20) default '000-0000-0000' comment '电话'")
+	@Column(name = "mobile", nullable = false, columnDefinition = "varchar(20) default '' comment '电话'")
 	public String getMobile() {
 		return this.mobile;
 	}
 
-	@Column(name = "idcard", nullable = false, columnDefinition = "varchar(24) default '000000-00000000-0000' comment '身份证号码'")
+	@Column(name = "idcard", nullable = false, columnDefinition = "varchar(24) default '' comment '身份证号码'")
 	public String getIdCard() {
 		return this.idCard;
 	}

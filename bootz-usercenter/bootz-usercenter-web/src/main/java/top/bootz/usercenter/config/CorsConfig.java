@@ -1,4 +1,4 @@
-package top.bootz.user.config;
+package top.bootz.usercenter.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -8,7 +8,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import top.bootz.user.config.properties.CorsConfigProperties;
+import top.bootz.usercenter.config.properties.CorsConfigProperties;
 
 /**
  * 跨域支持
@@ -16,6 +16,7 @@ import top.bootz.user.config.properties.CorsConfigProperties;
  * @author John <br/>
  *         2018年6月16日 上午1:25:05
  */
+
 @Configuration
 public class CorsConfig {
 

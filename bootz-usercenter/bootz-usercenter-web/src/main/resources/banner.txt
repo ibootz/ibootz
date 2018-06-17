@@ -8,6 +8,6 @@ ${AnsiColor.BRIGHT_GREEN}
         \|__|  \|_______|\|__|                              \|_______|\|_______|\|_______|    \|__|  \|_______|
         
 ${AnsiColor.BRIGHT_RED}
-Application Version: ${application.formatted-version}
+Application Version: Bootz-0.0.1
 Spring Boot Version: ${spring-boot.version}
 

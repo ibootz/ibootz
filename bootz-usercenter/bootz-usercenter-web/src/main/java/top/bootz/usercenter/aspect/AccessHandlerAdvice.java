@@ -1,4 +1,4 @@
-package top.bootz.user.aspect;
+package top.bootz.usercenter.aspect;
 
 import java.lang.reflect.Method;
 import java.util.Date;
@@ -41,9 +41,9 @@ import top.bootz.core.aspect.AdviceException;
 @Order(1)
 @Aspect
 @Component
-public class AccessHandleAdvice {
+public class AccessHandlerAdvice {
 
-	private static final String CONTROLLER_EXECUTION = "execution(public * top.bootz.user.web.controller..*.**(..))";
+	private static final String CONTROLLER_EXECUTION = "execution(public * top.bootz.usercenter.controller..*.**(..))";
 
 	@Autowired
 	private MessageSource messageSource;
@@ -112,7 +112,7 @@ public class AccessHandleAdvice {
 			tookMillSeconds = System.currentTimeMillis() - start;
 			errMsg = getErrMsg(e);
 			adviceException = new AdviceException(errMsg, e);
-			log.error(e.getMessage());
+			log.error(e.getMessage(), e);
 			throw e;
 		} finally {
 			// response

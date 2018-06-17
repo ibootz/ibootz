@@ -4,7 +4,7 @@ import top.bootz.core.base.entity.BaseEntity;
 
 public class QuerySupport<T> extends BaseEntity {
 
-	private static final long serialVersionUID = 8693629725304838157L;
+	private static final long serialVersionUID = 1L;
 
 	private T query;
 

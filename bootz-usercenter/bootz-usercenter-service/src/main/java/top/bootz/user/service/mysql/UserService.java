@@ -8,18 +8,17 @@ import top.bootz.user.repository.mysql.user.UserRepository;
 
 /**
  * 
- * @author John
- * 2018年6月11日 下午10:09:58
+ * @author John 2018年6月11日 下午10:09:58
  */
 
 @Service
 public class UserService {
 
 	@Autowired
-	private UserRepository userDao;
-	
-	public void saveUser(User user) {
-		userDao.save(user);
+	private UserRepository userRepository;
+
+	public User saveUser(User user) {
+		return userRepository.save(user);
 	}
 
 }
