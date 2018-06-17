@@ -1,4 +1,4 @@
-package top.bootz.user.web.view.pong;
+package top.bootz.user.view.pong;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

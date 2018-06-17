@@ -1,4 +1,4 @@
-package top.bootz.user.web.view.user;
+package top.bootz.user.view.user;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;

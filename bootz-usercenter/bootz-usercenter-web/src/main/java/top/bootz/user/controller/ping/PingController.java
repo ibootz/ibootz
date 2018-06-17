@@ -1,4 +1,4 @@
-package top.bootz.user.web.controller.ping;
+package top.bootz.user.controller.ping;
 
 import java.util.Locale;
 
@@ -17,8 +17,8 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import lombok.extern.slf4j.Slf4j;
 import top.bootz.commons.helper.JsonHelper;
 import top.bootz.core.base.entity.BaseMessage;
-import top.bootz.user.web.controller.BaseController;
-import top.bootz.user.web.view.pong.Pong;
+import top.bootz.user.controller.BaseController;
+import top.bootz.user.view.pong.Pong;
 
 @Slf4j
 @RestController

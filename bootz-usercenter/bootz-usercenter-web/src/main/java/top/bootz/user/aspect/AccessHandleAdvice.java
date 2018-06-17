@@ -1,4 +1,4 @@
-package top.bootz.user.web.aspect;
+package top.bootz.user.aspect;
 
 import java.lang.reflect.Method;
 import java.util.Date;

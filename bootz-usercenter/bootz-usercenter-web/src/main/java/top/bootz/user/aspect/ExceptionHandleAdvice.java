@@ -1,4 +1,4 @@
-package top.bootz.user.web.aspect;
+package top.bootz.user.aspect;
 
 import java.io.IOException;
 import java.util.ArrayList;
