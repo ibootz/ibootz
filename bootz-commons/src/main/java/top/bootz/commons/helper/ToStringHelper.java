@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.alibaba.fastjson.JSONObject;
 
-import top.bootz.commons.constant.SymbolicConstants;
+import top.bootz.commons.constant.SymbolConstants;
 
 public final class ToStringHelper {
 	private ToStringHelper() {
@@ -51,23 +51,26 @@ public final class ToStringHelper {
 	private static String arrayToString(Object obj, ToStringStyle style) {
 		StringBuilder sb = new StringBuilder("");
 		int length = Array.getLength(obj);
-		sb.append(SymbolicConstants.LEFT_BRACKETS);
+		sb.append(SymbolConstants.LEFT_BRACKETS);
 		for (int i = 0; i < length; i++) {
 			Object subObj = Array.get(obj, i);
 			subObj = subObj == null ? "" : subObj;
 			Class<?> clazz = subObj.getClass();
-			if (ReflectionHelper.isBaseClassOrString(clazz)) { // 基本类型or字符串类型
+			if (ReflectionHelper.isBaseClassOrString(clazz)) {
+				// 基本类型or字符串类型
 				sb.append(String.valueOf(subObj));
-			} else if (clazz.isArray()) { // 数组
+			} else if (clazz.isArray()) {
+				// 数组
 				sb.append(arrayToString(subObj, style));
-			} else { // 其他一般引用类型
+			} else {
+				// 其他一般引用类型
 				sb.append(ToStringBuilder.reflectionToString(subObj, style));
 			}
 			if (i < length - 1) {
-				sb.append(SymbolicConstants.HALF_WIDTH_COMMA).append(SymbolicConstants.HALF_WIDTH_BLANK);
+				sb.append(SymbolConstants.HALF_WIDTH_COMMA).append(SymbolConstants.HALF_WIDTH_BLANK);
 			}
 		}
-		sb.append(SymbolicConstants.RIGHT_BRACKETS);
+		sb.append(SymbolConstants.RIGHT_BRACKETS);
 		return sb.toString();
 	}
 }

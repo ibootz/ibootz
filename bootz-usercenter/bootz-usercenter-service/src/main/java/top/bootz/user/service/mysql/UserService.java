@@ -2,6 +2,7 @@ package top.bootz.user.service.mysql;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import top.bootz.user.entity.mysql.user.User;
 import top.bootz.user.repository.mysql.user.UserRepository;
@@ -12,6 +13,7 @@ import top.bootz.user.repository.mysql.user.UserRepository;
  */
 
 @Service
+@Transactional(readOnly = true, rollbackFor = Exception.class)
 public class UserService {
 
 	@Autowired

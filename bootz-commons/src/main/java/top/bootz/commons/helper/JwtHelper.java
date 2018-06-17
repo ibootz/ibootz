@@ -1,10 +1,12 @@
 package top.bootz.commons.helper;
 
+import java.security.Key;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.security.jwt.Jwt;
 import org.springframework.security.jwt.crypto.sign.RsaSigner;
@@ -87,11 +89,14 @@ public final class JwtHelper {
 	}
 
 	static {
-		try {
-			signer = new RsaSigner((RSAPrivateKey) RsaHelper.getPrivateKey());
-			verifier = new RsaVerifier((RSAPublicKey) RsaHelper.getPublicKey());
-		} catch (Exception e) {
-			log.error("init tokenUtil failure!", e);
+		Optional<Key> privOpt = RsaHelper.getPrivateKey();
+		if (privOpt.isPresent()) {
+			signer = new RsaSigner((RSAPrivateKey) privOpt.get());
+		}
+
+		Optional<Key> pubOpt = RsaHelper.getPublicKey();
+		if (pubOpt.isPresent()) {
+			verifier = new RsaVerifier((RSAPublicKey) pubOpt.get());
 		}
 	}
 
@@ -101,9 +106,9 @@ public final class JwtHelper {
 	 * @param payload：JSON字符串格式
 	 * @return
 	 */
-	public static String encode(String payload) {
+	public static Optional<String> encode(String payload) {
 		Jwt jwt = org.springframework.security.jwt.JwtHelper.encode(payload, signer);
-		return jwt.getEncoded();
+		return Optional.of(jwt.getEncoded());
 	}
 
 	/**
@@ -114,11 +119,11 @@ public final class JwtHelper {
 	 * @param payload：JSON字符串格式
 	 * @return
 	 */
-	public static String encode(Map<String, Object> customPayloads) {
+	public static Optional<String> encode(Map<String, Object> customPayloads) {
 		Map<String, Object> payloads = buildNormalJwtPayloads();
 		payloads.putAll(customPayloads);
 		Jwt jwt = org.springframework.security.jwt.JwtHelper.encode(JsonHelper.toJSON(payloads), signer);
-		return jwt.getEncoded();
+		return Optional.of(jwt.getEncoded());
 	}
 
 	/**
@@ -156,13 +161,14 @@ public final class JwtHelper {
 	 * 
 	 * @return
 	 */
-	public static JSONObject getPayload(String jwtToken) {
+	public static Optional<JSONObject> getPayload(String jwtToken) {
 		try {
 			Jwt jwt = org.springframework.security.jwt.JwtHelper.decodeAndVerify(jwtToken, verifier);
-			return JsonHelper.getJSONObject(jwt.getClaims());
+			return Optional.ofNullable(JsonHelper.getJSONObject(jwt.getClaims()));
 		} catch (Exception e) {
-			throw new RuntimeException("获取JWT的payload数据失败！ [" + e.getMessage() + "]", e);
+			log.error("获取JWT的payload数据失败！ [" + e.getMessage() + "]", e);
 		}
+		return Optional.of(new JSONObject());
 	}
 
 	/**
@@ -170,23 +176,25 @@ public final class JwtHelper {
 	 * 
 	 * @return
 	 */
-	public static JSONObject getHeader(String jwtToken) {
+	public static Optional<JSONObject> getHeader(String jwtToken) {
 		try {
 			Jwt jwt = org.springframework.security.jwt.JwtHelper.decodeAndVerify(jwtToken, verifier);
 			String header = new String(CodecHelper.fromUrlSafeBase64(jwt.getEncoded().split("\\.")[0]));
-			return JsonHelper.getJSONObject(header);
+			return Optional.ofNullable(JsonHelper.getJSONObject(header));
 		} catch (Exception e) {
-			throw new RuntimeException("获取JWT的header数据失败！ [" + e.getMessage() + "]", e);
+			log.error("获取JWT的header数据失败！ [" + e.getMessage() + "]", e);
 		}
+		return Optional.of(new JSONObject());
 	}
 
-	public static String getSignature(String jwtToken) {
+	public static Optional<String> getSignature(String jwtToken) {
 		try {
 			Jwt jwt = org.springframework.security.jwt.JwtHelper.decodeAndVerify(jwtToken, verifier);
-			return new String(CodecHelper.fromUrlSafeBase64(jwt.getEncoded().split("\\.")[2]));
+			return Optional.of(new String(CodecHelper.fromUrlSafeBase64(jwt.getEncoded().split("\\.")[2])));
 		} catch (Exception e) {
-			throw new RuntimeException("获取JWT的signature数据失败！ [" + e.getMessage() + "]", e);
+			log.error("获取JWT的signature数据失败！ [" + e.getMessage() + "]", e);
 		}
+		return Optional.of(StringHelper.EMPTY);
 	}
 
 }

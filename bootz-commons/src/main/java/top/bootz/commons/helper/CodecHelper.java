@@ -115,21 +115,30 @@ public final class CodecHelper {
 	 *            文件生成目录
 	 */
 	public static void byteArrayToFile(byte[] bytes, String filePath) throws Exception {
-		InputStream in = new ByteArrayInputStream(bytes);
-		File destFile = new File(filePath);
-		if (!destFile.getParentFile().exists()) {
-			destFile.getParentFile().mkdirs();
+		OutputStream out = null;
+		try (InputStream in = new ByteArrayInputStream(bytes);) {
+			File destFile = new File(filePath);
+			if (!destFile.getParentFile().exists()) {
+				destFile.getParentFile().mkdirs();
+			}
+
+			if (!destFile.createNewFile()) {
+				return;
+			}
+			
+			out = new FileOutputStream(destFile);
+			byte[] cache = new byte[CACHE_SIZE];
+			int nRead = 0;
+			while ((nRead = in.read(cache)) != -1) {
+				out.write(cache, 0, nRead);
+				out.flush();
+			}
+		} finally {
+			if (out != null) {
+				out.close();
+			}
 		}
-		destFile.createNewFile();
-		OutputStream out = new FileOutputStream(destFile);
-		byte[] cache = new byte[CACHE_SIZE];
-		int nRead = 0;
-		while ((nRead = in.read(cache)) != -1) {
-			out.write(cache, 0, nRead);
-			out.flush();
-		}
-		out.close();
-		in.close();
+
 	}
 
 }

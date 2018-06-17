@@ -19,7 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
@@ -28,17 +27,17 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-import lombok.extern.slf4j.Slf4j;
 import top.bootz.commons.constant.ExceptionConstants;
 import top.bootz.commons.exception.ApiException;
 import top.bootz.commons.exception.BaseException;
 import top.bootz.commons.helper.JsonHelper;
+import top.bootz.core.base.dto.ErrorMessage;
 import top.bootz.core.base.dto.RestMessage;
+import top.bootz.core.dictionary.MessageStatusEnum;
 
 /**
  * 专门用来处理带有RestController和Controller注解的controller层面的异常.
@@ -47,7 +46,7 @@ import top.bootz.core.base.dto.RestMessage;
  * @author John
  *
  */
-@Slf4j
+
 @RestControllerAdvice(annotations = { RestController.class, Controller.class })
 public class ExceptionHandleAdvice {
 
@@ -63,124 +62,13 @@ public class ExceptionHandleAdvice {
 		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
 		String message = messageSource.getMessage(e.getErrorKey(), e.getArgs(), locale);
 		if (StringUtils.isBlank(message)) {
-			message = messageSource.getMessage(ExceptionConstants.API_EXCEPTION, e.getArgs(), null);
+			message = messageSource.getMessage(ExceptionConstants.API_EXCEPTION, e.getArgs(), locale);
 		}
-		RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
-		restMessage.setMoreInfo(e.getMessage());
-		restMessage.setThrowable(e);
-		return new ResponseEntity<>(restMessage, HttpStatus.valueOf(restMessage.getHttpStatus()));
-	}
-
-	/**
-	 * 空指针异常
-	 * 
-	 */
-	@ExceptionHandler(NullPointerException.class)
-	public ResponseEntity<RestMessage> nullPointerExceptionHandler(NullPointerException e, HttpServletRequest request,
-			HttpServletResponse response) {
-		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
-		String message = messageSource.getMessage(ExceptionConstants.NULL_POINTER_EXCEPTION, null, locale);
-		RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
-		restMessage.setMoreInfo(e.getMessage());
-		restMessage.setThrowable(e);
-		return new ResponseEntity<>(restMessage, HttpStatus.valueOf(restMessage.getHttpStatus()));
-	}
-
-	/**
-	 * 类型转换异常
-	 * 
-	 */
-	@ExceptionHandler(ClassCastException.class)
-	public ResponseEntity<RestMessage> classCastExceptionHandler(ClassCastException e, HttpServletRequest request,
-			HttpServletResponse response) {
-		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
-		String message = messageSource.getMessage(ExceptionConstants.CLASS_CAST_EXCEPTION, null, locale);
-		RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
-		restMessage.setMoreInfo(e.getMessage());
-		restMessage.setThrowable(e);
-		return new ResponseEntity<>(restMessage, HttpStatus.valueOf(restMessage.getHttpStatus()));
-	}
-
-	/**
-	 * IO异常
-	 * 
-	 */
-	@ExceptionHandler(IOException.class)
-	public ResponseEntity<RestMessage> ioExceptionHandler(IOException e, HttpServletRequest request,
-			HttpServletResponse response) {
-		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
-		String message = messageSource.getMessage(ExceptionConstants.IO_EXCEPTION, null, locale);
-		RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
-		restMessage.setMoreInfo(e.getMessage());
-		restMessage.setThrowable(e);
-		return new ResponseEntity<>(restMessage, HttpStatus.valueOf(restMessage.getHttpStatus()));
-	}
-
-	/**
-	 * 未知方法异常
-	 * 
-	 */
-	@ExceptionHandler(NoSuchMethodException.class)
-	public ResponseEntity<RestMessage> noSuchMethodExceptionHandler(NoSuchMethodException e, HttpServletRequest request,
-			HttpServletResponse response) {
-		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
-		String message = messageSource.getMessage(ExceptionConstants.NO_SUCH_METHOD_EXCEPTION, null, locale);
-		RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
-		restMessage.setMoreInfo(e.getMessage());
-		restMessage.setThrowable(e);
-		return new ResponseEntity<>(restMessage, HttpStatus.valueOf(restMessage.getHttpStatus()));
-	}
-
-	/**
-	 * 数组越界异常
-	 * 
-	 */
-	@ExceptionHandler(IndexOutOfBoundsException.class)
-	public ResponseEntity<RestMessage> indexOutOfBoundsExceptionHandler(IndexOutOfBoundsException e,
-			HttpServletRequest request, HttpServletResponse response) {
-		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
-		String message = messageSource.getMessage(ExceptionConstants.INDEX_OUT_OF_BOUNDS_EXCEPTION, null, locale);
-		RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
-		restMessage.setMoreInfo(e.getMessage());
-		restMessage.setThrowable(e);
-		return new ResponseEntity<>(restMessage, HttpStatus.valueOf(restMessage.getHttpStatus()));
-	}
-
-	/**
-	 * 数据库访问异常异常
-	 * 
-	 */
-	@ExceptionHandler(DataAccessException.class)
-	public ResponseEntity<RestMessage> dataAccessExceptionHandler(DataAccessException e, HttpServletRequest request,
-			HttpServletResponse response) {
-		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
-		String message = messageSource.getMessage(ExceptionConstants.DATA_ACCESS_EXCEPTION, null, locale);
-		RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
-		restMessage.setMoreInfo(e.getMessage());
-		restMessage.setThrowable(e);
-		return new ResponseEntity<>(restMessage, HttpStatus.valueOf(restMessage.getHttpStatus()));
-	}
-
-	/**
-	 * 400 - Spring validation Exception - 不符合验证规范
-	 * 
-	 * @param ex
-	 * @return
-	 */
-	@ExceptionHandler(BindException.class)
-	public ResponseEntity<RestMessage> bindExceptionHandler(BindException e, HttpServletRequest request,
-			HttpServletResponse response) {
-		BindingResult bindingResult = e.getBindingResult();
-		String messageKey = ExceptionConstants.BAD_REQUEST;
-		for (FieldError fieldError : bindingResult.getFieldErrors()) {
-			messageKey = fieldError.getDefaultMessage();
-		}
-		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
-		String message = messageSource.getMessage(messageKey, null, locale);
-		RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
-		restMessage.setMoreInfo(e.getMessage());
-		restMessage.setThrowable(e);
-		return new ResponseEntity<>(restMessage, HttpStatus.valueOf(restMessage.getHttpStatus()));
+		ErrorMessage error = JsonHelper.fromJSON(message, ErrorMessage.class);
+		error.setMoreInfo(e.getMessage());
+		error.setThrowable(e);
+		RestMessage restMessage = new RestMessage(MessageStatusEnum.ERROR, null, error);
+		return new ResponseEntity<>(restMessage, HttpStatus.valueOf(e.getHttpStatus()));
 	}
 
 	/**
@@ -197,16 +85,18 @@ public class ExceptionHandleAdvice {
 		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
 		for (FieldError fieldError : bindingResult.getFieldErrors()) {
 			String message = messageSource.getMessage(fieldError.getDefaultMessage(), null, locale);
-			RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
-			restMessage.setMoreInfo(e.getMessage());
-			restMessage.setThrowable(e);
+			ErrorMessage error = JsonHelper.fromJSON(message, ErrorMessage.class);
+			error.setMoreInfo(e.getMessage());
+			error.setThrowable(e);
+			RestMessage restMessage = new RestMessage(MessageStatusEnum.ERROR, null, error);
 			restMessages.add(restMessage);
 		}
 		if (CollectionUtils.isEmpty(restMessages)) {
 			String message = messageSource.getMessage(ExceptionConstants.BAD_REQUEST, null, locale);
-			RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
-			restMessage.setMoreInfo(e.getMessage());
-			restMessage.setThrowable(e);
+			ErrorMessage error = JsonHelper.fromJSON(message, ErrorMessage.class);
+			error.setMoreInfo(e.getMessage());
+			error.setThrowable(e);
+			RestMessage restMessage = new RestMessage(MessageStatusEnum.ERROR, null, error);
 			restMessages.add(restMessage);
 		}
 		return new ResponseEntity<>(restMessages, HttpStatus.BAD_REQUEST);
@@ -221,12 +111,7 @@ public class ExceptionHandleAdvice {
 	@ExceptionHandler(TypeMismatchException.class)
 	public ResponseEntity<RestMessage> typeMismatchExceptionHandler(TypeMismatchException e, HttpServletRequest request,
 			HttpServletResponse response) {
-		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
-		String message = messageSource.getMessage(ExceptionConstants.TYPE_MISMATCH_EXCEPTION, null, locale);
-		RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
-		restMessage.setMoreInfo(e.getMessage());
-		restMessage.setThrowable(e);
-		return new ResponseEntity<>(restMessage, HttpStatus.valueOf(restMessage.getHttpStatus()));
+		return buildResponseEntity(ExceptionConstants.TYPE_MISMATCH_EXCEPTION, HttpStatus.BAD_REQUEST, e, request);
 	}
 
 	/**
@@ -235,12 +120,7 @@ public class ExceptionHandleAdvice {
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ResponseEntity<RestMessage> httpMessageNotReadableExceptionHandler(HttpMessageNotReadableException e,
 			HttpServletRequest request, HttpServletResponse response) {
-		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
-		String message = messageSource.getMessage(ExceptionConstants.BAD_REQUEST, null, locale);
-		RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
-		restMessage.setMoreInfo(e.getMessage());
-		restMessage.setThrowable(e);
-		return new ResponseEntity<>(restMessage, HttpStatus.valueOf(restMessage.getHttpStatus()));
+		return buildResponseEntity(ExceptionConstants.BAD_REQUEST, HttpStatus.BAD_REQUEST, e, request);
 	}
 
 	/**
@@ -249,12 +129,7 @@ public class ExceptionHandleAdvice {
 	@ExceptionHandler(MissingServletRequestParameterException.class)
 	public ResponseEntity<RestMessage> missingServletRequestParameterExceptionHandler(
 			MissingServletRequestParameterException e, HttpServletRequest request, HttpServletResponse response) {
-		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
-		String message = messageSource.getMessage(ExceptionConstants.BAD_REQUEST, null, locale);
-		RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
-		restMessage.setMoreInfo(e.getMessage());
-		restMessage.setThrowable(e);
-		return new ResponseEntity<>(restMessage, HttpStatus.valueOf(restMessage.getHttpStatus()));
+		return buildResponseEntity(ExceptionConstants.BAD_REQUEST, HttpStatus.BAD_REQUEST, e, request);
 	}
 
 	/**
@@ -263,17 +138,13 @@ public class ExceptionHandleAdvice {
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
 	public ResponseEntity<RestMessage> httpRequestMethodNotSupportedExceptionHandler(
 			HttpRequestMethodNotSupportedException e, HttpServletRequest request, HttpServletResponse response) {
-		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
-		String message = messageSource.getMessage(ExceptionConstants.METHOD_NOT_ALLOWED, null, locale);
-		RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
-		restMessage.setMoreInfo(e.getMessage());
-		restMessage.setThrowable(e);
 		String[] supportedMethods = e.getSupportedMethods();
 		if (supportedMethods != null) {
 			response.setHeader("Allow",
 					org.springframework.util.StringUtils.arrayToDelimitedString(supportedMethods, ", "));
 		}
-		return new ResponseEntity<>(restMessage, HttpStatus.valueOf(restMessage.getHttpStatus()));
+
+		return buildResponseEntity(ExceptionConstants.METHOD_NOT_ALLOWED, HttpStatus.BAD_REQUEST, e, request);
 	}
 
 	/**
@@ -282,17 +153,13 @@ public class ExceptionHandleAdvice {
 	@ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
 	public ResponseEntity<RestMessage> httpMediaTypeNotAcceptableExceptionHandler(HttpMediaTypeNotAcceptableException e,
 			HttpServletRequest request, HttpServletResponse response) {
-		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
-		String message = messageSource.getMessage(ExceptionConstants.HTTP_MEDIA_TYPE_NOT_ACCEPTABLE_EXCEPTION, null,
-				locale);
-		RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
-		restMessage.setMoreInfo(e.getMessage());
-		restMessage.setThrowable(e);
 		List<MediaType> mediaTypes = e.getSupportedMediaTypes();
 		if (!CollectionUtils.isEmpty(mediaTypes)) {
 			response.setHeader("Accept", MediaType.toString(mediaTypes));
 		}
-		return new ResponseEntity<>(restMessage, HttpStatus.valueOf(restMessage.getHttpStatus()));
+
+		return buildResponseEntity(ExceptionConstants.HTTP_MEDIA_TYPE_NOT_ACCEPTABLE_EXCEPTION,
+				HttpStatus.NOT_ACCEPTABLE, e, request);
 	}
 
 	/**
@@ -301,16 +168,78 @@ public class ExceptionHandleAdvice {
 	@ExceptionHandler(HttpMediaTypeNotSupportedException.class)
 	public ResponseEntity<RestMessage> httpMediaTypeNotSupportedExceptionHandler(HttpMediaTypeNotSupportedException e,
 			HttpServletRequest request, HttpServletResponse response) {
-		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
-		String message = messageSource.getMessage(ExceptionConstants.HTTP_MEDIA_TYPE_NOT_SUPPORTED, null, locale);
-		RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
-		restMessage.setMoreInfo(e.getMessage());
-		restMessage.setThrowable(e);
 		List<MediaType> mediaTypes = e.getSupportedMediaTypes();
 		if (!CollectionUtils.isEmpty(mediaTypes)) {
 			response.setHeader("Accept", MediaType.toString(mediaTypes));
 		}
-		return new ResponseEntity<>(restMessage, HttpStatus.valueOf(restMessage.getHttpStatus()));
+
+		return buildResponseEntity(ExceptionConstants.HTTP_MEDIA_TYPE_NOT_SUPPORTED, HttpStatus.UNSUPPORTED_MEDIA_TYPE,
+				e, request);
+	}
+
+	/**
+	 * 500 - 空指针异常
+	 * 
+	 */
+	@ExceptionHandler(NullPointerException.class)
+	public ResponseEntity<RestMessage> nullPointerExceptionHandler(NullPointerException e, HttpServletRequest request,
+			HttpServletResponse response) {
+		return buildResponseEntity(ExceptionConstants.NULL_POINTER_EXCEPTION, HttpStatus.INTERNAL_SERVER_ERROR, e,
+				request);
+	}
+
+	/**
+	 * 500 - 类型转换异常
+	 * 
+	 */
+	@ExceptionHandler(ClassCastException.class)
+	public ResponseEntity<RestMessage> classCastExceptionHandler(ClassCastException e, HttpServletRequest request,
+			HttpServletResponse response) {
+		return buildResponseEntity(ExceptionConstants.CLASS_CAST_EXCEPTION, HttpStatus.INTERNAL_SERVER_ERROR, e,
+				request);
+	}
+
+	/**
+	 * 500 - IO异常
+	 * 
+	 */
+	@ExceptionHandler(IOException.class)
+	public ResponseEntity<RestMessage> ioExceptionHandler(IOException e, HttpServletRequest request,
+			HttpServletResponse response) {
+		return buildResponseEntity(ExceptionConstants.IO_EXCEPTION, HttpStatus.INTERNAL_SERVER_ERROR, e, request);
+	}
+
+	/**
+	 * 500 - 未知方法异常
+	 * 
+	 */
+	@ExceptionHandler(NoSuchMethodException.class)
+	public ResponseEntity<RestMessage> noSuchMethodExceptionHandler(NoSuchMethodException e, HttpServletRequest request,
+			HttpServletResponse response) {
+		return buildResponseEntity(ExceptionConstants.NO_SUCH_METHOD_EXCEPTION, HttpStatus.INTERNAL_SERVER_ERROR, e,
+				request);
+	}
+
+	/**
+	 * 500 - 数组越界异常
+	 * 
+	 */
+	@ExceptionHandler(IndexOutOfBoundsException.class)
+	public ResponseEntity<RestMessage> indexOutOfBoundsExceptionHandler(IndexOutOfBoundsException e,
+			HttpServletRequest request, HttpServletResponse response) {
+		return buildResponseEntity(ExceptionConstants.INDEX_OUT_OF_BOUNDS_EXCEPTION, HttpStatus.INTERNAL_SERVER_ERROR,
+				e, request);
+	}
+
+	/**
+	 * 500 - 数据库访问异常异常
+	 * 
+	 */
+	@ExceptionHandler(DataAccessException.class)
+	public ResponseEntity<RestMessage> dataAccessExceptionHandler(DataAccessException e, HttpServletRequest request,
+			HttpServletResponse response) {
+		return buildResponseEntity(ExceptionConstants.DATA_ACCESS_EXCEPTION, HttpStatus.INTERNAL_SERVER_ERROR, e,
+				request);
 	}
 
 	/**
@@ -324,31 +253,41 @@ public class ExceptionHandleAdvice {
 			HttpServletResponse response) {
 		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
 		String message = messageSource.getMessage(ExceptionConstants.APPLICATION_EXCEPTION, null, locale);
-		RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
+		ErrorMessage error = JsonHelper.fromJSON(message, ErrorMessage.class);
 		if ("null".equalsIgnoreCase(e.getMessage()) || StringUtils.isBlank(e.getMessage())) {
-			restMessage.setMoreInfo("空指针异常");
+			error.setMoreInfo("空指针异常");
 		} else {
-			restMessage.setMoreInfo(e.getMessage());
+			error.setMoreInfo(e.getMessage());
 		}
-		restMessage.setThrowable(e);
-		log.error(e.getMessage(), e);
-		return new ResponseEntity<>(restMessage, HttpStatus.valueOf(restMessage.getHttpStatus()));
+		error.setThrowable(e);
+		RestMessage restMessage = new RestMessage(MessageStatusEnum.ERROR, null, error);
+		return new ResponseEntity<>(restMessage, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	/**
 	 * 500 - Internal Server Error 其他未知异常
 	 */
 	@ExceptionHandler(Exception.class)
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public ResponseEntity<RestMessage> exceptionHandler(Exception e, HttpServletRequest request,
 			HttpServletResponse response) {
 		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
 		String message = messageSource.getMessage(ExceptionConstants.INTERNAL_SERVER_ERROR, null, locale);
-		RestMessage restMessage = JsonHelper.fromJSON(message, RestMessage.class);
-		restMessage.setMoreInfo(e.getMessage());
-		restMessage.setThrowable(e);
-		log.error(e.getMessage(), e);
-		return new ResponseEntity<>(restMessage, HttpStatus.valueOf(restMessage.getHttpStatus()));
+		ErrorMessage error = JsonHelper.fromJSON(message, ErrorMessage.class);
+		error.setMoreInfo(e.getMessage());
+		error.setThrowable(e);
+		RestMessage restMessage = new RestMessage(MessageStatusEnum.ERROR, null, error);
+		return new ResponseEntity<>(restMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	private ResponseEntity<RestMessage> buildResponseEntity(String errKey, HttpStatus httpStatus, Throwable e,
+			HttpServletRequest request) {
+		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
+		String message = messageSource.getMessage(errKey, null, locale);
+		ErrorMessage error = JsonHelper.fromJSON(message, ErrorMessage.class);
+		error.setMoreInfo(e.getMessage());
+		error.setThrowable(e);
+		RestMessage restMessage = new RestMessage(MessageStatusEnum.ERROR, null, error);
+		return new ResponseEntity<>(restMessage, httpStatus);
 	}
 
 }

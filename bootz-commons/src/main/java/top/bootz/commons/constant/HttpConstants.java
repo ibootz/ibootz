@@ -17,4 +17,8 @@ public final class HttpConstants {
 
 	public static final String SLASH2 = "//";
 
+	public static final String SCHEME_POSTFIX = "://";
+
+	public static final String HEADER_NAME_LOCATION = "Location";
+
 }

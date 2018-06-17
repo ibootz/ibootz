@@ -11,6 +11,7 @@ import java.util.Date;
 import org.apache.commons.lang3.StringUtils;
 
 import top.bootz.commons.constant.PatternConstants;
+import top.bootz.commons.exception.BaseRuntimeException;
 
 /**
  * 日期处理相关的工具方法
@@ -73,7 +74,7 @@ public final class DateHelper {
 		try {
 			date = new SimpleDateFormat(PatternConstants.DATE_FORMAT_PATTERN_1).parse(str);
 		} catch (ParseException e) {
-			throw new RuntimeException("日期解析失败 [" + e.getMessage() + "]");
+			throw new BaseRuntimeException("日期解析失败 [" + e.getMessage() + "]", e);
 		}
 		return date;
 	}
@@ -107,7 +108,7 @@ public final class DateHelper {
 		try {
 			date = new SimpleDateFormat(pattern).parse(str);
 		} catch (ParseException e) {
-			throw new RuntimeException("日期解析失败 [" + e.getMessage() + "]");
+			throw new BaseRuntimeException("日期解析失败 [" + e.getMessage() + "]", e);
 		}
 		return date;
 	}
@@ -562,7 +563,7 @@ public final class DateHelper {
 	 * @return
 	 */
 	public static long getMillisPerUnit(int unit) {
-		long result = Long.MAX_VALUE;
+		long result;
 		switch (unit) {
 		case Calendar.DAY_OF_YEAR:
 		case Calendar.DATE:
@@ -631,8 +632,7 @@ public final class DateHelper {
 		if (cal1 == null || cal2 == null) {
 			throw new IllegalArgumentException(ERROR_MSG_1);
 		}
-		return (cal1.get(Calendar.ERA) == cal2.get(Calendar.ERA) && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)
-				&& cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH));
+		return isSameYear(cal1, cal2) && cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH);
 	}
 
 	/**
@@ -650,18 +650,17 @@ public final class DateHelper {
 	}
 
 	/**
-	 * 判断是否是同一年同一月的同一天
+	 * 判断是否是同一年的同一天
 	 */
 	public static boolean isSameDay(Calendar cal1, Calendar cal2) {
 		if (cal1 == null || cal2 == null) {
 			throw new IllegalArgumentException(ERROR_MSG_1);
 		}
-		return (cal1.get(Calendar.ERA) == cal2.get(Calendar.ERA) && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)
-				&& cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR));
+		return isSameYear(cal1, cal2) && cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
 	}
 
 	/**
-	 * 判断是否是同一年同一月的同一周
+	 * 判断是否是同一年的同一周
 	 */
 	public static boolean isSameWeek(Date date1, Date date2) {
 		if (date1 == null || date2 == null) {
@@ -675,7 +674,7 @@ public final class DateHelper {
 	}
 
 	/**
-	 * 判断是否是同一年同一月的同一天
+	 * 判断是否是同一年的同一周
 	 */
 	public static boolean isSameWeek(Calendar cal1, Calendar cal2) {
 		if (cal1 == null || cal2 == null) {
@@ -700,15 +699,13 @@ public final class DateHelper {
 	}
 
 	/**
-	 * 判断是否是同一年同一月的同一小时
+	 * 判断是否是同一年同一月同一天的同一小时
 	 */
 	public static boolean isSameHour(Calendar cal1, Calendar cal2) {
 		if (cal1 == null || cal2 == null) {
 			throw new IllegalArgumentException(ERROR_MSG_1);
 		}
-		return (cal1.get(Calendar.ERA) == cal2.get(Calendar.ERA) && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)
-				&& cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
-				&& cal1.get(Calendar.HOUR_OF_DAY) == cal2.get(Calendar.HOUR_OF_DAY));
+		return isSameDay(cal1, cal2) && cal1.get(Calendar.HOUR_OF_DAY) == cal2.get(Calendar.HOUR_OF_DAY);
 	}
 
 	/**
@@ -726,16 +723,13 @@ public final class DateHelper {
 	}
 
 	/**
-	 * 判断是否是同一年同一月的同一分钟
+	 * 判断是否是同一年同一月同一天同一小时的同一分钟
 	 */
 	public static boolean isSameMinute(Calendar cal1, Calendar cal2) {
 		if (cal1 == null || cal2 == null) {
 			throw new IllegalArgumentException(ERROR_MSG_1);
 		}
-		return cal1.get(Calendar.ERA) == cal2.get(Calendar.ERA) && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)
-				&& cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
-				&& cal1.get(Calendar.HOUR_OF_DAY) == cal2.get(Calendar.HOUR_OF_DAY)
-				&& cal1.get(Calendar.MINUTE) == cal2.get(Calendar.MINUTE);
+		return isSameHour(cal1, cal2) && cal1.get(Calendar.MINUTE) == cal2.get(Calendar.MINUTE);
 	}
 
 	/**
@@ -763,12 +757,14 @@ public final class DateHelper {
 		if (startDate == null || endDate == null) {
 			throw new IllegalArgumentException(ERROR_MSG_1);
 		}
+		Date newStartDate = startDate;
+		Date newEndDate = endDate;
 		if (startDate.after(endDate)) {
 			Date tempDate = startDate;
-			startDate = endDate;
-			endDate = tempDate;
+			newStartDate = endDate;
+			newEndDate = tempDate;
 		}
-		Double diff = Double.valueOf((endDate.getTime() - startDate.getTime()) / (double) MILLIS_PER_DAY);
+		Double diff = Double.valueOf((newEndDate.getTime() - newStartDate.getTime()) / (double) MILLIS_PER_DAY);
 		return Integer.valueOf((int) diff.doubleValue());
 	}
 
@@ -783,12 +779,14 @@ public final class DateHelper {
 		if (startDate == null || endDate == null) {
 			throw new IllegalArgumentException(ERROR_MSG_1);
 		}
+		Date newStartDate = startDate;
+		Date newEndDate = endDate;
 		if (startDate.after(endDate)) {
 			Date tempDate = startDate;
-			startDate = endDate;
-			endDate = tempDate;
+			newStartDate = endDate;
+			newEndDate = tempDate;
 		}
-		Double diff = Double.valueOf((endDate.getTime() - startDate.getTime()) / MILLIS_PER_HOUR);
+		Double diff = Double.valueOf((newEndDate.getTime() - newStartDate.getTime())) / MILLIS_PER_HOUR;
 		return Integer.valueOf((int) diff.doubleValue());
 	}
 
@@ -803,12 +801,14 @@ public final class DateHelper {
 		if (startDate == null || endDate == null) {
 			throw new IllegalArgumentException(ERROR_MSG_1);
 		}
+		Date newStartDate = startDate;
+		Date newEndDate = endDate;
 		if (startDate.after(endDate)) {
 			Date tempDate = startDate;
-			startDate = endDate;
-			endDate = tempDate;
+			newStartDate = endDate;
+			newEndDate = tempDate;
 		}
-		Double diff = Double.valueOf((endDate.getTime() - startDate.getTime()) / MILLIS_PER_MINUTE);
+		Double diff = Double.valueOf((newEndDate.getTime() - newStartDate.getTime())) / MILLIS_PER_MINUTE;
 		return Integer.valueOf((int) diff.doubleValue());
 	}
 
@@ -823,12 +823,14 @@ public final class DateHelper {
 		if (startDate == null || endDate == null) {
 			throw new IllegalArgumentException(ERROR_MSG_1);
 		}
+		Date newStartDate = startDate;
+		Date newEndDate = endDate;
 		if (startDate.after(endDate)) {
 			Date tempDate = startDate;
-			startDate = endDate;
-			endDate = tempDate;
+			newStartDate = endDate;
+			newEndDate = tempDate;
 		}
-		Double diff = Double.valueOf((endDate.getTime() - startDate.getTime()) / MILLIS_PER_SECOND);
+		Double diff = Double.valueOf((newEndDate.getTime() - newStartDate.getTime())) / MILLIS_PER_SECOND;
 		return Integer.valueOf((int) diff.doubleValue());
 	}
 

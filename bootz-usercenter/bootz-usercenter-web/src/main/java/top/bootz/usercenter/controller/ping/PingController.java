@@ -1,32 +1,23 @@
 package top.bootz.usercenter.controller.ping;
 
-import java.util.Locale;
-
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
-import lombok.extern.slf4j.Slf4j;
-import top.bootz.commons.helper.JsonHelper;
-import top.bootz.core.base.entity.BaseMessage;
+import top.bootz.core.base.dto.RestMessage;
+import top.bootz.core.dictionary.MessageStatusEnum;
 import top.bootz.usercenter.controller.BaseController;
 import top.bootz.usercenter.view.pong.Pong;
 
-@Slf4j
 @RestController
 @RequestMapping("/ping")
 public class PingController extends BaseController {
-
-	@Autowired
-	private MessageSource messageSource;
 
 	/**
 	 * 相应调用发的测试请求
@@ -36,13 +27,24 @@ public class PingController extends BaseController {
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public Pong ping(HttpServletRequest request) {
-		Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
-		String message = messageSource.getMessage("ping.success.message", null, locale);
-		BaseMessage baseMessage = JsonHelper.fromJSON(message, BaseMessage.class);
-		Pong pong = new Pong("success", baseMessage.getMessage());
-		log.debug("message [" + message + "] locale language [" + locale.getLanguage() + "]");
-		return pong;
+	public ResponseEntity<RestMessage> ping(HttpServletRequest request) {
+		// 1. 测试Jpa相关配置和Mysql服务器
+		boolean mysql = false;
+
+		// 2. 测试Redis相关配置和Redis服务器
+		boolean redis = false;
+
+		// 3. 测试Mongodb相关配置和Mongo服务器
+		boolean mongodb = false;
+
+		// 4. 测试Elastic相关配置和Elastic服务器
+		boolean elastic = false;
+
+		// 5. 测试Rabbitmq相关配置和rabbitmq服务器
+		boolean rabbitmq = false;
+
+		Pong pong = new Pong(mysql, redis, mongodb, elastic, rabbitmq);
+		return buildRestMessage(HttpStatus.OK, MessageStatusEnum.SUCCESS, pong, null);
 	}
 
 }

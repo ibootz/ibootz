@@ -10,9 +10,8 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import lombok.extern.slf4j.Slf4j;
+import top.bootz.commons.exception.BaseRuntimeException;
 
-@Slf4j
 public final class AesHelper {
 
 	private static final String ALGORITHM = "AES";
@@ -37,7 +36,7 @@ public final class AesHelper {
 			cipher.init(Cipher.ENCRYPT_MODE, key);
 			result = cipher.doFinal(source);
 		} catch (Exception e) {
-			log.error("AES encode failed!", e);
+			throw new BaseRuntimeException("Failed to encrypt the content!", e);
 		}
 		return result;
 	}
@@ -64,7 +63,7 @@ public final class AesHelper {
 			cipher.init(Cipher.DECRYPT_MODE, key);
 			result = cipher.doFinal(encryptedContent);
 		} catch (Exception e) {
-			log.error("AES decode failed!", e);
+			throw new BaseRuntimeException("Failed to decrypt the encrypted content!", e);
 		}
 		return result;
 	}
@@ -79,7 +78,7 @@ public final class AesHelper {
 		try {
 			result = new String(decrypt(CodecHelper.fromBase64(base64Encrypted)), StandardCharsets.UTF_8);
 		} catch (Exception e) {
-			log.error("AES decode failed!", e);
+			throw new BaseRuntimeException("Failed to decrypt the encrypted base64 content!", e);
 		}
 		return result;
 	}
@@ -103,12 +102,11 @@ public final class AesHelper {
 		return new SecretKeySpec(raw, ALGORITHM);
 	}
 
-	/*public static void main(String[] args) {
-		String source = "中文English*&&$uawhuh2138761872ak97892389749(*&*(^@%^&%@!<>?<>:\"\"P{{P;,<，；’。；；】【132897897*（&……&！%@！）（*@！……%whukh21379287dawkuhku2h太多太多的中文需要测试1312983717dasjHLIJl213028^%$#（*781=2dawkuhadwadwduukw&*(*(7";
-		String after = encryptToBase64(source);
-		String before = decryptFromBase64(after);
-		System.out.println(after);
-		System.out.println(source);
-		System.out.println(before);
-	}*/
+	/*
+	 * public static void main(String[] args) { String source =
+	 * "中文English*&&$uawhuh2138761872ak97892389749(*&*(^@%^&%@!<>?<>:\"\"P{{P;,<，；’。；；】【132897897*（&……&！%@！）（*@！……%whukh21379287dawkuhku2h太多太多的中文需要测试1312983717dasjHLIJl213028^%$#（*781=2dawkuhadwadwduukw&*(*(7";
+	 * String after = encryptToBase64(source); String before =
+	 * decryptFromBase64(after); System.out.println(after);
+	 * System.out.println(source); System.out.println(before); }
+	 */
 }

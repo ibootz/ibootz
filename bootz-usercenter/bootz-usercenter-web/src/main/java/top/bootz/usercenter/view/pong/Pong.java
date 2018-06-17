@@ -6,16 +6,28 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.bootz.core.base.entity.BaseEntity;
 
-@Setter
+/**
+ * 
+ * @author John
+ * @time 2018年6月18日 上午2:26:20
+ */
+
 @Getter
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Pong extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	private String ack;
+	private boolean mysql;
 
-	private String message;
+	private boolean redis;
+
+	private boolean mongodb;
+
+	private boolean elastic;
+
+	private boolean rabbitmq;
 
 }

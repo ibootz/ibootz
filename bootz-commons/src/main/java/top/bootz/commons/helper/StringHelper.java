@@ -5,11 +5,11 @@ import java.util.Iterator;
 
 import org.apache.commons.lang3.StringUtils;
 
-import top.bootz.commons.constant.SymbolicConstants;
+import top.bootz.commons.constant.SymbolConstants;
 
 public final class StringHelper {
 
-	public static final String EMPTY = SymbolicConstants.EMPTY;
+	public static final String EMPTY = SymbolConstants.EMPTY;
 
 	private StringHelper() {
 

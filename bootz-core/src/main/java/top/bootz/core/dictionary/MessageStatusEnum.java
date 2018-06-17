@@ -1,5 +1,7 @@
 package top.bootz.core.dictionary;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /**
  * 消息类型
  * 
@@ -20,6 +22,7 @@ public enum MessageStatusEnum {
 		this.desc = desc;
 	}
 
+	@JsonValue
 	public String getDesc() {
 		return this.desc;
 	}

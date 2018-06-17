@@ -7,24 +7,31 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import top.bootz.commons.constant.SecurityConstants;
+import top.bootz.commons.exception.BaseRuntimeException;
 
 /**
  * RSA公钥/私钥/签名工具包
@@ -71,7 +78,7 @@ public class RsaHelper {
 	 */
 	private static final int MAX_DECRYPT_BLOCK = 128;
 
-	private static final Map<String, Object> keyMap = new HashMap<>(2);
+	private static final Map<String, Key> keyMap = new HashMap<>(2);
 
 	private static final int KEY_SIZE = 1024;
 
@@ -102,12 +109,12 @@ public class RsaHelper {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String getBase64PublicKey() {
-		Key key = (Key) keyMap.get(PUBLIC_KEY);
+	public static Optional<String> getBase64PublicKey() {
+		Key key = keyMap.get(PUBLIC_KEY);
 		if (key != null) {
-			return CodecHelper.toBase64(key.getEncoded());
+			return Optional.of(CodecHelper.toBase64(key.getEncoded()));
 		}
-		return null;
+		return Optional.of(StringHelper.EMPTY);
 	}
 
 	/**
@@ -116,12 +123,12 @@ public class RsaHelper {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String getBase64PrivateKey() {
-		Key key = (Key) keyMap.get(PRIVATE_KEY);
+	public static Optional<String> getBase64PrivateKey() {
+		Key key = keyMap.get(PRIVATE_KEY);
 		if (key != null) {
-			return CodecHelper.toBase64(key.getEncoded());
+			return Optional.of(CodecHelper.toBase64(key.getEncoded()));
 		}
-		return null;
+		return Optional.of(StringHelper.EMPTY);
 	}
 
 	/**
@@ -130,8 +137,8 @@ public class RsaHelper {
 	 * @return
 	 * @throws Exception
 	 */
-	public static PublicKey getPublicKey() throws Exception {
-		return (PublicKey) keyMap.get(PUBLIC_KEY);
+	public static Optional<Key> getPublicKey() {
+		return Optional.ofNullable(keyMap.get(PUBLIC_KEY));
 	}
 
 	/**
@@ -140,8 +147,8 @@ public class RsaHelper {
 	 * @return
 	 * @throws Exception
 	 */
-	public static PrivateKey getPrivateKey() throws Exception {
-		return (PrivateKey) keyMap.get(PRIVATE_KEY);
+	public static Optional<Key> getPrivateKey() {
+		return Optional.ofNullable(keyMap.get(PRIVATE_KEY));
 	}
 
 	/**
@@ -151,8 +158,9 @@ public class RsaHelper {
 	 *            密钥字符串（经过base64编码）
 	 * @throws Exception
 	 */
-	public static PublicKey getPublicKeyFromBase64(String base64PublicKey) throws Exception {
-		return keyFactory.generatePublic(new X509EncodedKeySpec(CodecHelper.fromBase64(base64PublicKey)));
+	public static Optional<PublicKey> getPublicKeyFromBase64(String base64PublicKey) throws Exception {
+		return Optional
+				.ofNullable(keyFactory.generatePublic(new X509EncodedKeySpec(CodecHelper.fromBase64(base64PublicKey))));
 	}
 
 	/**
@@ -162,8 +170,9 @@ public class RsaHelper {
 	 *            密钥字符串（经过base64编码）
 	 * @throws Exception
 	 */
-	public static PrivateKey getPrivateKeyFromBase64(String base64PrivateKey) throws Exception {
-		return keyFactory.generatePrivate(new PKCS8EncodedKeySpec(CodecHelper.fromBase64(base64PrivateKey)));
+	public static Optional<PrivateKey> getPrivateKeyFromBase64(String base64PrivateKey) throws Exception {
+		return Optional.ofNullable(
+				keyFactory.generatePrivate(new PKCS8EncodedKeySpec(CodecHelper.fromBase64(base64PrivateKey))));
 	}
 
 	/**
@@ -175,9 +184,41 @@ public class RsaHelper {
 		String base64PublicKey = readFromFile(PUBLIC_KEY_FILE_PATH);
 		String base64PrivateKey = readFromFile(PRIVATE_KEY_FILE_PATH);
 		if (StringUtils.isNoneBlank(base64PublicKey) && StringUtils.isNotBlank(base64PrivateKey)) {
-			keyMap.put(PUBLIC_KEY, getPublicKeyFromBase64(base64PublicKey));
-			keyMap.put(PRIVATE_KEY, getPrivateKeyFromBase64(base64PrivateKey));
+			Optional<PublicKey> pubOpt = getPublicKeyFromBase64(base64PublicKey);
+			if (pubOpt.isPresent()) {
+				keyMap.put(PUBLIC_KEY, pubOpt.get());
+			}
+			Optional<PrivateKey> priOpt = getPrivateKeyFromBase64(base64PrivateKey);
+			if (priOpt.isPresent()) {
+				keyMap.put(PRIVATE_KEY, priOpt.get());
+			}
 		}
+	}
+
+	/**
+	 * 非对称加密并进行Base64编码
+	 * 
+	 * @author John
+	 * @time 2018年6月17日 下午10:25:11
+	 * @param source
+	 * @return
+	 * @throws Exception
+	 */
+	public static Optional<String> encryptToBase64(byte[] source) throws Exception {
+		return Optional.ofNullable(CodecHelper.toBase64(encrypt(source)));
+	}
+
+	/**
+	 * 对传入的Base64加密密码进行解密
+	 * 
+	 * @author John
+	 * @time 2018年6月17日 下午10:25:11
+	 * @param source
+	 * @return
+	 * @throws Exception
+	 */
+	public static Optional<byte[]> encryptToBase64(String base64Content) throws Exception {
+		return Optional.ofNullable(decrypt(CodecHelper.fromBase64(base64Content)));
 	}
 
 	/**
@@ -189,14 +230,23 @@ public class RsaHelper {
 	 * @param source
 	 *            源数据
 	 * @return
+	 * @throws InvalidKeyException
+	 * @throws NoSuchPaddingException
+	 * @throws NoSuchAlgorithmException
+	 * @throws BadPaddingException
+	 * @throws IllegalBlockSizeException
 	 * @throws Exception
 	 */
 	public static byte[] encrypt(byte[] source) throws Exception {
-		Key publicKey = getPublicKey();
 		Cipher cipher = Cipher.getInstance(KEY_ALGORITHM);
-		cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-		int inputLen = source.length;
+		Optional<Key> publicKey = getPublicKey();
+		if (publicKey.isPresent()) {
+			cipher.init(Cipher.ENCRYPT_MODE, publicKey.get());
+		} else {
+			throw new BaseRuntimeException("Failed to encrypt the content by Rsa!");
+		}
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		int inputLen = source.length;
 		int offSet = 0;
 		byte[] cache;
 		int i = 0;
@@ -211,9 +261,7 @@ public class RsaHelper {
 			i++;
 			offSet = i * MAX_ENCRYPT_BLOCK;
 		}
-		byte[] encryptedData = out.toByteArray();
-		out.close();
-		return encryptedData;
+		return out.toByteArray();
 	}
 
 	/**
@@ -228,11 +276,15 @@ public class RsaHelper {
 	 * @throws Exception
 	 */
 	public static byte[] decrypt(byte[] encryptedData) throws Exception {
-		Key privateKey = getPrivateKey();
 		Cipher cipher = Cipher.getInstance(KEY_ALGORITHM);
-		cipher.init(Cipher.DECRYPT_MODE, privateKey);
-		int inputLen = encryptedData.length;
+		Optional<Key> privateKey = getPrivateKey();
+		if (privateKey.isPresent()) {
+			cipher.init(Cipher.DECRYPT_MODE, privateKey.get());
+		} else {
+			throw new BaseRuntimeException("Failed to decrypt the content by Rsa!");
+		}
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		int inputLen = encryptedData.length;
 		int offSet = 0;
 		byte[] cache;
 		int i = 0;
@@ -247,25 +299,22 @@ public class RsaHelper {
 			i++;
 			offSet = i * MAX_DECRYPT_BLOCK;
 		}
-		byte[] decryptedData = out.toByteArray();
-		out.close();
-		return decryptedData;
+		return out.toByteArray();
 	}
 
 	private static String readFromFile(String filePath) {
+		StringBuilder sb = new StringBuilder();
 		try (FileReader fr = new FileReader(filePath); BufferedReader br = new BufferedReader(fr);) {
 			String readLine = null;
-			StringBuilder sb = new StringBuilder();
 			while ((readLine = br.readLine()) != null) {
 				sb.append(readLine);
 			}
 			return sb.toString();
 		} catch (FileNotFoundException e) {
-			log.info("没有找到密钥文件！ [" + filePath + "]", e);
+			throw new BaseRuntimeException("没有找到密钥文件！ [" + filePath + "]", e);
 		} catch (IOException e) {
-			log.info("读取密钥文件失败！ [" + filePath + "]", e);
+			throw new BaseRuntimeException("读取密钥文件失败！ [" + filePath + "]", e);
 		}
-		return null;
 	}
 
 	public static String getBaseClassPath() {
@@ -294,13 +343,16 @@ public class RsaHelper {
 		FileUtils.write(new File(filePath), publicKeyStr, StandardCharsets.UTF_8);
 	}
 
-	/*
-	 * public static void main(String[] args) { try { String privateKeyPath =
-	 * "I:/git_repository/orion/orion-pms/src/main/resources/keystore/privateKey.keystore";
-	 * String publicKeyPath =
-	 * "I:/git_repository/orion/orion-pms/src/main/resources/keystore/publicKey.keystore";
-	 * genKeyPair(privateKeyPath, publicKeyPath); } catch (Exception e) {
-	 * e.printStackTrace(); } }
-	 */
+	public static void main(String[] args) {
+		// try {
+		// String privateKeyPath =
+		// "E:/GitRepo/backend/ibootz/bootz-usercenter/bootz-usercenter-web/src/main/resources/rsa/privateKey.keystore";
+		// String publicKeyPath =
+		// "E:/GitRepo/backend/ibootz/bootz-usercenter/bootz-usercenter-web/src/main/resources/rsa/publicKey.keystore";
+		// genKeyPair(privateKeyPath, publicKeyPath);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+	}
 
 }

@@ -1,6 +1,7 @@
 package top.bootz.user.service.mysql;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
+@Transactional(readOnly = true, rollbackFor = Exception.class)
 public class ResourceService {
 
 }

@@ -2,6 +2,7 @@ package top.bootz.commons.helper;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.util.Optional;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,7 +15,7 @@ public final class Md5Helper {
 	private Md5Helper() {
 	}
 
-	public final static String md5(String content) {
+	public final static Optional<String> md5(String content) {
 		try {
 			byte[] btInput = content.getBytes(StandardCharsets.UTF_8);
 			MessageDigest mdInst = MessageDigest.getInstance("MD5");
@@ -30,10 +31,10 @@ public final class Md5Helper {
 			}
 
 			// 返回经过加密后的字符串
-			return new String(str);
+			return Optional.of(new String(str));
 		} catch (Exception e) {
 			log.error("MD5 encode failed!", e);
-			return null;
+			return Optional.ofNullable(StringHelper.EMPTY);
 		}
 	}
 
