@@ -1,5 +1,7 @@
 package top.bootz.core.dictionary;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /**
  * 激活状态枚举
  * 
@@ -16,6 +18,7 @@ public enum ActiveTypeEnum {
 		this.code = code;
 	}
 
+	@JsonValue
 	public Integer getCode() {
 		return this.code;
 	}

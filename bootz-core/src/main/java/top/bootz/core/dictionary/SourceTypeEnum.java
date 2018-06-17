@@ -1,5 +1,7 @@
 package top.bootz.core.dictionary;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /**
  * 请求方的标识
  * 
@@ -16,6 +18,7 @@ public enum SourceTypeEnum {
 		this.code = code;
 	}
 
+	@JsonValue
 	public Integer getCode() {
 		return this.code;
 	}

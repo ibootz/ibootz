@@ -1,13 +1,5 @@
 package top.bootz.user.config;
 
-import java.util.Optional;
-
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.auditing.CurrentDateTimeProvider;
-import org.springframework.data.auditing.DateTimeProvider;
-import org.springframework.data.domain.AuditorAware;
-
 //@Configuration
 //@EnableMongoRepositories(basePackages = { "top.bootz.user.service.mongo" })
 //@EnableMongoAuditing(auditorAwareRef = "mongoAuditorProvider", dateTimeProviderRef = "mongoDateTimeProvider", modifyOnCreate = false)

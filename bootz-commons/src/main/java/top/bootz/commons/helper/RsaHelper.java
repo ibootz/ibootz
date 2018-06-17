@@ -22,9 +22,8 @@ import javax.crypto.Cipher;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
+import lombok.extern.slf4j.Slf4j;
 import top.bootz.commons.constant.SecurityConstants;
 
 /**
@@ -38,9 +37,9 @@ import top.bootz.commons.constant.SecurityConstants;
  * @author John
  *
  */
-public class RsaHelper {
 
-	private static final Logger LOGGER = LogManager.getLogger(RsaHelper.class);
+@Slf4j
+public class RsaHelper {
 
 	/**
 	 * 加密算法
@@ -87,10 +86,10 @@ public class RsaHelper {
 		try {
 			keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
 			initKey();
-			LOGGER.trace("RSA Public Key [" + getBase64PublicKey() + "] Private Key [" + getBase64PrivateKey() + "]");
+			log.trace("RSA Public Key [" + getBase64PublicKey() + "] Private Key [" + getBase64PrivateKey() + "]");
 		} catch (Exception e) {
 			keyMap.clear();
-			LOGGER.error("Init RSA key failure!", e);
+			log.error("Init RSA key failure!", e);
 		}
 	}
 
@@ -262,9 +261,9 @@ public class RsaHelper {
 			}
 			return sb.toString();
 		} catch (FileNotFoundException e) {
-			LOGGER.info("没有找到密钥文件！ [" + filePath + "]");
+			log.info("没有找到密钥文件！ [" + filePath + "]", e);
 		} catch (IOException e) {
-			LOGGER.info("读取密钥文件失败！ [" + filePath + "]");
+			log.info("读取密钥文件失败！ [" + filePath + "]", e);
 		}
 		return null;
 	}
@@ -295,14 +294,13 @@ public class RsaHelper {
 		FileUtils.write(new File(filePath), publicKeyStr, StandardCharsets.UTF_8);
 	}
 
-	/*public static void main(String[] args) {
-		try {
-			String privateKeyPath = "I:/git_repository/orion/orion-pms/src/main/resources/keystore/privateKey.keystore";
-			String publicKeyPath = "I:/git_repository/orion/orion-pms/src/main/resources/keystore/publicKey.keystore";
-			genKeyPair(privateKeyPath, publicKeyPath);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}*/
+	/*
+	 * public static void main(String[] args) { try { String privateKeyPath =
+	 * "I:/git_repository/orion/orion-pms/src/main/resources/keystore/privateKey.keystore";
+	 * String publicKeyPath =
+	 * "I:/git_repository/orion/orion-pms/src/main/resources/keystore/publicKey.keystore";
+	 * genKeyPair(privateKeyPath, publicKeyPath); } catch (Exception e) {
+	 * e.printStackTrace(); } }
+	 */
 
 }

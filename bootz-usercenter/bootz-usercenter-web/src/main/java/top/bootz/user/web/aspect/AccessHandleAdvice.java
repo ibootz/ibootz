@@ -16,6 +16,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -33,15 +34,16 @@ import top.bootz.core.aspect.AdviceException;
 /**
  * 记录请求日志信息的切面
  * 
- * @author dong
+ * @author Zhangq
  *
  */
+@Slf4j
 @Order(1)
 @Aspect
-@Slf4j
+@Component
 public class AccessHandleAdvice {
 
-	private static final String CONTROLLER_EXECUTION = "execution(public * com.orion.manage.user.controller..*.*(..))";
+	private static final String CONTROLLER_EXECUTION = "execution(public * top.bootz.user.web.controller..*.**(..))";
 
 	@Autowired
 	private MessageSource messageSource;
@@ -115,7 +117,7 @@ public class AccessHandleAdvice {
 		} finally {
 			// response
 			if (accessAdviceInfo.isReturned() && object != null) {
-				accessAdviceInfo.setResponse(ToStringHelper.toJSON(object));
+				accessAdviceInfo.setResponse(ToStringHelper.toJSON(object, true));
 			}
 			// tookMillSeconds
 			accessAdviceInfo.setTookMillSeconds(tookMillSeconds);
@@ -143,7 +145,7 @@ public class AccessHandleAdvice {
 			// 异常处理切面中方法的参数太过于复杂，这里没有必要作为日志打印详细信息，故排除掉
 			boolean isNotExceptionClass = !clz.getName().endsWith("Exception");
 			if ((isPolarisClass || isSimpleClass) && isNotExceptionClass) {
-				accessAdviceInfo.putInputParam(paramNames[i], ToStringHelper.toJSON(args[i]));
+				accessAdviceInfo.putInputParam(paramNames[i], ToStringHelper.toJSON(args[i], true));
 			} else {
 				accessAdviceInfo.putInputParam(paramNames[i], args[i].toString());
 			}

@@ -1,4 +1,4 @@
-package top.bootz.user.properties;
+package top.bootz.user.config.properties;
 
 import org.hibernate.validator.constraints.Range;
 import org.springframework.boot.context.properties.ConfigurationProperties;

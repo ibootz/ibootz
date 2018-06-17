@@ -1,4 +1,4 @@
-package top.bootz.user.web.wraper;
+package top.bootz.core.wrapper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

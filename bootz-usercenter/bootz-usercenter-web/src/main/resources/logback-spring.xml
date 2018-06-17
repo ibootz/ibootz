@@ -24,7 +24,7 @@
 	<!-- Append -->
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-			<level>INFO</level>
+			<level>DEBUG</level>
 		</filter>
 		<encoder>
 			<charset>UTF-8</charset>
@@ -35,9 +35,10 @@
 	<!-- logstash -->
 	<appender name="LOGSTASH"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${LOG_FILE}.json</file>
+		<file>${LOG_FILE}/total.json</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${LOG_FILE}.json.%d{yyyy-MM-dd}.gz</fileNamePattern>
+			<fileNamePattern>${LOG_FILE}/${springAppName}.json.%d{yyyy-MM-dd}.gz
+			</fileNamePattern>
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<encoder

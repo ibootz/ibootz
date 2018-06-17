@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import top.bootz.commons.snowflake.Snowflake;
-import top.bootz.user.properties.IdGeneratorProperties;
+import top.bootz.user.config.properties.IdGeneratorProperties;
 
 /**
  * @author John

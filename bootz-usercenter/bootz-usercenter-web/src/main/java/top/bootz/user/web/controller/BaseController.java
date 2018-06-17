@@ -4,9 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
+import lombok.extern.slf4j.Slf4j;
 import top.bootz.commons.constant.SecurityConstants;
 import top.bootz.core.dictionary.SourceTypeEnum;
 
@@ -16,9 +15,8 @@ import top.bootz.core.dictionary.SourceTypeEnum;
  * @author John
  *
  */
+@Slf4j
 public class BaseController {
-
-	private static final Logger LOGGER = LogManager.getLogger(BaseController.class);
 
 	/**
 	 * 新增操作之后，在response的header中添加新增资源的url地址。
@@ -34,7 +32,7 @@ public class BaseController {
 		} else {
 			location = requestUrl + "/" + id;
 		}
-		LOGGER.trace("location url [" + location + "]");
+		log.trace("location url [" + location + "]");
 		response.addHeader("Location", location);
 	}
 

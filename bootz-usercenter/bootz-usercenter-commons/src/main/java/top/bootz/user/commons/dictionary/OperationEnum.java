@@ -1,5 +1,7 @@
 package top.bootz.user.commons.dictionary;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /**
  * 操作类型枚举
  * 
@@ -16,6 +18,7 @@ public enum OperationEnum {
 		this.code = code;
 	}
 
+	@JsonValue
 	public Integer getCode() {
 		return this.code;
 	}

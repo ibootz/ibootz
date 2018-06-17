@@ -14,7 +14,7 @@ public class BaseEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return ToStringHelper.toJSON(this);
+		return ToStringHelper.toJSON(this, true);
 	}
 
 	@Transient

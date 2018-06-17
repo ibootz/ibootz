@@ -1,4 +1,4 @@
-package top.bootz.user.properties;
+package top.bootz.user.config.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

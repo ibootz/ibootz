@@ -6,19 +6,17 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.security.jwt.Jwt;
 import org.springframework.security.jwt.crypto.sign.RsaSigner;
 import org.springframework.security.jwt.crypto.sign.RsaVerifier;
 
 import com.alibaba.fastjson.JSONObject;
 
+import lombok.extern.slf4j.Slf4j;
 import top.bootz.commons.constant.SecurityConstants;
 
+@Slf4j
 public final class JwtHelper {
-
-	private static final Logger LOGGER = LogManager.getLogger(JwtHelper.class);
 
 	/**
 	 * jwt签发者（本服务器）
@@ -93,7 +91,7 @@ public final class JwtHelper {
 			signer = new RsaSigner((RSAPrivateKey) RsaHelper.getPrivateKey());
 			verifier = new RsaVerifier((RSAPublicKey) RsaHelper.getPublicKey());
 		} catch (Exception e) {
-			LOGGER.error("init tokenUtil failure!", e);
+			log.error("init tokenUtil failure!", e);
 		}
 	}
 
@@ -147,7 +145,7 @@ public final class JwtHelper {
 		try {
 			org.springframework.security.jwt.JwtHelper.decodeAndVerify(jwtToken, verifier);
 		} catch (Exception e) {
-			LOGGER.error("JWT - 签名验证失败！ [" + jwtToken + "]", e);
+			log.error("JWT - 签名验证失败！ [" + jwtToken + "]", e);
 			isLegalToken = false;
 		}
 		return isLegalToken;

@@ -89,7 +89,7 @@ spring:
       max-file-size: 10MB
       max-request-size: 20MB
 server:
-  port: 6080
+  port: 8443
   tomcat:
     accesslog:
       enabled: true
@@ -99,7 +99,13 @@ server:
     uri-encoding: UTF-8
   connection-timeout: 60s
   servlet:
-    context-path: /user-center/api/v1
+    context-path: /usercenter/api/v1
+  ssl:
+    enabled: true
+    key-store: classpath:keystore.p12
+    key-store-password: 1990912
+    key-store-type: PKCS12
+    key-alias: tomcat-bootz
 custom:
   task:
     pool:
@@ -113,8 +119,15 @@ custom:
     dataCenterId: 0
   cors:
     allow-credentials: true
-    allowed-header: *
-    allowed-method: GET,PUT,POST,DELETE,OPTIONS,HEAD
-    allowed-origin: .bootz.com
-    exposed-headers: *
+    allowed-header: '*'
+    allowed-method:
+    - GET
+    - PUT
+    - POST
+    - DELETE
+    - OPTIONS
+    - HEAD
+    allowed-origin:
+    - https://www.bootz.top
+    - https://api-usercenter.bootz.top
     max-age: 86400

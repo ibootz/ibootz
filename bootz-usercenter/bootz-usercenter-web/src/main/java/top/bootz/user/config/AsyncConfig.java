@@ -13,7 +13,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import lombok.extern.slf4j.Slf4j;
-import top.bootz.user.properties.TaskThreadPoolConfigProperties;
+import top.bootz.user.config.properties.TaskThreadPoolConfigProperties;
 
 @Slf4j
 @Configuration

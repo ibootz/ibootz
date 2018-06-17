@@ -1,5 +1,7 @@
 package top.bootz.core.dictionary;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /**
  * 禁用状态枚举
  * 
@@ -16,6 +18,7 @@ public enum DisableTypeEnum {
 		this.code = code;
 	}
 
+	@JsonValue
 	public Integer getCode() {
 		return this.code;
 	}

@@ -1,10 +1,10 @@
 package top.bootz.user.persist.mysql.user;
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.NoRepositoryBean;
 
-@NoRepositoryBean
-public interface UserDao extends CrudRepository<User, Long> {
+import top.bootz.user.entity.mysql.user.User;
+
+public interface UserDao extends CrudRepository<User, Long>, JpaSpecificationExecutor<User> {
 
 }

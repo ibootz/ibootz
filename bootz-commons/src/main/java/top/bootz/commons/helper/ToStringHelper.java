@@ -39,9 +39,13 @@ public final class ToStringHelper {
 	 * @param obj
 	 * @return
 	 */
-	public static String toJSON(Object obj) {
+	public static String toJSON(Object obj, boolean wrapClassName) {
+		if (!wrapClassName) {
+			return JsonHelper.toJSON(obj);
+		}
 		JSONObject jsonObj = new JSONObject();
-		return jsonObj.put(obj.getClass().getSimpleName(), JsonHelper.toJSON(obj)).toString();
+		jsonObj.put(obj.getClass().getSimpleName(), JsonHelper.toJSON(obj));
+		return jsonObj.toString();
 	}
 
 	private static String arrayToString(Object obj, ToStringStyle style) {

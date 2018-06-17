@@ -1,5 +1,7 @@
 package top.bootz.core.dictionary;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /**
  * 硬件设备类型
  * 
@@ -19,6 +21,7 @@ public enum DeviceEnum {
 		this.name = name;
 	}
 
+	@JsonValue
 	public Integer getCode() {
 		return this.code;
 	}
