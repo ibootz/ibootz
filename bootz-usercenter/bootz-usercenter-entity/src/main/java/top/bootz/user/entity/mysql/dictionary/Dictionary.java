@@ -3,27 +3,30 @@ package top.bootz.user.entity.mysql.dictionary;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.bootz.core.base.entity.BaseMysqlEntity;
-import top.bootz.core.converter.ActiveTypeAttributeConverter;
 import top.bootz.core.converter.DictionaryTypeAttributeConverter;
-import top.bootz.core.dictionary.ActiveTypeEnum;
+import top.bootz.core.converter.DisableTypeAttributeConverter;
 import top.bootz.core.dictionary.DictionaryTypeEnum;
+import top.bootz.core.dictionary.DisableTypeEnum;
 
 /**
  * Desc: 通用字典表
  * 
- * @author John
- * 2018年6月10日 下午7:02:28 <br/>
+ * @author John 2018年6月10日 下午7:02:28 <br/>
  */
 
 @Entity
-@Table(name = "core_dictionary")
+@Table(name = "uc_dictionary", indexes = {
+		@Index(columnList = "name,type", name = "idx_uc_dictionary_name_type", unique = true) })
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Dictionary extends BaseMysqlEntity {
@@ -42,8 +45,8 @@ public class Dictionary extends BaseMysqlEntity {
 	/** 字典备注 */
 	private String description;
 
-	/** 字典是否启用 */
-	private ActiveTypeEnum status;
+	/** 是否处于不可用状态 */
+	private DisableTypeEnum disable;
 
 	@Convert(converter = DictionaryTypeAttributeConverter.class)
 	@Column(name = "type", nullable = false, columnDefinition = "varchar(16) default '' comment '字典类型'")
@@ -66,10 +69,10 @@ public class Dictionary extends BaseMysqlEntity {
 		return description;
 	}
 
-	@Convert(converter = ActiveTypeAttributeConverter.class)
-	@Column(name = "status", nullable = false, columnDefinition = "tinyint(1) default 1 comment '字典状态'")
-	public ActiveTypeEnum getStatus() {
-		return status;
+	@Convert(converter = DisableTypeAttributeConverter.class)
+	@Column(name = "disable", nullable = false, columnDefinition = "tinyint(1) default 0 comment '是否处于不可用状态（0-可用，1-不可用）'")
+	public DisableTypeEnum getDisable() {
+		return this.disable == null ? DisableTypeEnum.ENABLE : this.disable;
 	}
 
 }

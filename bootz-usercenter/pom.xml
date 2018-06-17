@@ -18,7 +18,7 @@
 	<modules>
 		<module>bootz-usercenter-commons</module>
 		<module>bootz-usercenter-entity</module>
-		<module>bootz-usercenter-persist</module>
+		<module>bootz-usercenter-repository</module>
 		<module>bootz-usercenter-service</module>
 		<module>bootz-usercenter-web</module>
 	</modules>

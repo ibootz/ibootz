@@ -21,7 +21,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>top.bootz</groupId>
-			<artifactId>bootz-usercenter-persist</artifactId>
+			<artifactId>bootz-usercenter-repository</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 public enum DisableTypeEnum {
 
-	ENABLE(0), DISABLE(1);
+	ENABLE(0), DISABLED(1);
 
 	private Integer code;
 

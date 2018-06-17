@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import top.bootz.user.entity.mysql.user.User;
-import top.bootz.user.persist.mysql.user.UserDao;
+import top.bootz.user.repository.mysql.user.UserDao;
 
 /**
  * 

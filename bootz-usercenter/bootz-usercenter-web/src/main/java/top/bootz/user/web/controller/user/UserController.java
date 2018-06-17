@@ -39,8 +39,7 @@ public class UserController extends BaseController {
 		userService.saveUser(user);
 
 		log.debug("snowflake [" + snowflake + "]");
-		log.debug("springHelper [" + SpringHelper.applicationContext + "]");
-		log.debug("snowflake [" + snowflake.nextId() + "]");
+		log.debug("springHelper [{}]", (SpringHelper.getBean("useService") == userService));
 	}
 
 }

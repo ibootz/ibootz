@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.bootz.core.base.entity.BaseMysqlEntity;
@@ -21,6 +22,7 @@ import top.bootz.user.commons.dictionary.AuthorityEnum;
 @Entity
 @Table(name = "uc_authority")
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Authority extends BaseMysqlEntity {

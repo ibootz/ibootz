@@ -1,13 +1,18 @@
 package top.bootz.user.entity.mysql.department;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.bootz.core.base.entity.BaseMysqlEntity;
+import top.bootz.core.converter.DisableTypeAttributeConverter;
+import top.bootz.core.dictionary.DisableTypeEnum;
 
 /**
  * 部门表
@@ -16,8 +21,11 @@ import top.bootz.core.base.entity.BaseMysqlEntity;
  *
  */
 @Entity
-@Table(name = "uc_department")
+@Table(name = "uc_department", indexes = { @Index(columnList = "name", name = "idx_uc_department_name", unique = true),
+		@Index(columnList = "path", name = "idx_uc_department_path"),
+		@Index(columnList = "parent_id", name = "idx_uc_department_parentid") })
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Department extends BaseMysqlEntity {
@@ -36,6 +44,9 @@ public class Department extends BaseMysqlEntity {
 	/** 部门职能描述 */
 	private String description;
 
+	/** 是否启用 */
+	private DisableTypeEnum disable;
+
 	@Column(name = "name", nullable = false, columnDefinition = "varchar(32) default '' comment '部门名'")
 	public String getName() {
 		return name;
@@ -46,7 +57,7 @@ public class Department extends BaseMysqlEntity {
 		return path;
 	}
 
-	@Column(name = "parentId", nullable = false, columnDefinition = "bigint(64) default 0 comment '父部门id'")
+	@Column(name = "parent_id", nullable = false, columnDefinition = "bigint(64) default 0 comment '父部门id'")
 	public Long getParentId() {
 		return parentId;
 	}
@@ -54,6 +65,12 @@ public class Department extends BaseMysqlEntity {
 	@Column(name = "description", nullable = false, columnDefinition = "varchar(255) default '' comment '部门职能描述'")
 	public String getDescription() {
 		return description;
+	}
+
+	@Convert(converter = DisableTypeAttributeConverter.class)
+	@Column(name = "disable", nullable = false, columnDefinition = "tinyint(1) default 0 comment '是否处于不可用状态（0-可用，1-不可用）'")
+	public DisableTypeEnum getDisable() {
+		return this.disable == null ? DisableTypeEnum.ENABLE : this.disable;
 	}
 
 }

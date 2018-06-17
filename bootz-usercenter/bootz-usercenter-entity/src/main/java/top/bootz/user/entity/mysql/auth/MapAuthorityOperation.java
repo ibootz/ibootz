@@ -2,22 +2,27 @@ package top.bootz.user.entity.mysql.auth;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.bootz.core.base.entity.BaseMysqlEntity;
 
 /**
- * 权限功能操作映射表
+ * 关联表：权限-功能操作
  * 
  * @author John
  *
  */
 @Entity
-@Table(name = "uc_map_authority_operation")
+@Table(name = "uc_map_authority_operation", indexes = {
+		@Index(columnList = "authority_id,operation_id", name = "idx_uc_mao_authid_operationid", unique = true),
+		@Index(columnList = "operation_id", name = "idx_uc_mao_operationid") })
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class MapAuthorityOperation extends BaseMysqlEntity {

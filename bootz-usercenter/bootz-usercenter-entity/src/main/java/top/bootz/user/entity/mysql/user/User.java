@@ -9,6 +9,8 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.bootz.core.base.entity.BaseMysqlEntity;
@@ -27,10 +29,15 @@ import top.bootz.core.dictionary.LockStatusEnum;
  */
 @Entity
 @Table(name = "uc_user", indexes = { @Index(columnList = "username", name = "idx_uc_user_username", unique = true),
-		@Index(columnList = "password", name = "idx_uc_user_password") })
+		@Index(columnList = "password", name = "idx_uc_user_password"),
+		@Index(columnList = "realname", name = "idx_uc_user_realname"),
+		@Index(columnList = "mobile", name = "idx_uc_user_mobile"),
+		@Index(columnList = "email", name = "idx_uc_user_email") })
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = { "username" }, callSuper = false)
 public class User extends BaseMysqlEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -56,10 +63,10 @@ public class User extends BaseMysqlEntity {
 	/** 邮箱 */
 	private String email;
 
-	/** 启用/禁用 */
+	/** 是否禁用 */
 	private DisableTypeEnum disable;
 
-	/** 锁定时间 */
+	/** 禁用时间 */
 	private LocalDateTime disableTime;
 
 	/** 是否锁定 */
@@ -121,13 +128,18 @@ public class User extends BaseMysqlEntity {
 	}
 
 	@Convert(converter = DisableTypeAttributeConverter.class)
-	@Column(name = "disable", nullable = false, columnDefinition = "tinyint(1) default 0 comment '是否被禁用'")
+	@Column(name = "disable", nullable = false, columnDefinition = "tinyint(1) default 0 comment '是否处于不可用状态（0-可用，1-不可用）'")
 	public DisableTypeEnum getDisable() {
 		return this.disable == null ? DisableTypeEnum.ENABLE : this.disable;
 	}
 
+	@Column(name = "disable_time", nullable = true, columnDefinition = "DATETIME default NULL comment '禁用时间'")
+	public LocalDateTime getDisableTime() {
+		return disableTime;
+	}
+
 	@Convert(converter = LockStatusAttributeConverter.class)
-	@Column(name = "locked", nullable = false, columnDefinition = "tinyint(1) default 0 comment '是否被锁定'")
+	@Column(name = "locked", nullable = false, columnDefinition = "tinyint(1) default 0 comment '是否锁定（0-未锁定，1-锁定）'")
 	public LockStatusEnum getLocked() {
 		return this.locked == null ? LockStatusEnum.NOT_LOCKED : this.locked;
 	}
@@ -135,11 +147,6 @@ public class User extends BaseMysqlEntity {
 	@Column(name = "last_lock_time", nullable = true, columnDefinition = "DATETIME default NULL comment '最近一次被锁定的时间'")
 	public LocalDateTime getLastLockTime() {
 		return lastLockTime;
-	}
-
-	@Column(name = "disable_time", nullable = true, columnDefinition = "DATETIME default NULL comment '禁用时间'")
-	public LocalDateTime getDisableTime() {
-		return disableTime;
 	}
 
 }

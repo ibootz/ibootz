@@ -8,7 +8,7 @@ public class BaseRuntimeException extends RuntimeException {
 		super();
 	}
 
-	public BaseRuntimeException(Exception e) {
+	public BaseRuntimeException(Throwable e) {
 		super(e);
 	}
 
