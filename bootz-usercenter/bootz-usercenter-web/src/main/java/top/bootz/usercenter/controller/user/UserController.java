@@ -2,6 +2,7 @@ package top.bootz.usercenter.controller.user;
 
 import java.util.Optional;
 
+import javax.print.attribute.standard.Media;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,40 +29,29 @@ import top.bootz.usercenter.view.user.User4Add;
 @RequestMapping(value = "/users")
 public class UserController extends BaseController {
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-	/**
-	 * 创建用户
-	 * 
-	 * @param request
-	 * @param response
-	 * @param user4Add
-	 * @return
-	 * @throws Exception
-	 * @author John
-	 * @time 2018年6月18日 上午12:39:53
-	 */
-	@PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<RestMessage> add(HttpServletRequest request, HttpServletRequest response,
-			@RequestBody User4Add user4Add) throws Exception {
-		User user = new User();
-		BeanHelper.copyProperties(user4Add, user);
+    @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<RestMessage> add(HttpServletRequest request, @RequestBody User4Add user4Add) throws Exception {
+        User user = new User();
+        BeanHelper.copyProperties(user4Add, user);
 
-		user.setUsername(RandomHelper.randomString(9));
-		user.setRealName(RandomHelper.randomChineseName());
-		user.setEmail(RandomHelper.randomEmail());
-		user.setIdCard(RandomHelper.randomIdCard());
-		user.setMobile(RandomHelper.randomMobile());
-		Optional<String> opt = RsaHelper.encryptToBase64(RandomHelper.randomString(8, 18).getBytes());
-		if (opt.isPresent()) {
-			user.setPassword(opt.get());
-		}
-		user.setGender(GenderEnum.getGenderByCode(RandomHelper.randomString(1, "mfou")));
-		userService.saveUser(user);
+        user.setUsername(RandomHelper.randomString(9));
+        user.setRealName(RandomHelper.randomChineseName());
+        user.setEmail(RandomHelper.randomEmail());
+        user.setIdCard(RandomHelper.randomIdCard());
+        user.setMobile(RandomHelper.randomMobile());
+        Optional<String> opt = RsaHelper.encryptToBase64(RandomHelper.randomString(8, 18).getBytes());
+        if (opt.isPresent()) {
+            user.setPassword(opt.get());
+        }
+        user.setGender(GenderEnum.getGenderByCode(RandomHelper.randomString(1, "mfou")));
+        userService.saveUser(user);
 
-		return buildRestMessage(HttpStatus.CREATED, MessageStatusEnum.SUCCESS, buildLocation(request, user.getId()),
-				null);
-	}
+
+        return buildRestMessage(HttpStatus.CREATED, MessageStatusEnum.SUCCESS, buildLocation(request, user.getId()),
+                null);
+    }
 
 }

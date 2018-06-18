@@ -11,6 +11,6 @@ import top.bootz.user.entity.mysql.ping.Ping;
  */
 
 public interface PingRepository
-		extends JpaRepository<Ping, Long>, JpaSpecificationExecutor<Ping>, QuerydslPredicateExecutor<Ping> {
+        extends JpaRepository<Ping, Long>, JpaSpecificationExecutor<Ping>, QuerydslPredicateExecutor<Ping> {
 
 }
