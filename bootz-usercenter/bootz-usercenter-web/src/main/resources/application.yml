@@ -31,7 +31,7 @@ spring:
           enabled: true
           db-type: mysql
           config:
-            delete-allow: false
+            delete-allow: true
             selelct-allow: true
         slf4j:
           enabled: true
@@ -106,10 +106,29 @@ server:
     key-store-password: 1990912
     key-store-type: PKCS12
     key-alias: tomcat-bootz
+management:
+  endpoints:
+    web:
+      cors:
+        allow-credentials: true
+        allowed-headers: '*'
+        allowed-methods:
+        - GET
+        - PUT
+        - POST
+        - DELETE
+        - OPTIONS
+        - HEAD
+        allowed-origins:
+        - https://www.bootz.top
+        - https://api-usercenter.bootz.top
+        exposed-headers:
+        - X-Auth-Token
+        max-age: 24h
 custom:
   task:
     pool:
-      thread-name-prefix: Bootz-Executor-
+      thread-name-prefix: app-executor-
       core-pool-size: 5
       max-pool-size: 20
       keep-alive-seconds: 120
@@ -117,17 +136,3 @@ custom:
   id-snowflake:
     workerId: 0
     dataCenterId: 0
-  cors:
-    allow-credentials: true
-    allowed-header: '*'
-    allowed-method:
-    - GET
-    - PUT
-    - POST
-    - DELETE
-    - OPTIONS
-    - HEAD
-    allowed-origin:
-    - https://www.bootz.top
-    - https://api-usercenter.bootz.top
-    max-age: 86400

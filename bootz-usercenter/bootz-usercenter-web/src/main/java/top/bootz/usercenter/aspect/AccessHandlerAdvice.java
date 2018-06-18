@@ -2,6 +2,7 @@ package top.bootz.usercenter.aspect;
 
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,6 +20,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import top.bootz.commons.constant.SecurityConstants;
@@ -110,7 +112,7 @@ public class AccessHandlerAdvice {
 			successed = false;
 			exceptionTime = DateHelper.now();
 			tookMillSeconds = System.currentTimeMillis() - start;
-			errMsg = getErrMsg(e);
+			errMsg = getErrMsg(request, e);
 			adviceException = new AdviceException(errMsg, e);
 			log.error(e.getMessage(), e);
 			throw e;
@@ -152,11 +154,13 @@ public class AccessHandlerAdvice {
 		}
 	}
 
-	private String getErrMsg(Throwable e) {
+	private String getErrMsg(HttpServletRequest request, Throwable e) {
 		String errMsg;
 		if (e instanceof ApiException) {
+			Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
 			ApiException apiException = (ApiException) e;
-			errMsg = messageSource.getMessage(apiException.getErrorKey(), apiException.getArgs(), e.getMessage(), null);
+			errMsg = messageSource.getMessage(apiException.getErrorKey(), apiException.getArgs(), e.getMessage(),
+					locale);
 		} else if (e instanceof NullPointerException) {
 			errMsg = "NullPointerException";
 		} else {

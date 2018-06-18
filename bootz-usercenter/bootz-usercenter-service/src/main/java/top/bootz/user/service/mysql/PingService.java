@@ -1,6 +1,9 @@
 package top.bootz.user.service.mysql;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,13 +28,20 @@ public class PingService {
 		return pingRepository.save(ping);
 	}
 
-	public void find(Long id) {
-		pingRepository.findById(id);
+	@Async
+	@Transactional(readOnly = false)
+	public void asyncSave(Ping ping) {
+		pingRepository.save(ping);
 	}
 
+	@Async
 	@Transactional(readOnly = false)
 	public void delete(Ping ping) {
 		pingRepository.delete(ping);
+	}
+
+	public Optional<Ping> find(Long id) {
+		return pingRepository.findById(id);
 	}
 
 }

@@ -2,9 +2,9 @@ package top.bootz.usercenter.controller.user;
 
 import java.util.Optional;
 
-import javax.print.attribute.standard.Media;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -37,7 +37,9 @@ public class UserController extends BaseController {
         User user = new User();
         BeanHelper.copyProperties(user4Add, user);
 
-        user.setUsername(RandomHelper.randomString(9));
+        if (StringUtils.isBlank(user4Add.getUsername())) {
+        	user.setUsername(RandomHelper.randomString(9));
+        }
         user.setRealName(RandomHelper.randomChineseName());
         user.setEmail(RandomHelper.randomEmail());
         user.setIdCard(RandomHelper.randomIdCard());
@@ -47,8 +49,7 @@ public class UserController extends BaseController {
             user.setPassword(opt.get());
         }
         user.setGender(GenderEnum.getGenderByCode(RandomHelper.randomString(1, "mfou")));
-        userService.saveUser(user);
-
+        userService.asyncSave(user);
 
         return buildRestMessage(HttpStatus.CREATED, MessageStatusEnum.SUCCESS, buildLocation(request, user.getId()),
                 null);
