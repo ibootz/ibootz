@@ -6,6 +6,11 @@ spring:
     redis:
       key-prefix: 'cache:usercenter:'
       time-to-live: 12h
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: false
   datasource:
     druid:
       initial-size: 1
@@ -69,6 +74,7 @@ spring:
   jpa:
     database: mysql
     open-in-view: true
+    show-sql: false
     hibernate:
       ddl-auto: update
     properties:
@@ -76,7 +82,6 @@ spring:
       hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
       hibernate.ejb.naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
       hibernate.cache.provider_class: org.hibernate.cache.NoCacheProvider
-      hibernate.show_sql: false
       hibernate.format_sql: false
       hibernate.ejb.entitymanager_factory_name: entityManagerFactory
   mvc:
@@ -125,6 +130,8 @@ management:
         exposed-headers:
         - X-Auth-Token
         max-age: 24h
+      exposure:
+        include: '*'
 custom:
   task:
     pool:

@@ -10,8 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.bootz.core.base.entity.BaseMysqlEntity;
-import top.bootz.core.converter.DictionaryTypeAttributeConverter;
-import top.bootz.core.converter.DisableTypeAttributeConverter;
+import top.bootz.core.converter.attribute.DictionaryTypeAttributeConverter;
+import top.bootz.core.converter.attribute.DisableTypeAttributeConverter;
 import top.bootz.core.dictionary.DictionaryTypeEnum;
 import top.bootz.core.dictionary.DisableTypeEnum;
 

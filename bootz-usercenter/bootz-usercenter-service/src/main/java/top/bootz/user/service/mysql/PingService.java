@@ -31,13 +31,18 @@ public class PingService {
 	@Async
 	@Transactional(readOnly = false)
 	public void asyncSave(Ping ping) {
-		pingRepository.save(ping);
+		save(ping);
+	}
+
+	@Transactional(readOnly = false)
+	public void delete(Ping ping) {
+		pingRepository.delete(ping);
 	}
 
 	@Async
 	@Transactional(readOnly = false)
-	public void delete(Ping ping) {
-		pingRepository.delete(ping);
+	public void asyncDelete(Ping ping) {
+		delete(ping);
 	}
 
 	public Optional<Ping> find(Long id) {

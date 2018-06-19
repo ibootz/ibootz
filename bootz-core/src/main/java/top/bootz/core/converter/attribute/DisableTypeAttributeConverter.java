@@ -1,4 +1,4 @@
-package top.bootz.core.converter;
+package top.bootz.core.converter.attribute;
 
 import javax.persistence.AttributeConverter;
 

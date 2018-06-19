@@ -1,10 +1,15 @@
 package top.bootz.usercenter.controller.ping;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,10 +24,13 @@ import lombok.extern.slf4j.Slf4j;
 import top.bootz.core.base.dto.RestMessage;
 import top.bootz.core.dictionary.MessageStatusEnum;
 import top.bootz.user.entity.mysql.ping.Ping;
+import top.bootz.user.entity.redis.PingCache;
 import top.bootz.user.service.elastic.ElasticPingService;
 import top.bootz.user.service.mongo.MongoPingService;
 import top.bootz.user.service.mysql.PingService;
 import top.bootz.user.service.rabbit.RabbitService;
+import top.bootz.user.service.redis.PingCacheService;
+import top.bootz.user.service.redis.RedisService;
 import top.bootz.usercenter.controller.BaseController;
 import top.bootz.usercenter.view.pong.Pong;
 
@@ -33,6 +41,12 @@ public class PingController extends BaseController {
 
 	@Autowired
 	private PingService pingService;
+
+	@Autowired
+	private PingCacheService pingCacheService;
+
+	@Autowired
+	private RedisService redisService;
 
 	@Autowired
 	private MongoPingService mongoPingService;
@@ -93,33 +107,99 @@ public class PingController extends BaseController {
 	}
 
 	private boolean testRedis() {
-		// TODO Auto-generated method stub
-		return false;
+		String key = "";
+ 		String value = "";
+		try {
+			key = "ping:simple:key";
+			value = "ping:simple:value";
+			redisService.opsForValue(key, value);
+		} catch (Exception e) {
+			log.error("test redis opsForValue error.", e);
+			return false;
+		}
+
+		try {
+			key = "ping:hash:key";
+			String hashKey1 = "ping:hash:hKey--1";
+			String hashKey2 = "ping:hash:hKey--2";
+			PingCache ping1 = new PingCache();
+			PingCache ping2 = new PingCache();
+			Map<String, PingCache> values = new HashMap<>();
+			values.put(hashKey1, ping1);
+			values.put(hashKey2, ping2);
+			redisService.opsForHash(key, values);
+		} catch (Exception e) {
+			log.error("test redis opsForHash error.", e);
+			return false;
+		}
+
+		try {
+			key = "ping:list:key";
+			List<PingCache> pingCaches = new ArrayList<>();
+			PingCache ping1 = new PingCache();
+			PingCache ping2 = new PingCache();
+			pingCaches.add(ping1);
+			pingCaches.add(ping2);
+			redisService.opsForList(key, pingCaches);
+		} catch (Exception e) {
+			log.error("test redis opsForList error.", e);
+			return false;
+		}
+
+		try {
+			key = "ping:set:key";
+			Set<PingCache> pingCaches = new HashSet<>();
+			PingCache ping1 = new PingCache();
+			PingCache ping2 = new PingCache();
+			pingCaches.add(ping1);
+			pingCaches.add(ping2);
+			redisService.opsForSet(key, pingCaches);
+		} catch (Exception e) {
+			log.error("test redis opsForSet error.", e);
+			return false;
+		}
+
+		try {
+			PingCache pingCache = new PingCache();
+			pingCacheService.save(pingCache);
+			if (pingCache.getId() == null) {
+				log.error("pingCache id is null. [{}]", pingCache);
+				return false;
+			}
+
+			Optional<PingCache> opt = pingCacheService.find(pingCache.getId());
+			if (!opt.isPresent()) {
+				return false;
+			}
+
+			pingCacheService.delete(opt.get());
+
+			opt = pingCacheService.find(pingCache.getId());
+			return !opt.isPresent();
+		} catch (Exception e) {
+			log.error("test redis opsForSet error.", e);
+			return false;
+		}
 	}
 
 	private boolean testMysql() {
 		try {
 			Ping ping = new Ping();
 			pingService.save(ping);
-			System.out.println("1 > " + ping);
 			if (ping.getId() == null) {
+				log.error("ping id is null. [{}]", ping);
 				return false;
 			}
-
-			long id = ping.getId();
-			Optional<Ping> pingOpt = pingService.find(id);
+			Optional<Ping> pingOpt = pingService.find(ping.getId());
 			if (!pingOpt.isPresent()) {
+				log.error("ping is not found. [{}]");
 				return false;
 			}
 
-			// 异步删除 问题 TODO
 			pingService.delete(pingOpt.get());
-			
-			Thread.sleep(5000L);
-			
-			pingOpt = pingService.find(id);
-			System.out.println("2 > " + pingOpt);
-			return pingOpt.isPresent() ? false : true;
+
+			pingOpt = pingService.find(ping.getId());
+			return !pingOpt.isPresent();
 		} catch (Exception e) {
 			log.error("test mysql error.", e);
 			return false;
