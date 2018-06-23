@@ -6,7 +6,7 @@ import org.springframework.validation.annotation.Validated;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import top.bootz.commons.snowflake.Snowflake;
+import top.bootz.commons.snowflake.IdGenerator;
 
 /**
  * 配置主键生成器
@@ -21,10 +21,10 @@ import top.bootz.commons.snowflake.Snowflake;
 @ConfigurationProperties(prefix = "custom.id-snowflake")
 public class IdGeneratorProperties {
 
-	@Range(min = 0, max = Snowflake.MAX_WORKER_ID)
+	@Range(min = 0, max = IdGenerator.MAX_WORKER_ID)
 	private Long workerId;
 
-	@Range(min = 0, max = Snowflake.MAX_DATACENTER_ID)
+	@Range(min = 0, max = IdGenerator.MAX_DATACENTER_ID)
 	private Long dataCenterId;
 
 }

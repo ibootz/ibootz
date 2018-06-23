@@ -14,69 +14,76 @@ import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 
 public final class JsonHelper {
 
-	public static final String DATE_FORMAT_DATETIME = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATE_FORMAT_DATETIME = "yyyy-MM-dd HH:mm:ss";
 
-	private JsonHelper() {
+    private static ObjectMapper objectMapper = new ObjectMapper();
 
-	}
+    private JsonHelper() {
+    }
 
-	public static ObjectMapper createMapper() {
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.setDateFormat(new SimpleDateFormat(DATE_FORMAT_DATETIME));
-		mapper.registerModule(new JaxbAnnotationModule());
-		mapper.registerModule(new JavaTimeModule());
-		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		return mapper;
-	}
+    static {
+        objectMapper.setDateFormat(new SimpleDateFormat(DATE_FORMAT_DATETIME));
+        objectMapper.registerModule(new JaxbAnnotationModule());
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    }
 
-	public static <T> T fromJSON(String json, Class<T> beanClass) {
-		return JsonHelper.fromJSON(json, beanClass, new Class<?>[0]);
-	}
+    public static <T> T fromJSON(String json, Class<T> beanClass) {
+        return JsonHelper.fromJSON(json, beanClass, new Class<?>[0]);
+    }
 
-	/**
-	 * 
-	 * @param json
-	 *            ： json源文件
-	 * @param beanClass
-	 *            ： 转换目标类
-	 * @param elementClasses
-	 *            ： 复杂对象的转换
-	 * @return
-	 * @throws Exception
-	 */
-	public static <T> T fromJSON(String json, Class<T> beanClass, Class<?>... elementClasses) {
-		ObjectMapper mapper = createMapper();
-		try {
-			return elementClasses == null || elementClasses.length == 0 ? mapper.readValue(json, beanClass)
-					: mapper.readValue(json,
-							mapper.getTypeFactory().constructParametricType(beanClass, elementClasses));
-		} catch (IOException e) {
-			throw new RuntimeException(e.getMessage(), e);
-		}
-	}
+    /**
+     * @param json           ： json源文件
+     * @param beanClass      ： 转换目标类
+     * @param elementClasses ： 复杂对象的转换
+     * @return
+     * @throws Exception
+     */
+    public static <T> T fromJSON(String json, Class<T> beanClass, Class<?>... elementClasses) {
+        try {
+            return elementClasses == null || elementClasses.length == 0 ? objectMapper.readValue(json, beanClass)
+                    : objectMapper.readValue(json,
+                    objectMapper.getTypeFactory().constructParametricType(beanClass, elementClasses));
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
 
-	public static <T> String toJSON(T t) {
-		ObjectMapper mapper = createMapper();
-		try {
-			return mapper.writeValueAsString(t);
-		} catch (JsonProcessingException e) {
-			throw new RuntimeException(e.getMessage(), e);
-		}
-	}
+    public static <T> String toJSON(T t) {
+        try {
+            return objectMapper.writeValueAsString(t);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
 
-	public static boolean isJsonStr(String content) {
-		boolean isJsonStr = true;
-		getJSONObject(content);
-		return isJsonStr;
-	}
+    public static boolean isJsonStr(String content) {
+        boolean isJsonStr;
+        try {
+            getJSONObject(content);
+            isJsonStr = true;
+        } catch (Exception e) {
+            isJsonStr = false;
+        }
 
-	public static JSONObject getJSONObject(String payload) {
-		return JSONObject.parseObject(payload);
-	}
+        if (!isJsonStr) {
+            try {
+                getJSONArray(content);
+                isJsonStr = true;
+            } catch (Exception e) {
+                isJsonStr = false;
+            }
+        }
+        return isJsonStr;
+    }
 
-	public static JSONArray getJSONArray(String payload) {
-		return JSONArray.parseArray(payload);
-	}
+    public static JSONObject getJSONObject(String payload) {
+        return JSONObject.parseObject(payload);
+    }
+
+    public static JSONArray getJSONArray(String payload) {
+        return JSONArray.parseArray(payload);
+    }
 
 }

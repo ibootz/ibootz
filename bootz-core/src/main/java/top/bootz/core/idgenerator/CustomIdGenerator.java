@@ -12,7 +12,7 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.type.Type;
 
 import top.bootz.commons.helper.SpringHelper;
-import top.bootz.commons.snowflake.Snowflake;
+import top.bootz.commons.snowflake.IdGenerator;
 
 public class CustomIdGenerator implements IdentifierGenerator, Configurable {
 
@@ -27,7 +27,7 @@ public class CustomIdGenerator implements IdentifierGenerator, Configurable {
 	public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
 		Long id;
 		try {
-			Snowflake idGenerator = SpringHelper.getBean("idGenerator");
+			IdGenerator idGenerator = SpringHelper.getBean("idGenerator");
 			id = idGenerator.nextId();
 		} catch (Exception e) {
 			throw new HibernateException("", e);

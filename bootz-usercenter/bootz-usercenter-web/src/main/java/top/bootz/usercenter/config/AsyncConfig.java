@@ -38,32 +38,25 @@ public class AsyncConfig implements AsyncConfigurer {
         executor.setQueueCapacity(configProperties.getQueueCapacity());
 
         // 设置拒绝策略
-        executor.setRejectedExecutionHandler(new RejectedExecutionHandler() {
-            @Override
-            public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
-                log.error("TaskExecutor is rejected execute. activeCount [" + executor.getActiveCount() + "] "
-                        + "completedTaskCount [" + executor.getCompletedTaskCount() + "] largestPoolSize ["
-                        + executor.getLargestPoolSize() + "] taskCount [" + executor.getTaskCount() + "] ["
-                        + executor.getQueue().size() + "]");
-                if (!executor.isShutdown()) {
-                    r.run();
-                }
+        executor.setRejectedExecutionHandler((Runnable r, ThreadPoolExecutor executor1) -> {
+            log.error("TaskExecutor is rejected execute. activeCount [" + executor1.getActiveCount() + "] "
+                    + "completedTaskCount [" + executor1.getCompletedTaskCount() + "] largestPoolSize ["
+                    + executor1.getLargestPoolSize() + "] taskCount [" + executor1.getTaskCount() + "] ["
+                    + executor1.getQueue().size() + "]");
+            if (!executor1.isShutdown()) {
+                r.run();
             }
         });
+
         executor.initialize();
         return executor;
     }
 
     @Override
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-        return new AsyncUncaughtExceptionHandler() {
-
-            @Override
-            public void handleUncaughtException(Throwable arg0, Method arg1, Object... arg2) {
-                log.error("An uncaught async exception has occurred. exception method [{}]", arg1.getName());
-                log.error("", arg0);
-            }
-
+        return (Throwable arg0, Method arg1, Object... arg2) -> {
+            log.error("An uncaught async exception has occurred. exception method [{}]", arg1.getName());
+            log.error("", arg0);
         };
     }
 

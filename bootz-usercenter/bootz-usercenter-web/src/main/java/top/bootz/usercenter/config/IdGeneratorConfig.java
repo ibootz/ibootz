@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import top.bootz.commons.snowflake.Snowflake;
+import top.bootz.commons.snowflake.IdGenerator;
 import top.bootz.usercenter.config.properties.IdGeneratorProperties;
 
 /**
@@ -21,11 +21,11 @@ public class IdGeneratorConfig {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public Snowflake idGenerator() {
-		Snowflake snowflake = new Snowflake();
-		snowflake.setWorkerId(getWorkId());
-		snowflake.setDataCenterId(getDataCenterId());
-		return snowflake;
+	public IdGenerator idGenerator() {
+		IdGenerator idGenerator = new IdGenerator();
+		idGenerator.setWorkerId(getWorkId());
+		idGenerator.setDataCenterId(getDataCenterId());
+		return idGenerator;
 	}
 
 	private long getWorkId() {

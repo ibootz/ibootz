@@ -22,7 +22,7 @@ import top.bootz.commons.exception.BaseRuntimeException;
  * 加起来刚好64位，为一个Long型。<br>
  * SnowFlake的优点是，整体上按照时间自增排序，并且整个分布式系统内不会产生ID碰撞(由数据中心ID和机器ID作区分)，并且效率较高，经测试，SnowFlake每秒能够产生26万ID左右。
  */
-public class Snowflake {
+public class IdGenerator {
 
     /**
      * 起始时间戳，用于用当前时间戳减去这个时间戳，算出偏移量
@@ -221,7 +221,7 @@ public class Snowflake {
 		int tCounts = 16;
 		final Set<Long> set = Collections.synchronizedSet(new HashSet<>(counts));
 		CountDownLatch latch = new CountDownLatch(tCounts);
-		final Snowflake idWorker0 = new Snowflake();
+		final IdGenerator idWorker0 = new IdGenerator();
 		for (int i = 0; i < tCounts; i++) {
 			new Thread(new Runnable() {
 				@Override

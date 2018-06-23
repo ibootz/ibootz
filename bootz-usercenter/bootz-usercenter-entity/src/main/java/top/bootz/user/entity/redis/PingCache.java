@@ -26,7 +26,7 @@ import top.bootz.core.base.entity.BaseEntity;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@RedisHash(value = "{PingCache}", timeToLive = 120) // {}大括号包裹着keyPrefix可以保证在redis集群模式下，该实体的数据都存储在同一个slot中
+@RedisHash(value = "{PingCache}", timeToLive = 60) // {}大括号包裹着keyPrefix可以保证在redis集群模式下，该实体的数据都存储在同一个slot中
 public class PingCache extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;

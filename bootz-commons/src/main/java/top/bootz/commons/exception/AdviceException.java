@@ -1,4 +1,4 @@
-package top.bootz.core.aspect;
+package top.bootz.commons.exception;
 
 public class AdviceException extends Exception {
 
