@@ -1,11 +1,6 @@
 package top.bootz.usercenter.aspect;
 
-import java.lang.reflect.Method;
-import java.util.Date;
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -17,20 +12,28 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.support.RequestContextUtils;
-
-import lombok.extern.slf4j.Slf4j;
+import top.bootz.commons.constant.ExceptionConstants;
 import top.bootz.commons.constant.SecurityConstants;
+import top.bootz.commons.exception.AdviceException;
 import top.bootz.commons.exception.ApiException;
 import top.bootz.commons.helper.DateHelper;
 import top.bootz.commons.helper.HttpHelper;
 import top.bootz.commons.helper.ReflectionHelper;
 import top.bootz.commons.helper.ToStringHelper;
 import top.bootz.user.entity.mongo.AccessLog;
-import top.bootz.commons.exception.AdviceException;
+import top.bootz.user.service.mongo.AccessLogService;
+
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Optional;
 
 /**
  * 记录请求日志信息的切面
@@ -48,7 +51,8 @@ public class AccessHandlerAdvice {
     @Autowired
     private MessageSource messageSource;
 
-
+    @Autowired
+    private AccessLogService accessLogService;
 
     // @Autowired
     // private TokenService tokenService;
@@ -65,47 +69,60 @@ public class AccessHandlerAdvice {
      */
     @Around(value = "pointcutInControllerLayer()")
     public Object doAroundInControllerLayer(ProceedingJoinPoint joinPoint) throws Throwable {
-        HttpServletRequest request = getHttpServletRequest();
-        MethodSignature methodSignature = getMethodSignature(joinPoint);
-        Method method = methodSignature.getMethod();
-        boolean isAccessible = method.isAccessible();
-        method.setAccessible(true);
-        String[] paramNames = methodSignature.getParameterNames();
-        String returnType = methodSignature.getReturnType().getSimpleName();
-        AccessLog accessLog = new AccessLog();
-        // visitor
-        String token = request.getHeader(SecurityConstants.HEADER_AUTH_TOKEN);
-
-        // TODO 从token中获取用户信息，存入日志系统
-        // String username = this.tokenService.getUsernameFromToken(token);
-        // accessLog.setVisitor(username);
-
-        // token
-        accessLog.setToken(token);
-        // requestIp
-        String remoteHost = HttpHelper.getRemoteHost(request);
-        accessLog.setRequestIp(remoteHost);
-        // requestUrl
-        accessLog.setRequestUrl(request.getRequestURL().toString());
-        // className
-        accessLog.setClassName(joinPoint.getTarget().getClass().getName());
-        // methodName
-        accessLog.setMethodName(joinPoint.getSignature().getName());
-        // inputParamMap
-        Object[] args = joinPoint.getArgs();
-        if (!ArrayUtils.isEmpty(args)) {
-            putInputParams(paramNames, accessLog, args);
-        }
-        // hasResponse
-        accessLog.setReturned(!"void".equalsIgnoreCase(returnType));
-        long start = System.currentTimeMillis();
+        HttpServletRequest request = null;
+        Method method = null;
+        boolean isAccessible = false;
         long tookMillSeconds = 0;
         Object object = null;
         boolean successed = true;
         Date exceptionTime = null;
         String errMsg = "";
         AdviceException adviceException = null;
+        AccessLog accessLog = new AccessLog();
+        long start = 0L;
+
         try {
+            Optional<HttpServletRequest> requestOpt = getHttpServletRequest();
+            if (requestOpt.isPresent()) {
+                request = requestOpt.get();
+            } else {
+                throw new ApiException(HttpStatus.BAD_REQUEST.value(), ExceptionConstants.BAD_REQUEST);
+            }
+
+            MethodSignature methodSignature = getMethodSignature(joinPoint);
+            method = methodSignature.getMethod();
+            isAccessible = method.isAccessible();
+            method.setAccessible(true);
+            String[] paramNames = methodSignature.getParameterNames();
+            String returnType = methodSignature.getReturnType().getSimpleName();
+
+            // visitor
+            String token = request.getHeader(SecurityConstants.HEADER_AUTH_TOKEN);
+
+            // TODO 从token中获取用户信息，存入日志系统
+            // String username = this.tokenService.getUsernameFromToken(token);
+            // accessLog.setVisitor(username);
+
+            // token
+            accessLog.setToken(token);
+            // requestIp
+            String remoteHost = HttpHelper.getRemoteHost(request);
+            accessLog.setRequestIp(remoteHost);
+            // requestUrl
+            accessLog.setRequestUrl(request.getRequestURL().toString());
+            // className
+            accessLog.setClassName(joinPoint.getTarget().getClass().getName());
+            // methodName
+            accessLog.setMethodName(joinPoint.getSignature().getName());
+            // inputParamMap
+            Object[] args = joinPoint.getArgs();
+            if (!ArrayUtils.isEmpty(args)) {
+                putInputParams(paramNames, accessLog, args);
+            }
+            // hasResponse
+            accessLog.setReturned(!"void".equalsIgnoreCase(returnType));
+            start = System.currentTimeMillis();
+
             object = joinPoint.proceed();
             tookMillSeconds = System.currentTimeMillis() - start;
         } catch (Throwable e) {
@@ -119,7 +136,7 @@ public class AccessHandlerAdvice {
         } finally {
             // response
             if (accessLog.isReturned() && object != null) {
-                accessLog.setResponse(ToStringHelper.toJSON(object, true));
+                accessLog.setResponse(ToStringHelper.toJSON(object, false));
             }
             // tookMillSeconds
             accessLog.setTookMillSeconds(tookMillSeconds);
@@ -132,7 +149,12 @@ public class AccessHandlerAdvice {
             accessLog.setErrMsg(errMsg);
             // adviceException
             accessLog.setAdviceException(adviceException);
-            method.setAccessible(isAccessible);
+            if (method != null) {
+                method.setAccessible(isAccessible);
+            }
+
+            // 将访问日志保存到mongodb中
+            accessLogService.asyncSave(accessLog);
             log.info(accessLog.toJson());
         }
         return object;
@@ -157,7 +179,14 @@ public class AccessHandlerAdvice {
     private String getErrMsg(HttpServletRequest request, Throwable e) {
         String errMsg;
         if (e instanceof ApiException) {
-            Locale locale = RequestContextUtils.getLocaleResolver(request).resolveLocale(request);
+            LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+            Locale locale;
+            if (localeResolver != null) {
+                locale = localeResolver.resolveLocale(request);
+            } else {
+                locale = Locale.getDefault();
+            }
+
             ApiException apiException = (ApiException) e;
             errMsg = messageSource.getMessage(apiException.getErrorKey(), apiException.getArgs(), e.getMessage(),
                     locale);
@@ -169,9 +198,9 @@ public class AccessHandlerAdvice {
         return errMsg;
     }
 
-    private HttpServletRequest getHttpServletRequest() {
+    private Optional<HttpServletRequest> getHttpServletRequest() {
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        return sra.getRequest();
+        return sra == null ? Optional.empty() : Optional.of(sra.getRequest());
     }
 
     private MethodSignature getMethodSignature(JoinPoint joinPoint) {

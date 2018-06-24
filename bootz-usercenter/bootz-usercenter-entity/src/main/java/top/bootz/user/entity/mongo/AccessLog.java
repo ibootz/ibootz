@@ -19,7 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * 访问日志表
+ * API访问日志表
  */
 
 @Setter

@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import top.bootz.core.base.dto.RestMessage;
+import top.bootz.user.service.rabbit.RabbitMessageSender;
 import top.bootz.core.dictionary.MessageStatusEnum;
 import top.bootz.user.entity.mongo.PingMongo;
 import top.bootz.user.entity.mysql.ping.Ping;
@@ -14,7 +15,6 @@ import top.bootz.user.entity.redis.PingCache;
 import top.bootz.user.service.elastic.ElasticPingService;
 import top.bootz.user.service.mongo.PingMongoService;
 import top.bootz.user.service.mysql.PingService;
-import top.bootz.user.service.rabbit.RabbitService;
 import top.bootz.user.service.redis.PingCacheService;
 import top.bootz.user.service.redis.RedisService;
 import top.bootz.usercenter.controller.BaseController;
@@ -44,7 +44,7 @@ public class PingController extends BaseController {
     private ElasticPingService elasticPingService;
 
     @Autowired
-    private RabbitService rabbitPingService;
+    private RabbitMessageSender rabbitMessageSender;
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)

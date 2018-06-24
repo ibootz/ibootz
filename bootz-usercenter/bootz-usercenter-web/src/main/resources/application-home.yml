@@ -29,9 +29,9 @@ spring:
 #    elasticsearch:
 #      cluster-name: null
 #      cluster-nodes: null
-#  rabbitmq:
-#    addresses: 192.168.199.113:5672,192.168.199.114:5672
-#    username: bootz
-#    password: 1990912
-#    virtual-host: /bootz
-#    connection-timeout: 60000
+  rabbitmq:
+    addresses: 192.168.199.113:5672,192.168.199.114:5672
+    username: bootz
+    password: 1990912
+    virtual-host: /bootz-v1
+    connection-timeout: 60s

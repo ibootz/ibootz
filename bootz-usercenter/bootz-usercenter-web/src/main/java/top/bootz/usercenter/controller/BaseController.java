@@ -57,12 +57,12 @@ public class BaseController {
     /**
      * 新增操作之后，在response的header中添加新增资源的url地址。
      *
-     * @param response
+     * @param request
      * @param id
      */
     protected String buildLocation(HttpServletRequest request, Long id) {
         String requestUrl = generateBaseUrl(request);
-        String location = "";
+        String location;
         if (requestUrl.endsWith("/")) {
             location = requestUrl + id;
         } else {
