@@ -1,7 +1,8 @@
 package top.bootz.commons.helper;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
+
+import com.google.common.base.Preconditions;
 
 public class SpringHelper {
 
@@ -15,9 +16,7 @@ public class SpringHelper {
 	}
 
 	public static ApplicationContext getApplicationContext() {
-		if (applicationContext == null) {
-			applicationContext = new FileSystemXmlApplicationContext(new String[0]);
-		}
+		Preconditions.checkNotNull(applicationContext, "ApplicationContext must not be null");
 		return applicationContext;
 	}
 

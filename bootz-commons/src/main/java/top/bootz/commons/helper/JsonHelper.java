@@ -12,6 +12,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 
+import top.bootz.commons.exception.BaseRuntimeException;
+
 public final class JsonHelper {
 
     public static final String DATE_FORMAT_DATETIME = "yyyy-MM-dd HH:mm:ss";
@@ -46,7 +48,7 @@ public final class JsonHelper {
                     : objectMapper.readValue(json,
                     objectMapper.getTypeFactory().constructParametricType(beanClass, elementClasses));
         } catch (IOException e) {
-            throw new RuntimeException(e.getMessage(), e);
+            throw new BaseRuntimeException(e.getMessage(), e);
         }
     }
 
@@ -54,7 +56,7 @@ public final class JsonHelper {
         try {
             return objectMapper.writeValueAsString(t);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e.getMessage(), e);
+            throw new BaseRuntimeException(e.getMessage(), e);
         }
     }
 

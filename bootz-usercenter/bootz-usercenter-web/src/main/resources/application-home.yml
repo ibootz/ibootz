@@ -26,12 +26,20 @@ spring:
     mongodb:
       uri: mongodb://readwrite:nkEs8h6MdH!@192.168.199.115:27017,192.168.199.116:27017,192.168.199.151:27017/bootz_v1
       authentication-database: bootz_v1
-#    elasticsearch:
-#      cluster-name: null
-#      cluster-nodes: null
   rabbitmq:
     addresses: 192.168.199.113:5672,192.168.199.114:5672
     username: bootz
-    password: 1990912
+    password: nkEs8h6MdH!
     virtual-host: /bootz-v1
     connection-timeout: 60s
+    publisher-confirms: true
+    dynamic: true
+    cache:
+      channel:
+        size: 5
+        checkout-timeout: 10s
+    listener:
+      type: simple
+      simple:
+        acknowledge-mode: manual
+        prefetch: 3

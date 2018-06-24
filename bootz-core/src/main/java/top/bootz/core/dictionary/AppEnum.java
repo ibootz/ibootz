@@ -2,15 +2,27 @@ package top.bootz.core.dictionary;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum GenderEnum {
+/**
+ * 系统内各微应用的名称和编号
+ * 
+ * @Author : Zhangq <momogoing@163.com>
+ * @CreationDate : 2018年6月24日 下午8:18:13
+ */
+public enum AppEnum {
 
-	UNKNOW("u", "未知"), MALE("m", "男性"), FEMALE("f", "女性"), OTHERS("o", "其他");
+	UNKNOW(0, "未知"),
 
-	private String code;
+	USER_CENTER(5, "用户中心"),
+
+	SECURITY(10, "安全中心"),
+
+	ORDER(15, "商城");
+
+	private int code;
 
 	private String desc;
 
-	GenderEnum(String code, String desc) {
+	AppEnum(int code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
@@ -34,10 +46,10 @@ public enum GenderEnum {
 	}
 
 	@JsonValue
-	public String getCode() {
+	public int getCode() {
 		return code;
 	}
-	
+
 	public String getDesc() {
 		return this.desc;
 	}

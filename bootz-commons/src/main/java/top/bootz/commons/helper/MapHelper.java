@@ -1,6 +1,7 @@
 package top.bootz.commons.helper;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -13,10 +14,15 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-
 public class MapHelper {
 
+	private static final Map<String, Object> EMPTY_MAP = new HashMap<>();
+
 	private MapHelper() {
+	}
+
+	public static Map<String, Object> emptyMap() {
+		return EMPTY_MAP;
 	}
 
 	/**

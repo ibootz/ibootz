@@ -1,6 +1,5 @@
 package top.bootz.user.entity.redis;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashSet;
@@ -13,6 +12,7 @@ import org.springframework.data.redis.core.index.Indexed;
 import lombok.Getter;
 import lombok.Setter;
 import top.bootz.commons.helper.BeanHelper;
+import top.bootz.core.base.entity.BaseEntity;
 import top.bootz.core.dictionary.DisableTypeEnum;
 import top.bootz.core.dictionary.GenderEnum;
 import top.bootz.core.dictionary.LockStatusEnum;
@@ -27,7 +27,7 @@ import top.bootz.user.entity.mysql.user.User;
 @Setter
 @Getter
 @RedisHash(timeToLive = 86400) // 缓存一天
-public class UserCache implements Serializable {
+public class UserCache extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 

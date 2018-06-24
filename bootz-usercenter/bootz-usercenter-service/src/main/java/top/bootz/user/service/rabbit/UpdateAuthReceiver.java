@@ -18,33 +18,28 @@ import top.bootz.user.entity.mongo.RabbitMessageLog;
 import top.bootz.user.service.mongo.RabbitMessageLogService;
 
 /**
- * @Project : ibootz
- * @Package : top.bootz.user.service.rabbit.sender
- * @Description : Rabbit消息接收处理中心
- * @Author : momogoing@163.com
- * @CreationDate : 2018-06-23 下午11:01
+ * @Author : Zhangq <momogoing@163.com>
+ * @CreationDate : 2018年6月24日 下午11:47:15
  */
-
 @Slf4j
 @Component
-@RabbitListener(queues = "app.usercenter.ping", admin = "rabbitAdmin")
-public class PingReceiver {
+@RabbitListener(queues = "app.update_auth", admin = "rabbitAdmin")
+public class UpdateAuthReceiver {
 
-	/** 监听队列名务必于<a>RabbitConstants.Queue</a>中的字段一致 */
-	public static final String USERCENTER_PING = "app.usercenter.ping";
+	public static final String USERCENTER_UPDATE_AUTH = "app.update_auth";
 
 	@Autowired
 	private RabbitMessageLogService rabbitMessageLogService;
 
 	@RabbitHandler
-	public void pingListener(@Payload BaseMessage message, @Headers Map<String, Object> messageHeaders) {
+	public void createUserListener(@Payload BaseMessage message, @Headers Map<String, Object> messageHeaders) {
 		if (message == null) {
 			log.error("The received message is illegal. {}", JsonHelper.toJSON(message));
 			return;
 		}
 
 		// 接收到消息之后做一些处理 ...
-		log.debug("监听到[{}]队列的消息: {}", USERCENTER_PING, message.toJson());
+		log.debug("监听到[{}]队列的消息: {}", USERCENTER_UPDATE_AUTH, message.toJson());
 
 		afterRecivedMessage(message);
 	}
