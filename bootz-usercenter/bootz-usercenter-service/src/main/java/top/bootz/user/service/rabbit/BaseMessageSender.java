@@ -13,6 +13,7 @@ import org.springframework.amqp.rabbit.support.CorrelationData;
 
 import com.google.common.base.Preconditions;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import top.bootz.commons.snowflake.IdGenerator;
 import top.bootz.core.base.dto.BaseMessage;
@@ -27,9 +28,8 @@ import top.bootz.user.service.mongo.RabbitMessageLogService;
  */
 
 @Slf4j
-public class BaseMessageSender implements RabbitTemplate.ConfirmCallback {
-
-	public static final String USERCENTER_DEAD_LETTER = "app.usercenter.dead_letter";
+@NoArgsConstructor
+public class BaseMessageSender {
 
 	private RabbitMessageLogService rabbitMessageLogService;
 
@@ -43,24 +43,21 @@ public class BaseMessageSender implements RabbitTemplate.ConfirmCallback {
 		this.rabbitMessageLogService = rabbitMessageLogService;
 		this.idGenerator = idGenerator;
 		this.rabbitTemplate = rabbitTemplate;
+		setupCallbacks();
 	}
 
 	/**
-	 * 处理消息回调
+	 * 发送消息的主要方法
+	 * 
+	 * @param exchange
+	 * @param routingKey
+	 * @param message
+	 * @param messageHeaders
+	 * @return
+	 * @Author : Zhangq <momogoing@163.com>
+	 * @CreationDate : 2018年6月28日 上午12:10:02
 	 */
-	@Override
-	public void confirm(CorrelationData correlationData, boolean ack, String cause) {
-		String messageId = correlationData.getId();
-		log.debug("message confirm callback, messageId: {}, ack: {}, cause: {}", messageId, ack, cause);
-		Optional<RabbitMessageLog> opt = rabbitMessageLogService.findByMessageId(Long.valueOf(messageId));
-		opt.ifPresent(messageLog -> {
-			messageLog.setConfirmed(ack);
-			messageLog.setCause(cause);
-			rabbitMessageLogService.asyncSave(messageLog);
-		});
-	}
-
-	protected void send(String exchange, String routingKey, BaseMessage message, Map<String, Object> messageHeaders) {
+	public Long send(String exchange, String routingKey, BaseMessage message, Map<String, Object> messageHeaders) {
 		Preconditions.checkArgument(StringUtils.isNotBlank(exchange), "Rabbit exchange must not be blank");
 		Preconditions.checkArgument(StringUtils.isNotBlank(routingKey), "Rabbit routing key must not be blank");
 		Preconditions.checkArgument(message != null, "Rabbit message payload must not be blank");
@@ -75,9 +72,8 @@ public class BaseMessageSender implements RabbitTemplate.ConfirmCallback {
 		boolean isSent = true;
 		try {
 			CorrelationData correlationData = new CorrelationData(String.valueOf(messageId));
-			rabbitTemplate.convertSendAndReceive(exchange, routingKey, message,
-					new CustomMessagePostProcessor(messageHeaders), correlationData);
-			isSent = true;
+			rabbitTemplate.convertAndSend(exchange, routingKey, message, new CustomMessagePostProcessor(messageHeaders),
+					correlationData);
 		} catch (Exception e) {
 			log.error("An exception has occurred when sending rabbit message. exchange: " + exchange + ", routingKey: "
 					+ routingKey + ", message: " + message.toJson(), e);
@@ -86,6 +82,8 @@ public class BaseMessageSender implements RabbitTemplate.ConfirmCallback {
 
 		RabbitMessageLog messageLog = new RabbitMessageLog(exchange, routingKey, message, isSent);
 		rabbitMessageLogService.asyncSave(messageLog);
+
+		return messageId;
 	}
 
 	/** 消息后处理器 */
@@ -109,6 +107,42 @@ public class BaseMessageSender implements RabbitTemplate.ConfirmCallback {
 			}
 			return msg;
 		}
+	}
+
+	protected void setupCallbacks() {
+		// broker服务器确认消息已递送到指定队列(此时消息已进入队列，但不代表消费者已经成功消费。消费者端手动确认与此处发送端的确认回调不是一码事)的回调
+		if (!rabbitTemplate.isConfirmListener()) {
+			this.rabbitTemplate.setConfirmCallback((CorrelationData correlationData, boolean ack, String cause) -> {
+				String messageId = correlationData.getId();
+				log.debug("message is confirmed, messageId: {}, ack: {}, cause: {}", messageId, ack, cause);
+				Optional<RabbitMessageLog> opt = rabbitMessageLogService.findByMessageId(Long.valueOf(messageId));
+				if (opt.isPresent()) {
+					RabbitMessageLog messageLog = opt.get();
+					messageLog.setConfirmed(ack && !messageLog.getReturned());
+					messageLog.setCause(messageLog.getReturned() ? messageLog.getCause() : cause);
+					rabbitMessageLogService.asyncSave(messageLog);
+				};
+			});
+		}
+
+		// broker退回消息回调(当指定的exchange存在但是通过的routingkey找不到对应的队列时，broker会将消息退回来)
+		this.rabbitTemplate.setReturnCallback((message, replyCode, replyText, exchange, routingKey) -> {
+			log.debug(
+					"message is returned callback, messageId:{}; replyCode:{}; replyText:{}; exchange:{}; routingKey:{}",
+					message, replyCode, replyText, exchange, routingKey);
+			String messageId = message.getMessageProperties().getCorrelationId();
+			if (StringUtils.isBlank(messageId)) {
+				messageId = message.getMessageProperties().getMessageId();
+			}
+			Optional<RabbitMessageLog> opt = rabbitMessageLogService.findByMessageId(Long.valueOf(messageId));
+			opt.ifPresent(messageLog -> {
+				messageLog.setReturned(Boolean.TRUE);
+				messageLog.setConfirmed(Boolean.FALSE);
+				messageLog.setReceived(Boolean.FALSE);
+				messageLog.setCause(replyCode + ":" + replyText);
+				rabbitMessageLogService.asyncSave(messageLog);
+			});
+		});
 	}
 
 }

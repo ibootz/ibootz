@@ -27,14 +27,17 @@ import top.bootz.core.base.dto.BaseMessage;
 import top.bootz.core.base.dto.RestMessage;
 import top.bootz.core.dictionary.AppEnum;
 import top.bootz.core.dictionary.MessageStatusEnum;
-import top.bootz.user.commons.constants.RabbitConstants;
+import top.bootz.user.commons.constants.RabbitConstants.Exchange;
+import top.bootz.user.commons.constants.RabbitConstants.Queue;
 import top.bootz.user.controller.BaseController;
 import top.bootz.user.entity.mongo.PingMongo;
+import top.bootz.user.entity.mongo.RabbitMessageLog;
 import top.bootz.user.entity.mysql.ping.Ping;
 import top.bootz.user.entity.rabbit.PingMessage;
 import top.bootz.user.entity.redis.PingCache;
 import top.bootz.user.service.elastic.ElasticPingService;
 import top.bootz.user.service.mongo.PingMongoService;
+import top.bootz.user.service.mongo.RabbitMessageLogService;
 import top.bootz.user.service.mysql.PingService;
 import top.bootz.user.service.rabbit.sender.PingMessageSender;
 import top.bootz.user.service.redis.PingCacheService;
@@ -64,15 +67,19 @@ public class PingController extends BaseController {
 	@Autowired
 	private PingMessageSender pingMessageSender;
 
+	@Autowired
+	private RabbitMessageLogService rabbitMessageLogService;
+
 	/**
 	 * 相应调用发的测试请求
 	 *
 	 * @param request
 	 * @return
+	 * @throws InterruptedException
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public @ResponseBody ResponseEntity<RestMessage> ping(HttpServletRequest request) {
+	public @ResponseBody ResponseEntity<RestMessage> ping(HttpServletRequest request) throws InterruptedException {
 		// 1. 测试Jpa相关配置和Mysql服务器
 		boolean mysql = testMysql();
 
@@ -92,14 +99,17 @@ public class PingController extends BaseController {
 		return buildRestMessage(HttpStatus.OK, MessageStatusEnum.SUCCESS, pong, null);
 	}
 
-	private boolean testRabbitmq() {
+	private boolean testRabbitmq() throws InterruptedException {
 		String payload = "Just a ping!!!";
-		BaseMessage message = new PingMessage(AppEnum.USER_CENTER.getCode(), AppEnum.ORDER.getCode(), -1L,
-				LocalDateTime.now(), payload);
-		pingMessageSender.send(
-				RabbitConstants.Exchange.DIRECT.name(), RabbitConstants
-						.buildRoutingKey(RabbitConstants.Exchange.DIRECT, RabbitConstants.Queue.USERCENTER_PING),
-				message, MapHelper.emptyMap());
+		BaseMessage message = new PingMessage(AppEnum.USER_CENTER.getName(), new String[] { AppEnum.ORDER.getName() },
+				-1L, LocalDateTime.now(), payload);
+		Long messageId = pingMessageSender.send(Exchange.DIRECT, Queue.UC_PING, message, MapHelper.emptyMap());
+		Thread.sleep(2000);
+		Optional<RabbitMessageLog> opt = rabbitMessageLogService.findByMessageId(messageId);
+		if (opt.isPresent()) {
+			log.debug(opt.get().toString());
+			return opt.get().getReceived();
+		}
 		return false;
 	}
 

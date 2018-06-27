@@ -19,10 +19,10 @@ import top.bootz.user.service.rabbit.BaseMessageSender;
 
 @Component
 @NoArgsConstructor
-public class PingMessageSender extends BaseMessageSender {
+public class UpdateAuthMessageSender extends BaseMessageSender {
 
 	@Autowired
-	public PingMessageSender(RabbitMessageLogService rabbitMessageLogService, IdGenerator idGenerator,
+	public UpdateAuthMessageSender(RabbitMessageLogService rabbitMessageLogService, IdGenerator idGenerator,
 			RabbitTemplate rabbitTemplate) {
 		super(rabbitMessageLogService, idGenerator, rabbitTemplate);
 	}

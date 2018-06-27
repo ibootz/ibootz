@@ -55,10 +55,14 @@ public class RabbitMessageLog extends BaseEntity {
 	@Indexed
 	private Boolean sent;
 
-	/** 回调阶段：消息服务器是否给出确认成功的回调 */
+	/** 确认递送：broker服务器是否给出确认成功的回调 */
 	@Indexed
 	private Boolean confirmed;
 
+	/** 退回消息：broker服务器没有找到相应的exchange，退回了消息 */
+	@Indexed
+	private Boolean returned;
+	
 	/** 处理阶段：消息是否被成功接收并成功处理 */
 	@Indexed
 	private Boolean received;

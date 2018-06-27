@@ -31,15 +31,22 @@ spring:
     username: bootz
     password: nkEs8h6MdH!
     virtual-host: /bootz-v1
-    connection-timeout: 60s
+    connection-timeout: 30s
     publisher-confirms: true
+    publisher-returns: true
     dynamic: true
     cache:
       channel:
-        size: 5
-        checkout-timeout: 10s
+        size: 100
+    template:
+      mandatory: true
     listener:
       type: simple
       simple:
         acknowledge-mode: manual
-        prefetch: 3
+        prefetch: 1
+        default-requeue-rejected: false
+        retry:
+          enabled: true
+          max-attempts: 3
+          multiplier: 10

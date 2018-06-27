@@ -29,11 +29,11 @@ public class BaseMessage extends BaseEntity {
 
 	/** 消息来自哪个微应用 */
 	@Indexed
-	private int from;
+	private String from;
 
 	/** 消息去往哪个微应用 */
 	@Indexed
-	private int to;
+	private String[] to;
 
 	/** 触发此条rabbit消息的用户 */
 	@Indexed
@@ -43,7 +43,7 @@ public class BaseMessage extends BaseEntity {
 	@Indexed
 	private LocalDateTime createTime = LocalDateTime.now();
 
-	public BaseMessage(int from, int to, Long createtor, LocalDateTime createTime) {
+	public BaseMessage(String from, String[] to, Long createtor, LocalDateTime createTime) {
 		super();
 		this.from = from;
 		this.to = to;

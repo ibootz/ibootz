@@ -23,7 +23,7 @@ public class PingMessage extends BaseMessage {
 
 	private String ping;
 
-	public PingMessage(int from, int to, Long createtor, LocalDateTime createTime, String ping) {
+	public PingMessage(String from, String[] to, Long createtor, LocalDateTime createTime, String ping) {
 		super(from, to, createtor, createTime);
 		this.ping = ping;
 	}

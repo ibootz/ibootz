@@ -1,5 +1,8 @@
 package top.bootz.core.dictionary;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
@@ -10,44 +13,68 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 public enum AppEnum {
 
-	UNKNOW(0, "未知"),
+	UNKNOW(0, "Unknow", "未知"),
 
-	USER_CENTER(5, "用户中心"),
+	USER_CENTER(5, "UserCenter", "用户中心"),
 
-	SECURITY(10, "安全中心"),
+	SECURITY(10, "Security", "安全中心"),
 
-	ORDER(15, "商城");
+	ORDER(15, "Order", "商城");
 
 	private int code;
 
+	private String name;
+
 	private String desc;
 
-	AppEnum(int code, String desc) {
+	AppEnum(int code, String name, String desc) {
 		this.code = code;
+		this.name = name;
 		this.desc = desc;
 	}
 
-	public static GenderEnum getGenderByCode(String code) {
-		for (GenderEnum genderEnum : GenderEnum.values()) {
-			if (genderEnum.getCode().equalsIgnoreCase(code)) {
-				return genderEnum;
-			}
+	public static List<String> getAllAppName() {
+		List<String> names = new ArrayList<>();
+		for (AppEnum appEnum : AppEnum.values()) {
+			names.add(appEnum.getName());
 		}
-		return GenderEnum.UNKNOW;
+		return names;
 	}
 
-	public static GenderEnum getGenderByDesc(String desc) {
-		for (GenderEnum genderEnum : GenderEnum.values()) {
-			if (genderEnum.getDesc().equalsIgnoreCase(desc)) {
-				return genderEnum;
+	public static AppEnum getAppByCode(Integer code) {
+		for (AppEnum appEnum : AppEnum.values()) {
+			if (appEnum.getCode() == code) {
+				return appEnum;
 			}
 		}
-		return GenderEnum.UNKNOW;
+		return AppEnum.UNKNOW;
+	}
+
+	public static AppEnum getAppByName(String name) {
+		for (AppEnum appEnum : AppEnum.values()) {
+			if (appEnum.getName().equalsIgnoreCase(name)) {
+				return appEnum;
+			}
+		}
+		return AppEnum.UNKNOW;
+	}
+
+	public static AppEnum getAppByDesc(String desc) {
+		for (AppEnum appEnum : AppEnum.values()) {
+			if (appEnum.getDesc().equalsIgnoreCase(desc)) {
+				return appEnum;
+			}
+		}
+		return AppEnum.UNKNOW;
 	}
 
 	@JsonValue
 	public int getCode() {
 		return code;
+	}
+
+	public String getName() {
+		return this.name;
 	}
 
 	public String getDesc() {
