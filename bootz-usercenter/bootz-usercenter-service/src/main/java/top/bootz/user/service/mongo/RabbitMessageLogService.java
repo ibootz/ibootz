@@ -1,14 +1,16 @@
 package top.bootz.user.service.mongo;
 
-import java.util.Optional;
-
+import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
+import top.bootz.core.base.service.BaseMongoService;
 import top.bootz.user.entity.mongo.RabbitMessageLog;
 import top.bootz.user.repository.mongo.RabbitMessageLogRepository;
+
+import java.util.Optional;
 
 /**
  * @Author : momogoing@163.com
@@ -16,35 +18,46 @@ import top.bootz.user.repository.mongo.RabbitMessageLogRepository;
  */
 
 @Service
-public class RabbitMessageLogService {
+@NoArgsConstructor
+public class RabbitMessageLogService extends BaseMongoService<RabbitMessageLog> {
 
-	@Autowired
-	private RabbitMessageLogRepository rabbitMessageLogRepository;
+    @Autowired
+    private RabbitMessageLogRepository rabbitMessageLogRepository;
 
-	public RabbitMessageLog save(RabbitMessageLog rabbitMessageLog) {
-		return rabbitMessageLogRepository.save(rabbitMessageLog);
-	}
+    /**
+     * 该构造方法用于为baseMongoService通用父类注入mongodbTemplate工具类，必不可少。
+     *
+     * @param mongoTemplate
+     */
+    @Autowired
+    private RabbitMessageLogService(MongoTemplate mongoTemplate) {
+        super(mongoTemplate);
+    }
 
-	@Async
-	public void asyncSave(RabbitMessageLog rabbitMessageLog) {
-		save(rabbitMessageLog);
-	}
+    public RabbitMessageLog save(RabbitMessageLog rabbitMessageLog) {
+        return rabbitMessageLogRepository.save(rabbitMessageLog);
+    }
 
-	public Optional<RabbitMessageLog> find(ObjectId objectId) {
-		return rabbitMessageLogRepository.findById(objectId);
-	}
+    @Async
+    public void asyncSave(RabbitMessageLog rabbitMessageLog) {
+        save(rabbitMessageLog);
+    }
 
-	public void delete(RabbitMessageLog rabbitMessageLog) {
-		rabbitMessageLogRepository.delete(rabbitMessageLog);
-	}
+    public Optional<RabbitMessageLog> find(ObjectId objectId) {
+        return rabbitMessageLogRepository.findById(objectId);
+    }
 
-	@Async
-	public void asyncDelete(RabbitMessageLog rabbitMessageLog) {
-		delete(rabbitMessageLog);
-	}
+    public void delete(RabbitMessageLog rabbitMessageLog) {
+        rabbitMessageLogRepository.delete(rabbitMessageLog);
+    }
 
-	public Optional<RabbitMessageLog> findByMessageId(Long messageId) {
-		return rabbitMessageLogRepository.findByMessage_Id(messageId);
-	}
+    @Async
+    public void asyncDelete(RabbitMessageLog rabbitMessageLog) {
+        delete(rabbitMessageLog);
+    }
+
+    public Optional<RabbitMessageLog> findByMessageId(Long messageId) {
+        return rabbitMessageLogRepository.findByMessage_Id(messageId);
+    }
 
 }

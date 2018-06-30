@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @CreationDate : 2018年6月24日 下午9:12:34
  */
 @Configuration
-@EnableCaching(proxyTargetClass = true)
+@EnableCaching
 public class CacheConfig {
 
 	@Autowired

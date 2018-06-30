@@ -1,4 +1,4 @@
-package top.bootz.core.idgenerator;
+package top.bootz.core.generator;
 
 import java.io.Serializable;
 import java.util.Properties;

@@ -24,7 +24,7 @@ import top.bootz.user.config.properties.TaskThreadPoolConfigProperties;
  */
 @Slf4j
 @Configuration
-@EnableAsync(proxyTargetClass = true)
+@EnableAsync
 public class AsyncConfig implements AsyncConfigurer {
 
 	@Autowired

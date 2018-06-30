@@ -1,14 +1,16 @@
 package top.bootz.user.service.mongo;
 
-import java.util.Optional;
-
+import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
+import top.bootz.core.base.service.BaseMongoService;
 import top.bootz.user.entity.mongo.AccessLog;
 import top.bootz.user.repository.mongo.AccessLogRepository;
+
+import java.util.Optional;
 
 /**
  * @Author : momogoing@163.com
@@ -16,31 +18,42 @@ import top.bootz.user.repository.mongo.AccessLogRepository;
  */
 
 @Service
-public class AccessLogService {
+@NoArgsConstructor
+public class AccessLogService extends BaseMongoService<AccessLog> {
 
-	@Autowired
-	private AccessLogRepository accessLogRepository;
+    @Autowired
+    private AccessLogRepository accessLogRepository;
 
-	public AccessLog save(AccessLog accessLog) {
-		return accessLogRepository.save(accessLog);
-	}
+    /**
+     * 该构造方法用于为baseMongoService通用父类注入mongodbTemplate工具类，必不可少。
+     *
+     * @param mongoTemplate
+     */
+    @Autowired
+    private AccessLogService(MongoTemplate mongoTemplate) {
+        super(mongoTemplate);
+    }
 
-	@Async
-	public void asyncSave(AccessLog accessLog) {
-		save(accessLog);
-	}
+    public AccessLog save(AccessLog accessLog) {
+        return accessLogRepository.save(accessLog);
+    }
 
-	public Optional<AccessLog> find(ObjectId objectId) {
-		return accessLogRepository.findById(objectId);
-	}
+    @Async
+    public void asyncSave(AccessLog accessLog) {
+        save(accessLog);
+    }
 
-	public void delete(AccessLog accessLog) {
-		accessLogRepository.delete(accessLog);
-	}
+    public Optional<AccessLog> find(ObjectId objectId) {
+        return accessLogRepository.findById(objectId);
+    }
 
-	@Async
-	public void asyncDelete(AccessLog accessLog) {
-		delete(accessLog);
-	}
+    public void delete(AccessLog accessLog) {
+        accessLogRepository.delete(accessLog);
+    }
+
+    @Async
+    public void asyncDelete(AccessLog accessLog) {
+        delete(accessLog);
+    }
 
 }

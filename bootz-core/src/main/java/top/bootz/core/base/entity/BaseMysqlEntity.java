@@ -46,7 +46,7 @@ public class BaseMysqlEntity extends BaseEntity {
 
 	@Id
 	@GeneratedValue(generator = "idGenerator")
-	@GenericGenerator(name = "idGenerator", strategy = "top.bootz.core.idgenerator.CustomIdGenerator")
+	@GenericGenerator(name = "idGenerator", strategy = "top.bootz.core.generator.CustomIdGenerator")
 	@Column(name = "id", nullable = false, unique = true, updatable = false, insertable = false, columnDefinition = "bigint(64) default 0 comment '主键唯一标识'")
 	public Long getId() {
 		return id;
