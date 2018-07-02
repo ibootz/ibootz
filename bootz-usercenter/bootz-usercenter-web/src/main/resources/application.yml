@@ -58,7 +58,7 @@ spring:
         login-password: 1990912
         reset-enable: false
   gson:
-    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSZZ
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
   http:
     converters:
       preferred-json-mapper: jackson
@@ -71,7 +71,6 @@ spring:
     serialization:
       fail-on-empty-beans: false
       write-dates-as-timestamps: false
-      
   jpa:
     database: mysql
     open-in-view: true

@@ -23,13 +23,12 @@ public class BaseMongoService<T> {
 
 	private MongoTemplate mongoTemplate;
 
-	private Class<T> targetType;
+	private Class<T> clazz;
 
 	@SuppressWarnings("unchecked")
-	public BaseMongoService(MongoTemplate mongoTemplate) {
+	protected BaseMongoService(MongoTemplate mongoTemplate) {
 		this.mongoTemplate = mongoTemplate;
-		ParameterizedType pType = (ParameterizedType) this.getClass().getGenericSuperclass();
-		targetType = (Class<T>) pType.getActualTypeArguments()[0];
+		clazz = (Class<T>) (((ParameterizedType) (this.getClass().getGenericSuperclass())).getActualTypeArguments()[0]);
 	}
 
 	/**
@@ -40,7 +39,7 @@ public class BaseMongoService<T> {
 		for (Map.Entry<String, Object> entry : fieldValueMap.entrySet()) {
 			update.set(entry.getKey(), entry.getValue());
 		}
-		return this.mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(id)), update, targetType);
+		return this.mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(id)), update, clazz);
 	}
 
 }
