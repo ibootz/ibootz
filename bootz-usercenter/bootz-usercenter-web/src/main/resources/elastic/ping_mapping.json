@@ -1,0 +1,68 @@
+{
+	"ping": {
+		"properties": {
+			"id": {
+				"type": "long",
+				"store": true
+			},
+			"count": {
+				"type": "integer"
+			},
+			"buyerName": {
+				"type": "text",
+				"analyzer": "ik_smart",
+				"search_analyzer": "ik_smart",
+				"eager_global_ordinals": true,
+				"store": true,
+				"fields": {
+					"raw": {
+						"type": "keyword",
+						"store": true,
+						"ignore_above": 256
+					}
+				}
+			},
+			"price": {
+				"type": "scaled_float",
+				"scaling_factor": 1000
+			},
+			"createTime": {
+				"type": "date",
+				"format": "strict_date_optional_time||date_time||yyyy-MM-dd'T'HH:mm:ss.SSS||yyyy-MM-dd HH:mm:ss||epoch_millis",
+				"ignore_malformed": true
+			},
+			"pingItems": {
+				"type": "nested",
+				"properties": {
+					"id": {
+						"type": "long"
+					},
+					"pingItemTag": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "long"
+							},
+							"description": {
+								"type": "text",
+								"analyzer": "ik_smart",
+								"search_analyzer": "ik_smart"
+							},
+							"sku": {
+								"type": "text",
+								"store": true,
+								"fields": {
+									"raw": {
+										"type": "keyword",
+										"store": true,
+										"ignore_above": 256
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -3,7 +3,7 @@ spring:
     url: jdbc:mysql://192.168.199.111:3306/bootz?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=round&rewriteBatchedStatements=true
     username: readwrite
     password: nkEs8h6MdH!
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
   redis:
     cluster:
       nodes:
@@ -26,6 +26,11 @@ spring:
     mongodb:
       uri: mongodb://readwrite:nkEs8h6MdH!@192.168.199.115:27017,192.168.199.116:27017,192.168.199.151:27017/bootz_v1
       authentication-database: bootz_v1
+    elasticsearch:
+      cluster-name: bootz-v1
+      cluster-nodes: 192.168.199.117:9300,192.168.199.118:9300,192.168.199.149:9300
+      repositories:
+        enabled: true
   rabbitmq:
     addresses: 192.168.199.113:5672,192.168.199.114:5672
     username: bootz
