@@ -3,11 +3,14 @@ package top.bootz.user.config;
 import java.io.IOException;
 
 import org.elasticsearch.client.Client;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.EntityMapper;
+import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -17,6 +20,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 
 @Configuration
+@EnableElasticsearchRepositories(basePackages = { "top.bootz.user.repository.elastic" })
+@AutoConfigureAfter(ElasticsearchAutoConfiguration.class)
 public class ElasticConfiguration {
 
 	@Bean
