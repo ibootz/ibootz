@@ -31,10 +31,8 @@ public class RedisService {
      */
     @Async
     public <V> void opsForValue(String key, V value, long timeout) {
-        if (timeout == -1) {
-            redisTemplate.opsForValue().set(key, value);
-        }
-        redisTemplate.opsForValue().set(key, value, timeout, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(key, value);
+        expire(key, timeout);
     }
 
     /**
@@ -46,10 +44,8 @@ public class RedisService {
      */
     @Async
     public <HK, V> void opsForHash(String key, Map<HK, V> values, long timeout) {
-        if (timeout == -1) {
-            redisTemplate.opsForValue().set(key, values);
-        }
-        redisTemplate.opsForValue().set(key, values, timeout, TimeUnit.SECONDS);
+        redisTemplate.opsForHash().putAll(key, values);
+        expire(key, timeout);
     }
 
     /**
@@ -60,10 +56,8 @@ public class RedisService {
      */
     @Async
     public <V> void opsForList(String key, List<V> values, long timeout) {
-        if (timeout == -1) {
-            redisTemplate.opsForValue().set(key, values);
-        }
-        redisTemplate.opsForList().leftPushAll(key, values, timeout, TimeUnit.SECONDS);
+        redisTemplate.opsForList().leftPushAll(key, values);
+        expire(key, timeout);
     }
 
     /**
@@ -74,10 +68,20 @@ public class RedisService {
      */
     @Async
     public <V> void opsForSet(String key, Set<V> values, long timeout) {
-        if (timeout == -1) {
-            redisTemplate.opsForValue().set(key, values);
+        redisTemplate.opsForSet().add(key, values);
+        expire(key, timeout);
+    }
+
+    /**
+     * 设置过期时间
+     *
+     * @param key
+     * @param timeout
+     */
+    public void expire(String key, long timeout) {
+        if (timeout != -1 && timeout != 0) {
+            redisTemplate.expire(key, timeout, TimeUnit.SECONDS);
         }
-        redisTemplate.opsForSet().add(key, values, timeout, TimeUnit.SECONDS);
     }
 
 }

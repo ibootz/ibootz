@@ -20,16 +20,16 @@ import top.bootz.user.config.properties.TaskThreadPoolConfigProperties;
 @EnableScheduling
 @EnableSpringDataWebSupport
 @EnableAspectJAutoProxy(exposeProxy = true)
-@SpringBootApplication(scanBasePackages = { "top.bootz" })
-@EnableConfigurationProperties({ IdGeneratorProperties.class, TaskThreadPoolConfigProperties.class })
-@Import(value = { AsyncConfig.class, CacheConfig.class, IdGeneratorConfig.class, JpaConfig.class, MongoConfig.class,
-		RabbitmqConfig.class, RedisConfig.class })
+@SpringBootApplication(scanBasePackages = {"top.bootz"})
+@EnableConfigurationProperties({IdGeneratorProperties.class, TaskThreadPoolConfigProperties.class})
+@Import(value = {AsyncConfig.class, CacheConfig.class, ElasticConfiguration.class, IdGeneratorConfig.class, JpaConfig
+        .class, MongoConfig.class, RabbitmqConfig.class, RedisConfig.class})
 public class Application {
 
-	public static void main(String[] args) {
-		System.setProperty("es.set.netty.runtime.available.processors", "false");
-		ConfigurableApplicationContext applicationContext = SpringApplication.run(Application.class, args);
-		SpringHelper.setApplicationContext(applicationContext);
-	}
+    public static void main(String[] args) {
+        System.setProperty("es.set.netty.runtime.available.processors", "false");
+        ConfigurableApplicationContext applicationContext = SpringApplication.run(Application.class, args);
+        SpringHelper.setApplicationContext(applicationContext);
+    }
 
 }

@@ -3,7 +3,7 @@ spring:
     url: jdbc:mysql://192.168.199.111:3306/bootz?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=round&rewriteBatchedStatements=true
     username: readwrite
     password: nkEs8h6MdH!
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
   redis:
     cluster:
       nodes:
