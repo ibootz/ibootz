@@ -12,8 +12,6 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext.SerializationPair;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 /**
  * 应用缓存配置
  * 
@@ -30,12 +28,11 @@ public class CacheConfig {
 	@Bean
 	@Primary
 	@ConditionalOnMissingBean
-	public RedisCacheConfiguration redisCacheConfiguration(ObjectMapper objectMapper) {
+	public RedisCacheConfiguration redisCacheConfiguration() {
 		Redis redisProperties = cacheProperties.getRedis();
 		RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
 		// 采用jackson序列化机制替换掉默认的jdk序列化
-		config = config.serializeValuesWith(
-				SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer(objectMapper)));
+		config = config.serializeValuesWith(SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
 		if (redisProperties.getTimeToLive() != null) {
 			config = config.entryTtl(redisProperties.getTimeToLive());
 		}

@@ -3,3 +3,24 @@
 用户中心模块 [bootz-usercenter] ：实现用户的注册功能， 配合安全中心模块实现登录，授权，访问控制等功能
 日志中心模块 [bootz-logcenter]  ：追踪查看各分项目日志记录，包括用户操作日志和应用日志
 安全中心模块 [bootz-security]   : 负责1. 登录鉴权，包括用户鉴权和第三方访问应用鉴权； 2. 访问限流
+
+
+小目标：
+	集成elasticsearch
+	集成Spring task
+	集成Spring batch
+	集成spring-security-oauth2
+	集成spring-security
+	测试Spring-data在webapi层面的使用：@EnableSpringDataWebSupport
+	测试文档生成框架：Spring REST docs
+	测试QueryDSL查询
+	集成mybatis
+	集成Quartz Scheduler
+	
+中期目标
+	将整个Spring boot项目转换为Spring Cloud项目
+	添加Docker支持
+	
+远期目标
+	添加Kubernate支持
+	
