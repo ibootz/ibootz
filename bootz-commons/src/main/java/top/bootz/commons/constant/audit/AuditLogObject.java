@@ -8,16 +8,16 @@ package top.bootz.commons.constant.audit;
  */
 public enum AuditLogObject {
 
-	PMS_ORDER("order");
+    PMS_ORDER("order");
 
-	private String desc;
+    private String desc;
 
-	private AuditLogObject(String desc) {
-		this.desc = desc;
-	}
+    private AuditLogObject(String desc) {
+        this.desc = desc;
+    }
 
-	public String getDesc() {
-		return this.desc;
-	}
+    public String getDesc() {
+        return this.desc;
+    }
 
 }

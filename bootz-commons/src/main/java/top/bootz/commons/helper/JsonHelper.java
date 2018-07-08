@@ -36,9 +36,12 @@ public final class JsonHelper {
     }
 
     /**
-     * @param json           ： json源文件
-     * @param beanClass      ： 转换目标类
-     * @param elementClasses ： 复杂对象的转换
+     * @param json
+     *            ： json源文件
+     * @param beanClass
+     *            ： 转换目标类
+     * @param elementClasses
+     *            ： 复杂对象的转换
      * @return
      * @throws Exception
      */
@@ -46,7 +49,7 @@ public final class JsonHelper {
         try {
             return elementClasses == null || elementClasses.length == 0 ? objectMapper.readValue(json, beanClass)
                     : objectMapper.readValue(json,
-                    objectMapper.getTypeFactory().constructParametricType(beanClass, elementClasses));
+                            objectMapper.getTypeFactory().constructParametricType(beanClass, elementClasses));
         } catch (IOException e) {
             throw new BaseRuntimeException(e.getMessage(), e);
         }

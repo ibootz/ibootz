@@ -112,7 +112,8 @@ public class IdGenerator {
     /**
      * 设置工作进程Id.
      *
-     * @param workerId 工作进程Id
+     * @param workerId
+     *            工作进程Id
      */
     public void setWorkerId(final Long workerId) {
         Preconditions.checkArgument(workerId >= 0L && workerId < MAX_WORKER_ID,
@@ -123,7 +124,8 @@ public class IdGenerator {
     /**
      * 设置数据中心Id.
      *
-     * @param dataCenterId 数据中心Id
+     * @param dataCenterId
+     *            数据中心Id
      */
     public void setDataCenterId(final Long dataCenterId) {
         Preconditions.checkArgument(dataCenterId >= 0L && dataCenterId < MAX_DATACENTER_ID,
@@ -190,7 +192,8 @@ public class IdGenerator {
     /**
      * 阻塞到下一个毫秒，直到获得新的时间戳
      *
-     * @param lastTimestamp 上次生成ID的时间截
+     * @param lastTimestamp
+     *            上次生成ID的时间截
      * @return 当前时间戳
      */
     private long tilNextMillis(long lastTimestamp) {
@@ -216,32 +219,20 @@ public class IdGenerator {
     }
 
     // 测试
-	/*public static void main(String[] args) throws InterruptedException {
-		int counts = 1000000;
-		int tCounts = 16;
-		final Set<Long> set = Collections.synchronizedSet(new HashSet<>(counts));
-		CountDownLatch latch = new CountDownLatch(tCounts);
-		final IdGenerator idWorker0 = new IdGenerator();
-		for (int i = 0; i < tCounts; i++) {
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					long start = System.currentTimeMillis();
-					for (int j = 0; j < counts; j++) {
-						long id = idWorker0.nextId();
-						if (set.contains(id)) {
-							System.out.println("冲突 [" + id + "]");
-							break;
-						}
-						set.add(id);
-					}
-					System.out.println("耗时：" + (System.currentTimeMillis() - start));
-					latch.countDown();
-				}
-			}).start();
-		}
-		latch.await();
-		System.out.println("set.size：" + set.size());
-	}*/
+    /*
+     * public static void main(String[] args) throws InterruptedException { int
+     * counts = 1000000; int tCounts = 16; final Set<Long> set =
+     * Collections.synchronizedSet(new HashSet<>(counts)); CountDownLatch latch
+     * = new CountDownLatch(tCounts); final IdGenerator idWorker0 = new
+     * IdGenerator(); for (int i = 0; i < tCounts; i++) { new Thread(new
+     * Runnable() {
+     * 
+     * @Override public void run() { long start = System.currentTimeMillis();
+     * for (int j = 0; j < counts; j++) { long id = idWorker0.nextId(); if
+     * (set.contains(id)) { System.out.println("冲突 [" + id + "]"); break; }
+     * set.add(id); } System.out.println("耗时：" + (System.currentTimeMillis() -
+     * start)); latch.countDown(); } }).start(); } latch.await();
+     * System.out.println("set.size：" + set.size()); }
+     */
 
 }

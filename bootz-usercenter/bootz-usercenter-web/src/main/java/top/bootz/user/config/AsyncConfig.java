@@ -27,46 +27,46 @@ import top.bootz.user.config.properties.TaskThreadPoolConfigProperties;
 @EnableAsync
 public class AsyncConfig implements AsyncConfigurer {
 
-	@Autowired
-	private TaskThreadPoolConfigProperties configProperties;
+    @Autowired
+    private TaskThreadPoolConfigProperties configProperties;
 
-	/**
-	 * 自定义异步线程池
-	 *
-	 * @return
-	 */
-	@Bean
-	@Primary
-	@Override
-	public Executor getAsyncExecutor() {
-		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-		executor.setThreadNamePrefix(configProperties.getThreadNamePrefix());
-		executor.setCorePoolSize(configProperties.getCorePoolSize());
-		executor.setKeepAliveSeconds(configProperties.getKeepAliveSeconds());
-		executor.setMaxPoolSize(configProperties.getMaxPoolSize());
-		executor.setQueueCapacity(configProperties.getQueueCapacity());
+    /**
+     * 自定义异步线程池
+     *
+     * @return
+     */
+    @Bean
+    @Primary
+    @Override
+    public Executor getAsyncExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setThreadNamePrefix(configProperties.getThreadNamePrefix());
+        executor.setCorePoolSize(configProperties.getCorePoolSize());
+        executor.setKeepAliveSeconds(configProperties.getKeepAliveSeconds());
+        executor.setMaxPoolSize(configProperties.getMaxPoolSize());
+        executor.setQueueCapacity(configProperties.getQueueCapacity());
 
-		// 设置拒绝策略
-		executor.setRejectedExecutionHandler((Runnable r, ThreadPoolExecutor executor1) -> {
-			log.error("TaskExecutor is rejected execute. activeCount [" + executor1.getActiveCount() + "] "
-					+ "completedTaskCount [" + executor1.getCompletedTaskCount() + "] largestPoolSize ["
-					+ executor1.getLargestPoolSize() + "] taskCount [" + executor1.getTaskCount() + "] ["
-					+ executor1.getQueue().size() + "]");
-			if (!executor1.isShutdown()) {
-				r.run();
-			}
-		});
+        // 设置拒绝策略
+        executor.setRejectedExecutionHandler((Runnable r, ThreadPoolExecutor executor1) -> {
+            log.error("TaskExecutor is rejected execute. activeCount [" + executor1.getActiveCount() + "] "
+                    + "completedTaskCount [" + executor1.getCompletedTaskCount() + "] largestPoolSize ["
+                    + executor1.getLargestPoolSize() + "] taskCount [" + executor1.getTaskCount() + "] ["
+                    + executor1.getQueue().size() + "]");
+            if (!executor1.isShutdown()) {
+                r.run();
+            }
+        });
 
-		executor.initialize();
-		return executor;
-	}
+        executor.initialize();
+        return executor;
+    }
 
-	@Override
-	public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-		return (Throwable arg0, Method arg1, Object... arg2) -> {
-			log.error("An uncaught async exception has occurred. exception method [{}]", arg1.getName());
-			log.error("", arg0);
-		};
-	}
+    @Override
+    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+        return (Throwable arg0, Method arg1, Object... arg2) -> {
+            log.error("An uncaught async exception has occurred. exception method [{}]", arg1.getName());
+            log.error("", arg0);
+        };
+    }
 
 }

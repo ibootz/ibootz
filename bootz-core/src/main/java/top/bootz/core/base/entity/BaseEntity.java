@@ -10,17 +10,17 @@ import top.bootz.commons.helper.ToStringHelper;
 
 public class BaseEntity implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	public String toString() {
-		return ToStringHelper.toJSON(this, false);
-	}
+    @Override
+    public String toString() {
+        return ToStringHelper.toJSON(this, false);
+    }
 
-	@Transient
-	@JsonIgnore
-	public String toJson() {
-		return JsonHelper.toJSON(this);
-	}
+    @Transient
+    @JsonIgnore
+    public String toJson() {
+        return JsonHelper.toJSON(this);
+    }
 
 }

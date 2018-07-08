@@ -11,6 +11,6 @@ import top.bootz.user.entity.mysql.user.MapUserGroup;
  */
 
 public interface MapUserGroupRepository extends JpaRepository<MapUserGroup, Long>,
-		JpaSpecificationExecutor<MapUserGroup>, QuerydslPredicateExecutor<MapUserGroup> {
+        JpaSpecificationExecutor<MapUserGroup>, QuerydslPredicateExecutor<MapUserGroup> {
 
 }

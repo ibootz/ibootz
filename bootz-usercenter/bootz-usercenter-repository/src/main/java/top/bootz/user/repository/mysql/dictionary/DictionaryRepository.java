@@ -11,6 +11,6 @@ import top.bootz.user.entity.mysql.dictionary.Dictionary;
  */
 
 public interface DictionaryRepository extends JpaRepository<Dictionary, Long>, JpaSpecificationExecutor<Dictionary>,
-		QuerydslPredicateExecutor<Dictionary> {
+        QuerydslPredicateExecutor<Dictionary> {
 
 }

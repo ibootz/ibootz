@@ -33,12 +33,13 @@ public class UserController extends BaseController {
     private UserService userService;
 
     @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<RestMessage> add(HttpServletRequest request, @RequestBody User4Add user4Add) throws Exception {
+    public ResponseEntity<RestMessage> add(HttpServletRequest request, @RequestBody User4Add user4Add)
+            throws Exception {
         User user = new User();
         BeanHelper.copyProperties(user4Add, user);
 
         if (StringUtils.isBlank(user4Add.getUsername())) {
-        	user.setUsername(RandomHelper.randomString(9));
+            user.setUsername(RandomHelper.randomString(9));
         }
         user.setRealName(RandomHelper.randomChineseName());
         user.setEmail(RandomHelper.randomEmail());

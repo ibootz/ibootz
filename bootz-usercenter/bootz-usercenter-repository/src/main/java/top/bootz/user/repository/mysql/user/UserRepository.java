@@ -7,6 +7,6 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import top.bootz.user.entity.mysql.user.User;
 
 public interface UserRepository
-		extends JpaRepository<User, Long>, JpaSpecificationExecutor<User>, QuerydslPredicateExecutor<User> {
+        extends JpaRepository<User, Long>, JpaSpecificationExecutor<User>, QuerydslPredicateExecutor<User> {
 
 }

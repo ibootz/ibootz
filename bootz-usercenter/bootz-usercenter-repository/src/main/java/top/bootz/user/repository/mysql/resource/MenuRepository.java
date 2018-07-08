@@ -11,6 +11,6 @@ import top.bootz.user.entity.mysql.resource.Menu;
  */
 
 public interface MenuRepository
-		extends JpaRepository<Menu, Long>, JpaSpecificationExecutor<Menu>, QuerydslPredicateExecutor<Menu> {
+        extends JpaRepository<Menu, Long>, JpaSpecificationExecutor<Menu>, QuerydslPredicateExecutor<Menu> {
 
 }

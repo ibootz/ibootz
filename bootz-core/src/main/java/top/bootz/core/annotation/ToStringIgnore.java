@@ -17,6 +17,6 @@ import java.lang.annotation.Target;
 @Documented
 public @interface ToStringIgnore {
 
-	String value() default "";
+    String value() default "";
 
 }

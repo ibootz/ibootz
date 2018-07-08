@@ -11,6 +11,6 @@ import top.bootz.user.entity.mysql.role.RoleGroup;
  */
 
 public interface RoleGroupRepository extends JpaRepository<RoleGroup, Long>, JpaSpecificationExecutor<RoleGroup>,
-		QuerydslPredicateExecutor<RoleGroup> {
+        QuerydslPredicateExecutor<RoleGroup> {
 
 }

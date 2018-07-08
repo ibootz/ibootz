@@ -15,9 +15,9 @@ import top.bootz.user.entity.elastic.PingElastic;
 
 public interface PingElasticRepository extends ElasticsearchRepository<PingElastic, Long> {
 
-	@Query("{\"bool\":{\"must\":{\"match\":{\"buyerName.raw\": \"?0\"}}}}")
-	Optional<PingElastic> findByBuyerNameLike(String buyerNameLike);
+    @Query("{\"bool\":{\"must\":{\"match\":{\"buyerName.raw\": \"?0\"}}}}")
+    Optional<PingElastic> findByBuyerNameLike(String buyerNameLike);
 
-	List<PingElastic> findByCreateTimeBetweenOrderByCreateTimeDesc(String startTime, String endTime);
+    List<PingElastic> findByCreateTimeBetweenOrderByCreateTimeDesc(String startTime, String endTime);
 
 }

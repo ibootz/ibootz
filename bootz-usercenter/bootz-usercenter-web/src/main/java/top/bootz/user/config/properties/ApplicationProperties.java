@@ -10,8 +10,7 @@ import javax.validation.constraints.NotBlank;
 /**
  * 配置主键生成器
  *
- * @author John
- * 2018年6月10日 下午10:47:07
+ * @author John 2018年6月10日 下午10:47:07
  */
 
 @Data

@@ -22,30 +22,29 @@ import org.springframework.data.redis.serializer.RedisSerializationContext.Seria
 @EnableCaching
 public class CacheConfig {
 
-	@Autowired
-	private CacheProperties cacheProperties;
+    @Autowired
+    private CacheProperties cacheProperties;
 
-	@Bean
-	@Primary
-	@ConditionalOnMissingBean
-	public RedisCacheConfiguration redisCacheConfiguration() {
-		Redis redisProperties = cacheProperties.getRedis();
-		RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
-		// 采用jackson序列化机制替换掉默认的jdk序列化
-		config = config.serializeValuesWith(SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
-		if (redisProperties.getTimeToLive() != null) {
-			config = config.entryTtl(redisProperties.getTimeToLive());
-		}
-		if (redisProperties.getKeyPrefix() != null) {
-			config = config.prefixKeysWith(redisProperties.getKeyPrefix());
-		}
-		if (!redisProperties.isCacheNullValues()) {
-			config = config.disableCachingNullValues();
-		}
-		if (!redisProperties.isUseKeyPrefix()) {
-			config = config.disableKeyPrefix();
-		}
-		return config;
-	}
+    @Bean
+    @Primary
+    @ConditionalOnMissingBean
+    public RedisCacheConfiguration redisCacheConfiguration() {
+        Redis redisProperties = cacheProperties.getRedis();
+        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
+        config = config.serializeValuesWith(SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
+        if (redisProperties.getTimeToLive() != null) {
+            config = config.entryTtl(redisProperties.getTimeToLive());
+        }
+        if (redisProperties.getKeyPrefix() != null) {
+            config = config.prefixKeysWith(redisProperties.getKeyPrefix());
+        }
+        if (!redisProperties.isCacheNullValues()) {
+            config = config.disableCachingNullValues();
+        }
+        if (!redisProperties.isUseKeyPrefix()) {
+            config = config.disableKeyPrefix();
+        }
+        return config;
+    }
 
 }

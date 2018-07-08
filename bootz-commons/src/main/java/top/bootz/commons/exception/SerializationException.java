@@ -8,22 +8,22 @@ package top.bootz.commons.exception;
 
 public class SerializationException extends BaseRuntimeException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public SerializationException() {
-		super();
-	}
+    public SerializationException() {
+        super();
+    }
 
-	public SerializationException(final String msg) {
-		super(msg);
-	}
+    public SerializationException(final String msg) {
+        super(msg);
+    }
 
-	public SerializationException(final Throwable cause) {
-		super(cause);
-	}
+    public SerializationException(final Throwable cause) {
+        super(cause);
+    }
 
-	public SerializationException(final String msg, final Throwable cause) {
-		super(msg, cause);
-	}
+    public SerializationException(final String msg, final Throwable cause) {
+        super(msg, cause);
+    }
 
 }

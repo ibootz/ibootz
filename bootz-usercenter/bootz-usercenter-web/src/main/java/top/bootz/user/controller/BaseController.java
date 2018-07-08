@@ -25,15 +25,18 @@ public class BaseController {
     /**
      * 构造返回给前端的统一消息体
      *
-     * @param status     系统自定义状态码
-     * @param httpStatus Http状态码
-     * @param value      业务实体
+     * @param status
+     *            系统自定义状态码
+     * @param httpStatus
+     *            Http状态码
+     * @param value
+     *            业务实体
      * @return
      * @author John
      * @time 2018年6月18日 上午12:43:14
      */
     protected ResponseEntity<RestMessage> buildRestMessage(HttpStatus httpStatus, MessageStatusEnum status,
-                                                           Object value, ErrorMessage error) {
+            Object value, ErrorMessage error) {
         RestMessage message = new RestMessage(status, value, error);
         return new ResponseEntity<>(message, httpStatus);
     }

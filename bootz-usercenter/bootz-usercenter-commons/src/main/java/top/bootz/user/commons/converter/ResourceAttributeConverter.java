@@ -13,16 +13,16 @@ import top.bootz.user.commons.dictionary.ResourceEnum;
  */
 public class ResourceAttributeConverter implements AttributeConverter<ResourceEnum, Integer> {
 
-	@Override
-	public Integer convertToDatabaseColumn(ResourceEnum arg0) {
-		Preconditions.checkArgument(arg0 != null, "Illegal resourceEnum");
-		return arg0.getCode();
-	}
+    @Override
+    public Integer convertToDatabaseColumn(ResourceEnum arg0) {
+        Preconditions.checkArgument(arg0 != null, "Illegal resourceEnum");
+        return arg0.getCode();
+    }
 
-	@Override
-	public ResourceEnum convertToEntityAttribute(Integer arg0) {
-		Preconditions.checkArgument(arg0 != null, "Illegal resourceEnum code.");
-		return ResourceEnum.getSourceTypeByCode(arg0);
-	}
+    @Override
+    public ResourceEnum convertToEntityAttribute(Integer arg0) {
+        Preconditions.checkArgument(arg0 != null, "Illegal resourceEnum code.");
+        return ResourceEnum.getSourceTypeByCode(arg0);
+    }
 
 }

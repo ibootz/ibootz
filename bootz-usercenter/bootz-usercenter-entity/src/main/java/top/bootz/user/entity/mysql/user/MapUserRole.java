@@ -19,28 +19,28 @@ import top.bootz.core.base.entity.BaseMysqlEntity;
  */
 @Entity
 @Table(name = "uc_map_user_role", indexes = {
-		@Index(columnList = "user_id,role_id", name = "idx_uc_mur_userid_roleid", unique = true),
-		@Index(columnList = "role_id", name = "idx_uc_mur_roleid") })
+        @Index(columnList = "user_id,role_id", name = "idx_uc_mur_userid_roleid", unique = true),
+        @Index(columnList = "role_id", name = "idx_uc_mur_roleid") })
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = { "userId", "roleId" }, callSuper = false)
 public class MapUserRole extends BaseMysqlEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Long userId;
+    private Long userId;
 
-	private Long roleId;
+    private Long roleId;
 
-	@Column(name = "user_id", nullable = false, columnDefinition = "bigint(64) default 0 comment '用户ID'")
-	public Long getUserId() {
-		return userId;
-	}
+    @Column(name = "user_id", nullable = false, columnDefinition = "bigint(64) default 0 comment '用户ID'")
+    public Long getUserId() {
+        return userId;
+    }
 
-	@Column(name = "role_id", nullable = false, columnDefinition = "bigint(64) default 0 comment '角色ID'")
-	public Long getRoleId() {
-		return roleId;
-	}
+    @Column(name = "role_id", nullable = false, columnDefinition = "bigint(64) default 0 comment '角色ID'")
+    public Long getRoleId() {
+        return roleId;
+    }
 
 }

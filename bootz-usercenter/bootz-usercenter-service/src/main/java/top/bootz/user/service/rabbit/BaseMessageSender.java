@@ -41,7 +41,7 @@ public class BaseMessageSender {
      * 由子类注入
      */
     protected BaseMessageSender(RabbitMessageLogService rabbitMessageLogService, IdGenerator idGenerator,
-                                RabbitTemplate rabbitTemplate) {
+            RabbitTemplate rabbitTemplate) {
         this.rabbitMessageLogService = rabbitMessageLogService;
         this.idGenerator = idGenerator;
         this.rabbitTemplate = rabbitTemplate;
@@ -80,8 +80,8 @@ public class BaseMessageSender {
             rabbitMessageLogService.save(messageLog);
 
             CorrelationData correlationData = new CorrelationData(String.valueOf(messageId));
-            rabbitTemplate.convertAndSend(exchange, routingKey, message, new CustomMessagePostProcessor(messageId, messageHeaders),
-                    correlationData);
+            rabbitTemplate.convertAndSend(exchange, routingKey, message,
+                    new CustomMessagePostProcessor(messageId, messageHeaders), correlationData);
             isSent = true;
         } catch (Exception e) {
             log.error("An exception has occurred when sending rabbit message. exchange: " + exchange + ", routingKey: "

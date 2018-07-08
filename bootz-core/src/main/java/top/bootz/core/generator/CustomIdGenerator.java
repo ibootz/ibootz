@@ -16,26 +16,26 @@ import top.bootz.commons.snowflake.IdGenerator;
 
 public class CustomIdGenerator implements IdentifierGenerator, Configurable {
 
-	@Override
-	public void configure(Type type, Properties params, ServiceRegistry serviceRegistry) throws MappingException {
-	}
+    @Override
+    public void configure(Type type, Properties params, ServiceRegistry serviceRegistry) throws MappingException {
+    }
 
-	/**
-	 * 如果id生成出错，降级为uuid
-	 */
-	@Override
-	public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
-		Long id;
-		try {
-			IdGenerator idGenerator = SpringHelper.getBean("idGenerator");
-			id = idGenerator.nextId();
-		} catch (Exception e) {
-			throw new HibernateException("", e);
-		}
-		if (id != 0) {
-			return id;
-		}
-		throw new HibernateException("Generated id is incorrect.");
-	}
+    /**
+     * 如果id生成出错，降级为uuid
+     */
+    @Override
+    public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
+        Long id;
+        try {
+            IdGenerator idGenerator = SpringHelper.getBean("idGenerator");
+            id = idGenerator.nextId();
+        } catch (Exception e) {
+            throw new HibernateException("", e);
+        }
+        if (id != 0) {
+            return id;
+        }
+        throw new HibernateException("Generated id is incorrect.");
+    }
 
 }

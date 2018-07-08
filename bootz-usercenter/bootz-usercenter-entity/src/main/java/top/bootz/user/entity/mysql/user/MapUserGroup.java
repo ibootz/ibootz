@@ -20,28 +20,28 @@ import top.bootz.core.base.entity.BaseMysqlEntity;
 
 @Entity
 @Table(name = "uc_map_user_group", indexes = {
-		@Index(columnList = "user_id,group_id", name = "idx_uc_mug_userid_groupid", unique = true),
-		@Index(columnList = "group_id", name = "idx_uc_mug_groupid") })
+        @Index(columnList = "user_id,group_id", name = "idx_uc_mug_userid_groupid", unique = true),
+        @Index(columnList = "group_id", name = "idx_uc_mug_groupid") })
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = { "userId", "groupId" }, callSuper = false)
 public class MapUserGroup extends BaseMysqlEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Long userId;
+    private Long userId;
 
-	private Long groupId;
+    private Long groupId;
 
-	@Column(name = "user_id", nullable = false, columnDefinition = "bigint(64) default 0 comment '用户ID'")
-	public Long getUserId() {
-		return userId;
-	}
+    @Column(name = "user_id", nullable = false, columnDefinition = "bigint(64) default 0 comment '用户ID'")
+    public Long getUserId() {
+        return userId;
+    }
 
-	@Column(name = "group_id", nullable = false, columnDefinition = "bigint(64) default 0 comment '用户组ID'")
-	public Long getGroupId() {
-		return groupId;
-	}
+    @Column(name = "group_id", nullable = false, columnDefinition = "bigint(64) default 0 comment '用户组ID'")
+    public Long getGroupId() {
+        return groupId;
+    }
 
 }

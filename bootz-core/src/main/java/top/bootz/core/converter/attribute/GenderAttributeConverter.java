@@ -12,14 +12,14 @@ import top.bootz.core.dictionary.GenderEnum;
  */
 public class GenderAttributeConverter implements AttributeConverter<GenderEnum, String> {
 
-	@Override
-	public String convertToDatabaseColumn(GenderEnum attribute) {
-		return attribute.getCode();
-	}
+    @Override
+    public String convertToDatabaseColumn(GenderEnum attribute) {
+        return attribute.getCode();
+    }
 
-	@Override
-	public GenderEnum convertToEntityAttribute(String dbData) {
-		return GenderEnum.getGenderByCode(dbData);
-	}
+    @Override
+    public GenderEnum convertToEntityAttribute(String dbData) {
+        return GenderEnum.getGenderByCode(dbData);
+    }
 
 }

@@ -51,7 +51,7 @@ public class RabbitmqConfig {
         private final RabbitProperties properties;
 
         public RabbitTemplateConfiguration(ObjectProvider<MessageConverter> messageConverter,
-                                           RabbitProperties properties) {
+                RabbitProperties properties) {
             this.messageConverter = messageConverter;
             this.properties = properties;
         }
@@ -121,7 +121,7 @@ public class RabbitmqConfig {
 
     @Bean
     public Binding bindPingQueueToDirectExchange(@Qualifier("pingQueue") Queue pingQueue,
-                                                 @Qualifier("directExchange") DirectExchange directExchange) {
+            @Qualifier("directExchange") DirectExchange directExchange) {
         return BindingBuilder.bind(pingQueue).to(directExchange).with(RabbitConstants.RoutingKey.UC_DIRECT_PING);
     }
 
@@ -132,7 +132,7 @@ public class RabbitmqConfig {
 
     @Bean
     public Binding bindUpdateAuthQueueToDirectExchange(@Qualifier("updateAuthQueue") Queue updateAuthQueue,
-                                                       @Qualifier("directExchange") DirectExchange directExchange) {
+            @Qualifier("directExchange") DirectExchange directExchange) {
         return BindingBuilder.bind(updateAuthQueue).to(directExchange)
                 .with(RabbitConstants.RoutingKey.UC_DIRECT_UPDATE_AUTH);
     }

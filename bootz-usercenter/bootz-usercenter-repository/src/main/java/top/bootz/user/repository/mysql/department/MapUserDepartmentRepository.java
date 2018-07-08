@@ -11,6 +11,6 @@ import top.bootz.user.entity.mysql.department.MapUserDepartment;
  */
 
 public interface MapUserDepartmentRepository extends JpaRepository<MapUserDepartment, Long>,
-		JpaSpecificationExecutor<MapUserDepartment>, QuerydslPredicateExecutor<MapUserDepartment> {
+        JpaSpecificationExecutor<MapUserDepartment>, QuerydslPredicateExecutor<MapUserDepartment> {
 
 }

@@ -12,12 +12,12 @@ import lombok.Data;
 @Data
 public class PingItemTag implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Long id;
+    private Long id;
 
-	private String description; // 标签描述
+    private String description; // 标签描述
 
-	private String sku; // 产品SKU
+    private String sku; // 产品SKU
 
 }

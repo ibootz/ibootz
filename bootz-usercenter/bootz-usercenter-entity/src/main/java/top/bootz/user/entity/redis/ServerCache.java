@@ -22,17 +22,17 @@ import top.bootz.core.base.entity.BaseEntity;
 @RedisHash(timeToLive = 2592000) // 缓存一个月
 public class ServerCache extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	private Long id;
+    @Id
+    private Long id;
 
-	/** 本机host */
-	@Indexed
-	private String host;
+    /** 本机host */
+    @Indexed
+    private String host;
 
-	/** 应用名 */
-	@Indexed
-	private String appName;
+    /** 应用名 */
+    @Indexed
+    private String appName;
 
 }

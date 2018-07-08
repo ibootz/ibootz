@@ -30,7 +30,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document
-@CompoundIndexes({@CompoundIndex(name = "idx_rml_exchange_routingkey", def = "{'exchange': 1, 'routingKey': 1}")})
+@CompoundIndexes({ @CompoundIndex(name = "idx_rml_exchange_routingkey", def = "{'exchange': 1, 'routingKey': 1}") })
 public class RabbitMessageLog extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -113,7 +113,6 @@ public class RabbitMessageLog extends BaseEntity {
      */
     @Indexed
     private LocalDateTime receivedTime;
-
 
     /**
      * 触发此条rabbit消息的用户

@@ -19,28 +19,28 @@ import top.bootz.user.repository.mysql.user.UserRepository;
 @Transactional(readOnly = true, rollbackFor = Exception.class)
 public class UserService {
 
-	@Autowired
-	private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-	@Transactional(readOnly = false)
-	public User saveUser(User user) {
-		return userRepository.save(user);
-	}
+    @Transactional(readOnly = false)
+    public User saveUser(User user) {
+        return userRepository.save(user);
+    }
 
-	@Async
-	@Transactional(readOnly = false)
-	public void deleteUser(User user) {
-		userRepository.delete(user);
-	}
+    @Async
+    @Transactional(readOnly = false)
+    public void deleteUser(User user) {
+        userRepository.delete(user);
+    }
 
-	@Async
-	@Transactional(readOnly = false)
-	public void asyncSave(User user) {
-		userRepository.save(user);
-	}
+    @Async
+    @Transactional(readOnly = false)
+    public void asyncSave(User user) {
+        userRepository.save(user);
+    }
 
-	public Optional<User> findUser(Long id) {
-		return userRepository.findById(id);
-	}
+    public Optional<User> findUser(Long id) {
+        return userRepository.findById(id);
+    }
 
 }

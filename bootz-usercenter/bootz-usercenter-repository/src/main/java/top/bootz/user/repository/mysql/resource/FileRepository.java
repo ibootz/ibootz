@@ -11,6 +11,6 @@ import top.bootz.user.entity.mysql.resource.File;
  */
 
 public interface FileRepository
-		extends JpaRepository<File, Long>, JpaSpecificationExecutor<File>, QuerydslPredicateExecutor<File> {
+        extends JpaRepository<File, Long>, JpaSpecificationExecutor<File>, QuerydslPredicateExecutor<File> {
 
 }

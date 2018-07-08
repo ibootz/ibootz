@@ -9,12 +9,12 @@ import org.springframework.core.convert.converter.Converter;
 
 public enum DateToLocalDateConverter implements Converter<Date, LocalDate> {
 
-	INSTANCE;
+    INSTANCE;
 
-	@Override
-	public LocalDate convert(Date source) {
-		return source == null ? null
-				: LocalDateTime.ofInstant(source.toInstant(), ZoneId.systemDefault()).toLocalDate();
-	}
+    @Override
+    public LocalDate convert(Date source) {
+        return source == null ? null
+                : LocalDateTime.ofInstant(source.toInstant(), ZoneId.systemDefault()).toLocalDate();
+    }
 
 }

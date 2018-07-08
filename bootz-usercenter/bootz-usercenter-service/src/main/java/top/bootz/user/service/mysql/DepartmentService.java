@@ -5,8 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
- * @author John
- * 2018年6月11日 下午10:41:47
+ * @author John 2018年6月11日 下午10:41:47
  */
 
 @Service

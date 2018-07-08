@@ -21,25 +21,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BaseMongoService<T> {
 
-	private MongoTemplate mongoTemplate;
+    private MongoTemplate mongoTemplate;
 
-	private Class<T> clazz;
+    private Class<T> clazz;
 
-	@SuppressWarnings("unchecked")
-	protected BaseMongoService(MongoTemplate mongoTemplate) {
-		this.mongoTemplate = mongoTemplate;
-		clazz = (Class<T>) (((ParameterizedType) (this.getClass().getGenericSuperclass())).getActualTypeArguments()[0]);
-	}
+    @SuppressWarnings("unchecked")
+    protected BaseMongoService(MongoTemplate mongoTemplate) {
+        this.mongoTemplate = mongoTemplate;
+        clazz = (Class<T>) (((ParameterizedType) (this.getClass().getGenericSuperclass())).getActualTypeArguments()[0]);
+    }
 
-	/**
-	 * 单独更新指定的某几个字段
-	 */
-	public UpdateResult updateFiled(ObjectId id, Map<String, Object> fieldValueMap) {
-		Update update = new Update();
-		for (Map.Entry<String, Object> entry : fieldValueMap.entrySet()) {
-			update.set(entry.getKey(), entry.getValue());
-		}
-		return this.mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(id)), update, clazz);
-	}
+    /**
+     * 单独更新指定的某几个字段
+     */
+    public UpdateResult updateFiled(ObjectId id, Map<String, Object> fieldValueMap) {
+        Update update = new Update();
+        for (Map.Entry<String, Object> entry : fieldValueMap.entrySet()) {
+            update.set(entry.getKey(), entry.getValue());
+        }
+        return this.mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(id)), update, clazz);
+    }
 
 }

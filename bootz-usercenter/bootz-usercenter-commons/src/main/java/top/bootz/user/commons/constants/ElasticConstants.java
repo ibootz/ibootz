@@ -8,7 +8,7 @@ package top.bootz.user.commons.constants;
  */
 public final class ElasticConstants {
 
-	private ElasticConstants() {
-	}
+    private ElasticConstants() {
+    }
 
 }

@@ -6,27 +6,27 @@ import java.util.List;
 import top.bootz.core.base.entity.BaseEntity;
 
 public class PagingSupport<T> extends BaseEntity {
-	
-	private static final long serialVersionUID = 1L;
 
-	private List<T> results = new ArrayList<>();
+    private static final long serialVersionUID = 1L;
 
-	private PagingInfo pagingInfo;
+    private List<T> results = new ArrayList<>();
 
-	public List<T> getResults() {
-		return results;
-	}
+    private PagingInfo pagingInfo;
 
-	public void setResults(List<T> results) {
-		this.results = results;
-	}
+    public List<T> getResults() {
+        return results;
+    }
 
-	public PagingInfo getPagingInfo() {
-		return pagingInfo;
-	}
+    public void setResults(List<T> results) {
+        this.results = results;
+    }
 
-	public void setPagingInfo(PagingInfo pagingInfo) {
-		this.pagingInfo = pagingInfo;
-	}
+    public PagingInfo getPagingInfo() {
+        return pagingInfo;
+    }
+
+    public void setPagingInfo(PagingInfo pagingInfo) {
+        this.pagingInfo = pagingInfo;
+    }
 
 }

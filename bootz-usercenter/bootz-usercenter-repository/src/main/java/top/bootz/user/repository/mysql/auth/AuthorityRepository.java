@@ -11,6 +11,6 @@ import top.bootz.user.entity.mysql.auth.Authority;
  */
 
 public interface AuthorityRepository extends JpaRepository<Authority, Long>, JpaSpecificationExecutor<Authority>,
-		QuerydslPredicateExecutor<Authority> {
+        QuerydslPredicateExecutor<Authority> {
 
 }

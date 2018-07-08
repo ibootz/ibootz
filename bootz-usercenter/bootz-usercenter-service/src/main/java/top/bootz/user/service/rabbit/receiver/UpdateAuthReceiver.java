@@ -33,39 +33,37 @@ import top.bootz.user.service.rabbit.BaseReceiver;
 @NoArgsConstructor
 public class UpdateAuthReceiver extends BaseReceiver {
 
-	@Autowired
-	public UpdateAuthReceiver(RabbitMessageLogService rabbitMessageLogService) {
-		super(rabbitMessageLogService);
-	}
+    @Autowired
+    public UpdateAuthReceiver(RabbitMessageLogService rabbitMessageLogService) {
+        super(rabbitMessageLogService);
+    }
 
-	@RabbitListener(returnExceptions = "true", bindings = @QueueBinding(value = @Queue(value = RabbitConstants.Queue.UC_UPDATE_AUTH, autoDelete = "false", durable = "true"), 
-			exchange = @Exchange(value = RabbitConstants.Exchange.DIRECT, type = ExchangeTypes.DIRECT, autoDelete = "false", durable = "true"), 
-			key = RabbitConstants.RoutingKey.UC_DIRECT_UPDATE_AUTH))
-	public void onMessage(@Payload BaseMessage message, @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag,
-			Channel channel) {
-		try {
-			if (message == null) {
-				log.error("The received message is illegal. {}", message);
-				channel.basicNack(deliveryTag, false, false);
-				return;
-			}
+    @RabbitListener(returnExceptions = "true", bindings = @QueueBinding(value = @Queue(value = RabbitConstants.Queue.UC_UPDATE_AUTH, autoDelete = "false", durable = "true"), exchange = @Exchange(value = RabbitConstants.Exchange.DIRECT, type = ExchangeTypes.DIRECT, autoDelete = "false", durable = "true"), key = RabbitConstants.RoutingKey.UC_DIRECT_UPDATE_AUTH))
+    public void onMessage(@Payload BaseMessage message, @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag,
+            Channel channel) {
+        try {
+            if (message == null) {
+                log.error("The received message is illegal. {}", message);
+                channel.basicNack(deliveryTag, false, false);
+                return;
+            }
 
-			log.debug("监听处理消息。exchange [" + RabbitConstants.Exchange.DIRECT + "] queue ["
-					+ RabbitConstants.Queue.UC_UPDATE_AUTH + "]");
+            log.debug("监听处理消息。exchange [" + RabbitConstants.Exchange.DIRECT + "] queue ["
+                    + RabbitConstants.Queue.UC_UPDATE_AUTH + "]");
 
-			afterRecivedMessage(message);
+            afterRecivedMessage(message);
 
-			// 确认接收处理消息成功
-			channel.basicAck(deliveryTag, false);
-		} catch (Exception e) {
-			log.error("An unknown error has occurred when handle message. exchange [" + RabbitConstants.Exchange.DIRECT
-					+ "] queue [" + RabbitConstants.Queue.UC_UPDATE_AUTH + "]", e);
-			try {
-				channel.basicNack(deliveryTag, false, false);
-			} catch (IOException e1) {
-				log.error("basic nack message fail.", e1);
-			}
-		}
-	}
+            // 确认接收处理消息成功
+            channel.basicAck(deliveryTag, false);
+        } catch (Exception e) {
+            log.error("An unknown error has occurred when handle message. exchange [" + RabbitConstants.Exchange.DIRECT
+                    + "] queue [" + RabbitConstants.Queue.UC_UPDATE_AUTH + "]", e);
+            try {
+                channel.basicNack(deliveryTag, false, false);
+            } catch (IOException e1) {
+                log.error("basic nack message fail.", e1);
+            }
+        }
+    }
 
 }

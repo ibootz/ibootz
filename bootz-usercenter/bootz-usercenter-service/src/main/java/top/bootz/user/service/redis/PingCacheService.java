@@ -19,29 +19,29 @@ import top.bootz.user.repository.redis.PingCacheRepository;
 @Service
 public class PingCacheService {
 
-	@Autowired
-	private PingCacheRepository pingCacheRepository;
+    @Autowired
+    private PingCacheRepository pingCacheRepository;
 
-	public PingCache save(PingCache pingCache) {
-		return pingCacheRepository.save(pingCache);
-	}
+    public PingCache save(PingCache pingCache) {
+        return pingCacheRepository.save(pingCache);
+    }
 
-	@Async
-	public void asyncSave(PingCache pingCache) {
-		save(pingCache);
-	}
+    @Async
+    public void asyncSave(PingCache pingCache) {
+        save(pingCache);
+    }
 
-	public Optional<PingCache> find(String id) {
-		return pingCacheRepository.findById(id);
-	}
+    public Optional<PingCache> find(String id) {
+        return pingCacheRepository.findById(id);
+    }
 
-	public void delete(PingCache pingCache) {
-		pingCacheRepository.delete(pingCache);
-	}
+    public void delete(PingCache pingCache) {
+        pingCacheRepository.delete(pingCache);
+    }
 
-	@Async
-	public void asyncDelete(PingCache pingCache) {
-		delete(pingCache);
-	}
+    @Async
+    public void asyncDelete(PingCache pingCache) {
+        delete(pingCache);
+    }
 
 }

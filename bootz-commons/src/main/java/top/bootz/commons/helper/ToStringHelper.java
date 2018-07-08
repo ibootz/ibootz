@@ -15,7 +15,8 @@ public final class ToStringHelper {
     /**
      * 输出类toString方法格式的字符串
      *
-     * @param obj 转换实体
+     * @param obj
+     *            转换实体
      * @return 格式化字符串
      */
     public static String toString(Object obj) {
@@ -34,8 +35,10 @@ public final class ToStringHelper {
     /**
      * 输出Json风格的字符串
      *
-     * @param obj           转换实体
-     * @param wrapClassName 是否在外侧包裹类名
+     * @param obj
+     *            转换实体
+     * @param wrapClassName
+     *            是否在外侧包裹类名
      * @return json字符串
      */
     public static String toJSON(Object obj, boolean wrapClassName) {

@@ -18,47 +18,47 @@ import top.bootz.user.config.properties.IdGeneratorProperties;
 @Configuration
 public class IdGeneratorConfig {
 
-	@Autowired
-	private IdGeneratorProperties idGeneratorProperties;
+    @Autowired
+    private IdGeneratorProperties idGeneratorProperties;
 
-	@Bean
-	@ConditionalOnMissingBean
-	public IdGenerator idGenerator() {
-		IdGenerator idGenerator = new IdGenerator();
-		idGenerator.setWorkerId(getWorkId());
-		idGenerator.setDataCenterId(getDataCenterId());
-		return idGenerator;
-	}
+    @Bean
+    @ConditionalOnMissingBean
+    public IdGenerator idGenerator() {
+        IdGenerator idGenerator = new IdGenerator();
+        idGenerator.setWorkerId(getWorkId());
+        idGenerator.setDataCenterId(getDataCenterId());
+        return idGenerator;
+    }
 
-	private long getWorkId() {
-		String workerId = System.getProperty("bootz.id.snowflake.worker.id");
-		if (StringUtils.isNotBlank(workerId)) {
-			return Long.valueOf(workerId);
+    private long getWorkId() {
+        String workerId = System.getProperty("bootz.id.snowflake.worker.id");
+        if (StringUtils.isNotBlank(workerId)) {
+            return Long.valueOf(workerId);
 
-		}
-		workerId = System.getenv("BOOTZ_ID_GENERATOR_WORKER_ID");
-		if (StringUtils.isNotBlank(workerId)) {
-			return Long.valueOf(workerId);
-		}
-		if (idGeneratorProperties.getWorkerId() != null) {
-			return idGeneratorProperties.getWorkerId();
-		}
-		throw new IllegalArgumentException("workerId must not be null or blank!");
-	}
+        }
+        workerId = System.getenv("BOOTZ_ID_GENERATOR_WORKER_ID");
+        if (StringUtils.isNotBlank(workerId)) {
+            return Long.valueOf(workerId);
+        }
+        if (idGeneratorProperties.getWorkerId() != null) {
+            return idGeneratorProperties.getWorkerId();
+        }
+        throw new IllegalArgumentException("workerId must not be null or blank!");
+    }
 
-	private long getDataCenterId() {
-		String dataCenterId = System.getProperty("bootz.id.snowflake.datacenter.id");
-		if (StringUtils.isNotBlank(dataCenterId)) {
-			return Long.valueOf(dataCenterId);
-		}
-		dataCenterId = System.getenv("BOOTZ_ID_GENERATOR_DATACENTER_ID");
-		if (StringUtils.isNotBlank(dataCenterId)) {
-			return Long.valueOf(dataCenterId);
-		}
-		if (idGeneratorProperties.getDataCenterId() != null) {
-			return idGeneratorProperties.getDataCenterId();
-		}
-		throw new IllegalArgumentException("dataCenter Id must not be null or blank!");
-	}
+    private long getDataCenterId() {
+        String dataCenterId = System.getProperty("bootz.id.snowflake.datacenter.id");
+        if (StringUtils.isNotBlank(dataCenterId)) {
+            return Long.valueOf(dataCenterId);
+        }
+        dataCenterId = System.getenv("BOOTZ_ID_GENERATOR_DATACENTER_ID");
+        if (StringUtils.isNotBlank(dataCenterId)) {
+            return Long.valueOf(dataCenterId);
+        }
+        if (idGeneratorProperties.getDataCenterId() != null) {
+            return idGeneratorProperties.getDataCenterId();
+        }
+        throw new IllegalArgumentException("dataCenter Id must not be null or blank!");
+    }
 
 }

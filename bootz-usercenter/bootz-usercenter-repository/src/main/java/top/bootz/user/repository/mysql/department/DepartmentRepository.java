@@ -11,6 +11,6 @@ import top.bootz.user.entity.mysql.department.Department;
  */
 
 public interface DepartmentRepository extends JpaRepository<Department, Long>, JpaSpecificationExecutor<Department>,
-		QuerydslPredicateExecutor<Department> {
+        QuerydslPredicateExecutor<Department> {
 
 }

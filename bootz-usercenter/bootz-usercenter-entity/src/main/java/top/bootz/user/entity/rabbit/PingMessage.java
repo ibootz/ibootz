@@ -19,13 +19,13 @@ import top.bootz.core.base.dto.BaseMessage;
 @AllArgsConstructor
 public class PingMessage extends BaseMessage {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String ping;
+    private String ping;
 
-	public PingMessage(String from, String[] to, Long createtor, LocalDateTime createTime, String ping) {
-		super(from, to, createtor, createTime);
-		this.ping = ping;
-	}
+    public PingMessage(String from, String[] to, Long createtor, LocalDateTime createTime, String ping) {
+        super(from, to, createtor, createTime);
+        this.ping = ping;
+    }
 
 }

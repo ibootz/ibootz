@@ -29,17 +29,17 @@ import top.bootz.core.base.entity.BaseEntity;
 @CompoundIndexes({ @CompoundIndex(name = "idx_ping_createtor_createTime", def = "{'createtor': 1, 'createTime': 1}") })
 public class PingMongo extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	private ObjectId id;
+    @Id
+    private ObjectId id;
 
-	@Indexed
-	@CreatedBy
-	private Long createtor;
+    @Indexed
+    @CreatedBy
+    private Long createtor;
 
-	@Indexed
-	@CreatedDate
-	private LocalDateTime createTime;
+    @Indexed
+    @CreatedDate
+    private LocalDateTime createTime;
 
 }

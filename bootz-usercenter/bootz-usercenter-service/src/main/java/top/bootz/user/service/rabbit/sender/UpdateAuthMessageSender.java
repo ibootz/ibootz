@@ -21,10 +21,10 @@ import top.bootz.user.service.rabbit.BaseMessageSender;
 @NoArgsConstructor
 public class UpdateAuthMessageSender extends BaseMessageSender {
 
-	@Autowired
-	public UpdateAuthMessageSender(RabbitMessageLogService rabbitMessageLogService, IdGenerator idGenerator,
-			RabbitTemplate rabbitTemplate) {
-		super(rabbitMessageLogService, idGenerator, rabbitTemplate);
-	}
+    @Autowired
+    public UpdateAuthMessageSender(RabbitMessageLogService rabbitMessageLogService, IdGenerator idGenerator,
+            RabbitTemplate rabbitTemplate) {
+        super(rabbitMessageLogService, idGenerator, rabbitTemplate);
+    }
 
 }

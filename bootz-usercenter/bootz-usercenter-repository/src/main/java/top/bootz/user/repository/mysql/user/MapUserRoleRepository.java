@@ -11,6 +11,6 @@ import top.bootz.user.entity.mysql.user.MapUserRole;
  */
 
 public interface MapUserRoleRepository extends JpaRepository<MapUserRole, Long>,
-		JpaSpecificationExecutor<MapUserRoleRepository>, QuerydslPredicateExecutor<MapUserRoleRepository>{
+        JpaSpecificationExecutor<MapUserRoleRepository>, QuerydslPredicateExecutor<MapUserRoleRepository> {
 
 }

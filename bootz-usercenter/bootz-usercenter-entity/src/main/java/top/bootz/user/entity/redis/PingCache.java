@@ -29,13 +29,13 @@ import top.bootz.core.base.entity.BaseEntity;
 @RedisHash(value = "{PingCache}", timeToLive = 60) // {}大括号包裹着keyPrefix可以保证在redis集群模式下，该实体的数据都存储在同一个slot中
 public class PingCache extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	private String id;
+    @Id
+    private String id;
 
-	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	@JsonSerialize(using = LocalDateTimeSerializer.class)
-	private LocalDateTime now = LocalDateTime.now();
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime now = LocalDateTime.now();
 
 }

@@ -13,6 +13,6 @@ import top.bootz.user.entity.mongo.RabbitMessageLog;
  */
 public interface RabbitMessageLogRepository extends MongoRepository<RabbitMessageLog, ObjectId> {
 
-	Optional<RabbitMessageLog> findByMessage_Id(Long messageId);
+    Optional<RabbitMessageLog> findByMessage_Id(Long messageId);
 
 }

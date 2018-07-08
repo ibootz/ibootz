@@ -11,6 +11,6 @@ import top.bootz.user.entity.mysql.resource.Element;
  */
 
 public interface ElementRepository
-		extends JpaRepository<Element, Long>, JpaSpecificationExecutor<Element>, QuerydslPredicateExecutor<Element> {
+        extends JpaRepository<Element, Long>, JpaSpecificationExecutor<Element>, QuerydslPredicateExecutor<Element> {
 
 }

@@ -9,7 +9,7 @@ package top.bootz.user.commons.constants;
  */
 public final class UserCenterConstants {
 
-	private UserCenterConstants() {
-	}
+    private UserCenterConstants() {
+    }
 
 }

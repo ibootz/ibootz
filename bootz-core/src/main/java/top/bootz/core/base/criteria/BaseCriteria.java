@@ -4,6 +4,6 @@ import top.bootz.core.base.entity.BaseEntity;
 
 public class BaseCriteria extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
 }

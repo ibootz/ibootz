@@ -25,23 +25,23 @@ import top.bootz.core.dictionary.DisableTypeEnum;
 @AllArgsConstructor
 public class Url extends BaseMysqlEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/** 请求路径前缀 */
-	private String urlExpression;
+    /** 请求路径前缀 */
+    private String urlExpression;
 
-	/** 是否处于不可用状态 */
-	private DisableTypeEnum disable;
+    /** 是否处于不可用状态 */
+    private DisableTypeEnum disable;
 
-	@Column(name = "url_expression", nullable = false, columnDefinition = "varchar(32) default '' comment '请求路径前缀'")
-	public String getUrlExpression() {
-		return urlExpression;
-	}
+    @Column(name = "url_expression", nullable = false, columnDefinition = "varchar(32) default '' comment '请求路径前缀'")
+    public String getUrlExpression() {
+        return urlExpression;
+    }
 
-	@Convert(converter = DisableTypeAttributeConverter.class)
-	@Column(name = "disable", nullable = false, columnDefinition = "tinyint(1) default 0 comment '是否处于不可用状态（0-可用，1-不可用）'")
-	public DisableTypeEnum getDisable() {
-		return this.disable == null ? DisableTypeEnum.ENABLE : this.disable;
-	}
+    @Convert(converter = DisableTypeAttributeConverter.class)
+    @Column(name = "disable", nullable = false, columnDefinition = "tinyint(1) default 0 comment '是否处于不可用状态（0-可用，1-不可用）'")
+    public DisableTypeEnum getDisable() {
+        return this.disable == null ? DisableTypeEnum.ENABLE : this.disable;
+    }
 
 }

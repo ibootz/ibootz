@@ -7,6 +7,6 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import top.bootz.user.entity.mysql.user.UserGroup;
 
 public interface UserGroupRepository extends JpaRepository<UserGroup, Long>, JpaSpecificationExecutor<UserGroup>,
-		QuerydslPredicateExecutor<UserGroup> {
+        QuerydslPredicateExecutor<UserGroup> {
 
 }

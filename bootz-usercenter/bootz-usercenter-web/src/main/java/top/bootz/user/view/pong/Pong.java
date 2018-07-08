@@ -18,16 +18,16 @@ import top.bootz.core.base.entity.BaseEntity;
 @AllArgsConstructor
 public class Pong extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private boolean mysql;
+    private boolean mysql;
 
-	private boolean redis;
+    private boolean redis;
 
-	private boolean mongodb;
+    private boolean mongodb;
 
-	private boolean elastic;
+    private boolean elastic;
 
-	private boolean rabbitmq;
+    private boolean rabbitmq;
 
 }

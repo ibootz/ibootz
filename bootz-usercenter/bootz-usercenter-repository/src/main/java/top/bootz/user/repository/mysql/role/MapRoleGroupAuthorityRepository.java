@@ -11,6 +11,6 @@ import top.bootz.user.entity.mysql.role.MapRoleGroupAuthority;
  */
 
 public interface MapRoleGroupAuthorityRepository extends JpaRepository<MapRoleGroupAuthority, Long>,
-		JpaSpecificationExecutor<MapRoleGroupAuthority>, QuerydslPredicateExecutor<MapRoleGroupAuthority> {
+        JpaSpecificationExecutor<MapRoleGroupAuthority>, QuerydslPredicateExecutor<MapRoleGroupAuthority> {
 
 }

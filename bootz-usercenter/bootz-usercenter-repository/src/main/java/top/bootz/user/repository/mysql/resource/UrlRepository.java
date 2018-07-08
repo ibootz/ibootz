@@ -11,6 +11,6 @@ import top.bootz.user.entity.mysql.resource.Url;
  */
 
 public interface UrlRepository
-		extends JpaRepository<Url, Long>, JpaSpecificationExecutor<Url>, QuerydslPredicateExecutor<Url> {
+        extends JpaRepository<Url, Long>, JpaSpecificationExecutor<Url>, QuerydslPredicateExecutor<Url> {
 
 }

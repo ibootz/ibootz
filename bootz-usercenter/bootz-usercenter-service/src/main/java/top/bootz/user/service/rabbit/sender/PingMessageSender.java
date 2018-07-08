@@ -21,10 +21,10 @@ import top.bootz.user.service.rabbit.BaseMessageSender;
 @NoArgsConstructor
 public class PingMessageSender extends BaseMessageSender {
 
-	@Autowired
-	public PingMessageSender(RabbitMessageLogService rabbitMessageLogService, IdGenerator idGenerator,
-			RabbitTemplate rabbitTemplate) {
-		super(rabbitMessageLogService, idGenerator, rabbitTemplate);
-	}
+    @Autowired
+    public PingMessageSender(RabbitMessageLogService rabbitMessageLogService, IdGenerator idGenerator,
+            RabbitTemplate rabbitTemplate) {
+        super(rabbitMessageLogService, idGenerator, rabbitTemplate);
+    }
 
 }

@@ -19,27 +19,27 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @EnableRedisRepositories(basePackages = { "top.bootz.user.repository.redis" })
 public class RedisConfig {
 
-	/**
-	 * 自定义RedisTemplete,
-	 * 采用json序列化机制替换掉默认的jdk序列化，提高redis中value的可读性，同时也能减少value的大小
-	 *
-	 * @param redisConnectionFactory
-	 * @return
-	 * @author John
-	 * @time 2018年6月19日 下午10:21:11
-	 */
-	@Bean
-	@Primary
-	public RedisTemplate<String, Object> redisCacheTemplate(LettuceConnectionFactory redisConnectionFactory) {
-		RedisTemplate<String, Object> template = new RedisTemplate<>();
-		StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
-		GenericJackson2JsonRedisSerializer genericJackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer();
-		template.setKeySerializer(stringRedisSerializer);
-		template.setValueSerializer(genericJackson2JsonRedisSerializer);
-		template.setHashKeySerializer(stringRedisSerializer);
-		template.setHashValueSerializer(genericJackson2JsonRedisSerializer);
-		template.setConnectionFactory(redisConnectionFactory);
-		return template;
-	}
+    /**
+     * 自定义RedisTemplete,
+     * 采用json序列化机制替换掉默认的jdk序列化，提高redis中value的可读性，同时也能减少value的大小
+     *
+     * @param redisConnectionFactory
+     * @return
+     * @author John
+     * @time 2018年6月19日 下午10:21:11
+     */
+    @Bean
+    @Primary
+    public RedisTemplate<String, Object> redisCacheTemplate(LettuceConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
+        GenericJackson2JsonRedisSerializer genericJackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer();
+        template.setKeySerializer(stringRedisSerializer);
+        template.setValueSerializer(genericJackson2JsonRedisSerializer);
+        template.setHashKeySerializer(stringRedisSerializer);
+        template.setHashValueSerializer(genericJackson2JsonRedisSerializer);
+        template.setConnectionFactory(redisConnectionFactory);
+        return template;
+    }
 
 }

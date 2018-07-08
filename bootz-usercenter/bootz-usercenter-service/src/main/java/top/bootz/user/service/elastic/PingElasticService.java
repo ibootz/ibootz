@@ -22,31 +22,31 @@ import top.bootz.user.repository.elastic.PingElasticRepository;
 @Service
 public class PingElasticService extends BaseElasticService {
 
-	@Autowired
-	private PingElasticRepository pingElasticRepository;
+    @Autowired
+    private PingElasticRepository pingElasticRepository;
 
-	@Autowired
-	public PingElasticService(ElasticsearchTemplate elasticsearchTemplate) {
-		super(elasticsearchTemplate);
-	}
+    @Autowired
+    public PingElasticService(ElasticsearchTemplate elasticsearchTemplate) {
+        super(elasticsearchTemplate);
+    }
 
-	public PingElastic save(PingElastic order) {
-		return this.pingElasticRepository.save(order);
-	}
+    public PingElastic save(PingElastic order) {
+        return this.pingElasticRepository.save(order);
+    }
 
-	public Optional<PingElastic> findByBuyerNameLike(String buyerNameLike) {
-		return this.pingElasticRepository.findByBuyerNameLike(buyerNameLike);
-	}
+    public Optional<PingElastic> findByBuyerNameLike(String buyerNameLike) {
+        return this.pingElasticRepository.findByBuyerNameLike(buyerNameLike);
+    }
 
-	public List<PingElastic> findByCreateTimeBetweenOrderByCreateTimeDesc(LocalDateTime startTime,
-			LocalDateTime endTime) {
-		return this.pingElasticRepository.findByCreateTimeBetweenOrderByCreateTimeDesc(
-				startTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
-				endTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-	}
+    public List<PingElastic> findByCreateTimeBetweenOrderByCreateTimeDesc(LocalDateTime startTime,
+            LocalDateTime endTime) {
+        return this.pingElasticRepository.findByCreateTimeBetweenOrderByCreateTimeDesc(
+                startTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+                endTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+    }
 
-	public void deleteOrders(List<PingElastic> pingOrders) {
-		this.pingElasticRepository.deleteAll(pingOrders);
-	}
+    public void deleteOrders(List<PingElastic> pingOrders) {
+        this.pingElasticRepository.deleteAll(pingOrders);
+    }
 
 }

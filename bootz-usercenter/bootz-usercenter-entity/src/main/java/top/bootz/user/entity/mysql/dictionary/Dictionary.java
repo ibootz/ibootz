@@ -23,54 +23,54 @@ import top.bootz.core.dictionary.DisableTypeEnum;
 
 @Entity
 @Table(name = "uc_dictionary", indexes = {
-		@Index(columnList = "name,type", name = "idx_uc_dictionary_name_type", unique = true) })
+        @Index(columnList = "name,type", name = "idx_uc_dictionary_name_type", unique = true) })
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Dictionary extends BaseMysqlEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/** 字典表类型 */
-	private DictionaryTypeEnum type;
+    /** 字典表类型 */
+    private DictionaryTypeEnum type;
 
-	/** 字典name */
-	private String name;
+    /** 字典name */
+    private String name;
 
-	/** 字典value */
-	private String value;
+    /** 字典value */
+    private String value;
 
-	/** 字典备注 */
-	private String description;
+    /** 字典备注 */
+    private String description;
 
-	/** 是否处于不可用状态 */
-	private DisableTypeEnum disable;
+    /** 是否处于不可用状态 */
+    private DisableTypeEnum disable;
 
-	@Convert(converter = DictionaryTypeAttributeConverter.class)
-	@Column(name = "type", nullable = false, columnDefinition = "varchar(16) default '' comment '字典类型'")
-	public DictionaryTypeEnum getType() {
-		return this.type;
-	}
+    @Convert(converter = DictionaryTypeAttributeConverter.class)
+    @Column(name = "type", nullable = false, columnDefinition = "varchar(16) default '' comment '字典类型'")
+    public DictionaryTypeEnum getType() {
+        return this.type;
+    }
 
-	@Column(name = "name", nullable = false, columnDefinition = "varchar(64) default '' comment '字典名'")
-	public String getName() {
-		return name;
-	}
+    @Column(name = "name", nullable = false, columnDefinition = "varchar(64) default '' comment '字典名'")
+    public String getName() {
+        return name;
+    }
 
-	@Column(name = "value", nullable = false, columnDefinition = "varchar(128) default '' comment '字典值'")
-	public String getValue() {
-		return value;
-	}
+    @Column(name = "value", nullable = false, columnDefinition = "varchar(128) default '' comment '字典值'")
+    public String getValue() {
+        return value;
+    }
 
-	@Column(name = "description", nullable = false, columnDefinition = "varchar(255) default '' comment '字典备注'")
-	public String getDescription() {
-		return description;
-	}
+    @Column(name = "description", nullable = false, columnDefinition = "varchar(255) default '' comment '字典备注'")
+    public String getDescription() {
+        return description;
+    }
 
-	@Convert(converter = DisableTypeAttributeConverter.class)
-	@Column(name = "disable", nullable = false, columnDefinition = "tinyint(1) default 0 comment '是否处于不可用状态（0-可用，1-不可用）'")
-	public DisableTypeEnum getDisable() {
-		return this.disable == null ? DisableTypeEnum.ENABLE : this.disable;
-	}
+    @Convert(converter = DisableTypeAttributeConverter.class)
+    @Column(name = "disable", nullable = false, columnDefinition = "tinyint(1) default 0 comment '是否处于不可用状态（0-可用，1-不可用）'")
+    public DisableTypeEnum getDisable() {
+        return this.disable == null ? DisableTypeEnum.ENABLE : this.disable;
+    }
 
 }

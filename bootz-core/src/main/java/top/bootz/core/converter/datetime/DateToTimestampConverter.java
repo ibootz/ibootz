@@ -14,11 +14,11 @@ import org.springframework.core.convert.converter.Converter;
  */
 public enum DateToTimestampConverter implements Converter<Date, Timestamp> {
 
-	INSTANCE;
+    INSTANCE;
 
-	@Override
-	public Timestamp convert(Date source) {
-		return source == null ? null : new Timestamp(source.getTime());
-	}
+    @Override
+    public Timestamp convert(Date source) {
+        return source == null ? null : new Timestamp(source.getTime());
+    }
 
 }

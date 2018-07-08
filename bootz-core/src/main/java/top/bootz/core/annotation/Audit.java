@@ -20,25 +20,25 @@ import top.bootz.commons.constant.audit.AuditLogOperation;
 @Documented
 public @interface Audit {
 
-	/**
-	 * 操作类型
-	 * 
-	 * @return
-	 */
-	AuditLogOperation op();
+    /**
+     * 操作类型
+     * 
+     * @return
+     */
+    AuditLogOperation op();
 
-	/**
-	 * 操作对象
-	 * 
-	 * @return
-	 */
-	AuditLogObject obj();
+    /**
+     * 操作对象
+     * 
+     * @return
+     */
+    AuditLogObject obj();
 
-	/**
-	 * 自定义记录信息
-	 * 
-	 * @return
-	 */
-	String comment();
+    /**
+     * 自定义记录信息
+     * 
+     * @return
+     */
+    String comment();
 
 }

@@ -20,19 +20,19 @@ import top.bootz.core.base.entity.BaseEntity;
 @AllArgsConstructor
 public class ErrorMessage extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/** 应用内部自定义错误代码 */
-	private String code;
+    /** 应用内部自定义错误代码 */
+    private String code;
 
-	/** 错误信息 */
-	private String message;
+    /** 错误信息 */
+    private String message;
 
-	/** 附加更详细说明 */
-	private String moreInfo;
+    /** 附加更详细说明 */
+    private String moreInfo;
 
-	/** 堆栈信息 */
-	@JsonIgnore
-	private Throwable throwable;
+    /** 堆栈信息 */
+    @JsonIgnore
+    private Throwable throwable;
 
 }

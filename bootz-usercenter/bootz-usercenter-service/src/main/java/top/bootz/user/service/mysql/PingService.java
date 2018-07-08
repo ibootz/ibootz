@@ -19,7 +19,7 @@ import java.util.Optional;
  */
 
 @Service
-@CacheConfig(cacheNames = {"ping"})
+@CacheConfig(cacheNames = { "ping" })
 @Transactional(readOnly = true, rollbackFor = Exception.class)
 public class PingService {
 

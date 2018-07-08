@@ -4,47 +4,47 @@ import top.bootz.core.base.entity.BaseEntity;
 
 public class SortInfo extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String sortFiled;
+    private String sortFiled;
 
-	private String direction;
+    private String direction;
 
-	private Integer priority; // 排序优先级
+    private Integer priority; // 排序优先级
 
-	public SortInfo() {
-		super();
-	}
+    public SortInfo() {
+        super();
+    }
 
-	public SortInfo(String sortFiled, String direction, Integer priority) {
-		super();
-		this.sortFiled = sortFiled;
-		this.direction = direction;
-		this.priority = priority;
-	}
+    public SortInfo(String sortFiled, String direction, Integer priority) {
+        super();
+        this.sortFiled = sortFiled;
+        this.direction = direction;
+        this.priority = priority;
+    }
 
-	public String getSortFiled() {
-		return sortFiled;
-	}
+    public String getSortFiled() {
+        return sortFiled;
+    }
 
-	public void setSortFiled(String sortFiled) {
-		this.sortFiled = sortFiled;
-	}
+    public void setSortFiled(String sortFiled) {
+        this.sortFiled = sortFiled;
+    }
 
-	public String getDirection() {
-		return direction;
-	}
+    public String getDirection() {
+        return direction;
+    }
 
-	public void setDirection(String direction) {
-		this.direction = direction;
-	}
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
 
-	public Integer getPriority() {
-		return priority;
-	}
+    public Integer getPriority() {
+        return priority;
+    }
 
-	public void setPriority(Integer priority) {
-		this.priority = priority;
-	}
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
 
 }

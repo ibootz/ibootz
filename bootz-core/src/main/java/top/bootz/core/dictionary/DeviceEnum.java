@@ -10,33 +10,33 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 public enum DeviceEnum {
 
-	UNKNOWN(0, "Unknown"), PC(1, "PC"), MOBILE(2, "Mobile"), TABLET(3, "Tablet");
+    UNKNOWN(0, "Unknown"), PC(1, "PC"), MOBILE(2, "Mobile"), TABLET(3, "Tablet");
 
-	private String name;
+    private String name;
 
-	private Integer code;
+    private Integer code;
 
-	private DeviceEnum(Integer code, String name) {
-		this.code = code;
-		this.name = name;
-	}
+    private DeviceEnum(Integer code, String name) {
+        this.code = code;
+        this.name = name;
+    }
 
-	@JsonValue
-	public Integer getCode() {
-		return this.code;
-	}
+    @JsonValue
+    public Integer getCode() {
+        return this.code;
+    }
 
-	public String getName() {
-		return this.name;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public static DeviceEnum getSourceTypeByCode(Integer code) {
-		for (DeviceEnum sourceType : DeviceEnum.values()) {
-			if (sourceType.getCode().equals(code)) {
-				return sourceType;
-			}
-		}
-		return DeviceEnum.UNKNOWN;
-	}
+    public static DeviceEnum getSourceTypeByCode(Integer code) {
+        for (DeviceEnum sourceType : DeviceEnum.values()) {
+            if (sourceType.getCode().equals(code)) {
+                return sourceType;
+            }
+        }
+        return DeviceEnum.UNKNOWN;
+    }
 
 }

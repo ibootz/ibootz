@@ -10,26 +10,26 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 public enum DisableTypeEnum {
 
-	ENABLE(0), DISABLED(1);
+    ENABLE(0), DISABLED(1);
 
-	private Integer code;
+    private Integer code;
 
-	private DisableTypeEnum(Integer code) {
-		this.code = code;
-	}
+    private DisableTypeEnum(Integer code) {
+        this.code = code;
+    }
 
-	@JsonValue
-	public Integer getCode() {
-		return this.code;
-	}
+    @JsonValue
+    public Integer getCode() {
+        return this.code;
+    }
 
-	public static DisableTypeEnum getSourceTypeByCode(Integer code) {
-		for (DisableTypeEnum sourceType : DisableTypeEnum.values()) {
-			if (sourceType.getCode().equals(code)) {
-				return sourceType;
-			}
-		}
-		return DisableTypeEnum.ENABLE;
-	}
+    public static DisableTypeEnum getSourceTypeByCode(Integer code) {
+        for (DisableTypeEnum sourceType : DisableTypeEnum.values()) {
+            if (sourceType.getCode().equals(code)) {
+                return sourceType;
+            }
+        }
+        return DisableTypeEnum.ENABLE;
+    }
 
 }
