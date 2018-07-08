@@ -2,6 +2,10 @@ package top.bootz.user.entity.mongo;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -29,17 +33,19 @@ import top.bootz.core.base.entity.BaseEntity;
 @CompoundIndexes({ @CompoundIndex(name = "idx_ping_createtor_createTime", def = "{'createtor': 1, 'createTime': 1}") })
 public class PingMongo extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    private ObjectId id;
+	@Id
+	private ObjectId id;
 
-    @Indexed
-    @CreatedBy
-    private Long createtor;
+	@Indexed
+	@CreatedBy
+	private Long createtor;
 
-    @Indexed
-    @CreatedDate
-    private LocalDateTime createTime;
+	@Indexed
+	@CreatedDate
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	private LocalDateTime createTime;
 
 }

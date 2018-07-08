@@ -14,7 +14,7 @@ import org.springframework.data.redis.serializer.RedisSerializationContext.Seria
 
 /**
  * 应用缓存配置
- * 
+ *
  * @Author : Zhangq <momogoing@163.com>
  * @CreationDate : 2018年6月24日 下午9:12:34
  */
@@ -31,6 +31,7 @@ public class CacheConfig {
     public RedisCacheConfiguration redisCacheConfiguration() {
         Redis redisProperties = cacheProperties.getRedis();
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
+        // 采用jackson序列化机制替换掉默认的jdk序列化
         config = config.serializeValuesWith(SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
         if (redisProperties.getTimeToLive() != null) {
             config = config.entryTtl(redisProperties.getTimeToLive());
