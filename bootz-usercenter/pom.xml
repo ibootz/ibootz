@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>bootz-usercenter</artifactId>
+    <artifactId>bootz-user</artifactId>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -16,11 +16,11 @@
     </parent>
 
     <modules>
-        <module>bootz-usercenter-commons</module>
-        <module>bootz-usercenter-entity</module>
-        <module>bootz-usercenter-repository</module>
-        <module>bootz-usercenter-service</module>
-        <module>bootz-usercenter-web</module>
+        <module>bootz-user-commons</module>
+        <module>bootz-user-entity</module>
+        <module>bootz-user-repository</module>
+        <module>bootz-user-service</module>
+        <module>bootz-user-web</module>
     </modules>
 
     <properties>
