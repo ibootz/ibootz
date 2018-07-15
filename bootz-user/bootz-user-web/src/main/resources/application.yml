@@ -4,7 +4,7 @@ spring:
   cache:
     type: redis
     redis:
-      key-prefix: 'cache:usercenter:'
+      key-prefix: 'cache:user:'
       time-to-live: 12h
   devtools:
     livereload:
@@ -104,7 +104,7 @@ server:
     uri-encoding: UTF-8
   connection-timeout: 60s
   servlet:
-    context-path: /usercenter/api/v1
+    context-path: /user/api/v1
   ssl:
     enabled: true
     key-store: classpath:keystore.p12
@@ -126,7 +126,7 @@ management:
         - HEAD
         allowed-origins:
         - https://www.bootz.top
-        - https://api-usercenter.bootz.top
+        - https://api-user.bootz.top
         exposed-headers:
         - X-Auth-Token
         max-age: 24h

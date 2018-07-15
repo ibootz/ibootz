@@ -20,7 +20,7 @@
     <modules>
         <module>bootz-core</module>
         <module>bootz-commons</module>
-        <module>bootz-usercenter</module>
+        <module>bootz-user</module>
     <module>bootz-security</module>
   </modules>
 

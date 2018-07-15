@@ -15,7 +15,7 @@ public enum AppEnum {
 
     UNKNOW(0, "Unknow", "未知"),
 
-    USER_CENTER(5, "UserCenter", "用户中心"),
+    USER(5, "User", "用户中心"),
 
     SECURITY(10, "Security", "安全中心"),
 

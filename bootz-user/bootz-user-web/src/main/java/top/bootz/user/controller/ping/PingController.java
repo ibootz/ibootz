@@ -99,7 +99,7 @@ public class PingController extends BaseController {
 
     private boolean testRabbitmq() throws InterruptedException {
         String payload = "Just a ping!!!";
-        BaseMessage message = new PingMessage(AppEnum.USER_CENTER.getName(), new String[]{AppEnum.ORDER.getName()},
+        BaseMessage message = new PingMessage(AppEnum.USER.getName(), new String[]{AppEnum.ORDER.getName()},
                 -1L, LocalDateTime.now(), payload);
         Long messageId = pingMessageSender.send(Exchange.DIRECT, RoutingKey.UC_DIRECT_PING, message,
                 MapHelper.emptyMap());

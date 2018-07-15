@@ -346,9 +346,9 @@ public class RsaHelper {
     public static void main(String[] args) {
         // try {
         // String privateKeyPath =
-        // "E:/GitRepo/backend/ibootz/bootz-usercenter/bootz-usercenter-web/src/main/resources/rsa/privateKey.keystore";
+        // "E:/GitRepo/backend/ibootz/bootz-user/bootz-user-web/src/main/resources/rsa/privateKey.keystore";
         // String publicKeyPath =
-        // "E:/GitRepo/backend/ibootz/bootz-usercenter/bootz-usercenter-web/src/main/resources/rsa/publicKey.keystore";
+        // "E:/GitRepo/backend/ibootz/bootz-user/bootz-user-web/src/main/resources/rsa/publicKey.keystore";
         // genKeyPair(privateKeyPath, publicKeyPath);
         // } catch (Exception e) {
         // e.printStackTrace();

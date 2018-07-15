@@ -6,11 +6,11 @@
 
 	<parent>
 		<groupId>top.bootz</groupId>
-		<artifactId>bootz-usercenter</artifactId>
+		<artifactId>bootz-user</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>bootz-usercenter-web</artifactId>
+	<artifactId>bootz-user-web</artifactId>
 	<name>${project.artifactId}</name>
 	<url>http://www.bootz.top</url>
 
@@ -21,7 +21,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>top.bootz</groupId>
-			<artifactId>bootz-usercenter-service</artifactId>
+			<artifactId>bootz-user-service</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

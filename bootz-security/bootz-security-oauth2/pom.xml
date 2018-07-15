@@ -14,4 +14,12 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     
+    <dependencies>
+        <dependency>
+            <groupId>top.bootz</groupId>
+            <artifactId>bootz-user-commons</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+    
 </project>

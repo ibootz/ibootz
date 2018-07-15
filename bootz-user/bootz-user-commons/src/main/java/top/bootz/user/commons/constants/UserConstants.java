@@ -7,9 +7,9 @@ package top.bootz.user.commons.constants;
  * @author John <br/>
  *         2018年6月10日 下午5:23:56 <br/>
  */
-public final class UserCenterConstants {
+public final class UserConstants {
 
-    private UserCenterConstants() {
+    private UserConstants() {
     }
 
 }
