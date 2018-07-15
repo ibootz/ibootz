@@ -1,5 +1,4 @@
-package top.bootz.security.oauth2;
 /**
- * gitkeep
- * 
+ * @author Zhangq<momogoing@163.com>
  */
+package top.bootz.security.oauth2;

@@ -1,5 +1,4 @@
-package top.bootz.user.commons.utils;
 /**
- * 应用内使用的工具类
- * 
+ * @author Zhangq<momogoing@163.com>
  */
+package top.bootz.user.commons.utils;
