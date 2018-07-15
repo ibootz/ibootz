@@ -2,7 +2,7 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>bootz-security-oauth2</artifactId>
+  <artifactId>bootz-security-social-weixin</artifactId>
 
     <name>${project.artifactId}</name>
     <description>Bootz project for Spring Boot</description>
@@ -10,8 +10,7 @@
 
     <parent>
         <groupId>top.bootz</groupId>
-        <artifactId>bootz-security</artifactId>
+        <artifactId>bootz-security-social</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    
 </project>
