@@ -20,12 +20,46 @@
 			<groupId>top.bootz</groupId>
 			<artifactId>bootz-core</artifactId>
 			<version>${bootz.project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-amqp</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>
+						spring-boot-starter-data-elasticsearch
+					</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>
+						spring-boot-starter-data-mongodb
+					</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.querydsl</groupId>
+					<artifactId>querydsl-mongodb</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.querydsl</groupId>
+					<artifactId>querydsl-jpa</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-oauth2</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+			<version>5.1.46</version><!--$NO-MVN-MAN-VER$ -->
+		</dependency>
+
 	</dependencies>
 
 </project>
