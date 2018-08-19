@@ -14,7 +14,7 @@ spring:
       - 192.168.199.120:6380
       - 192.168.199.120:6381
       max-redirects: 3
-    lettuce:
+    jedis:
       pool:
         max-active: 10
         max-wait: 10s
@@ -22,3 +22,7 @@ spring:
         min-idle: 2
     password: nkEs8h6MdH!
     timeout: 10s
+  data:
+    mongodb:
+      uri: mongodb://readwrite:nkEs8h6MdH!@192.168.199.115:27017,192.168.199.116:27017,192.168.199.151:27017/bootz_v1
+      authentication-database: bootz_v1

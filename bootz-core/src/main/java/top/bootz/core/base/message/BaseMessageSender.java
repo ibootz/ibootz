@@ -1,8 +1,10 @@
-package top.bootz.user.service.rabbit;
+package top.bootz.core.base.message;
 
-import com.google.common.base.Preconditions;
-import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.Message;
@@ -10,15 +12,14 @@ import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.support.CorrelationData;
-import top.bootz.commons.snowflake.IdGenerator;
-import top.bootz.core.base.dto.BaseMessage;
-import top.bootz.user.entity.mongo.RabbitMessageLog;
-import top.bootz.user.service.mongo.RabbitMessageLogService;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import com.google.common.base.Preconditions;
+
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import top.bootz.commons.snowflake.IdGenerator;
+import top.bootz.core.log.RabbitMessageLog;
+import top.bootz.core.log.RabbitMessageLogService;
 
 /**
  * 发送消息的基础通用类
@@ -59,7 +60,7 @@ public class BaseMessageSender {
      * @Author : Zhangq <momogoing@163.com>
      * @CreationDate : 2018年6月28日 上午12:10:02
      */
-    public Long send(String exchange, String routingKey, BaseMessage message, Map<String, Object> messageHeaders) {
+    public Long send(String exchange, String routingKey, RabbitMessage message, Map<String, Object> messageHeaders) {
         Preconditions.checkArgument(StringUtils.isNotBlank(exchange), "Rabbit exchange must not be blank");
         Preconditions.checkArgument(StringUtils.isNotBlank(routingKey), "Rabbit routing key must not be blank");
         Preconditions.checkArgument(message != null, "Rabbit message payload must not be blank");

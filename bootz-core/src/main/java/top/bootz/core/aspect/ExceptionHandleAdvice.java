@@ -1,4 +1,4 @@
-package top.bootz.user.aspect;
+package top.bootz.core.aspect;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,8 +35,8 @@ import top.bootz.commons.constant.ExceptionConstants;
 import top.bootz.commons.exception.ApiException;
 import top.bootz.commons.exception.BaseException;
 import top.bootz.commons.helper.JsonHelper;
-import top.bootz.core.base.dto.ErrorMessage;
-import top.bootz.core.base.dto.RestMessage;
+import top.bootz.core.base.message.ErrorMessage;
+import top.bootz.core.base.message.RestMessage;
 import top.bootz.core.dictionary.MessageStatusEnum;
 
 /**

@@ -14,10 +14,13 @@ spring:
       - 192.168.1.128:6383
       - 192.168.1.128:6384
       max-redirects: 3
-    lettuce:
+    jedis:
       pool:
         max-active: 10
         max-wait: 10s
         max-idle: 8
         min-idle: 2
     timeout: 10s
+  data:
+    mongodb:
+      uri: mongodb://root:1990912@192.168.1.128:27017/orion_v1

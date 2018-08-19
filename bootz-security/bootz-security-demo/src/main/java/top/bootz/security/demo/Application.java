@@ -1,16 +1,16 @@
 /**
  * 
  */
-package top.bootz.security;
+package top.bootz.security.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
-public class SecurityDemoApplication {
+@SpringBootApplication(scanBasePackages = { "top.bootz" })
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SecurityDemoApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }

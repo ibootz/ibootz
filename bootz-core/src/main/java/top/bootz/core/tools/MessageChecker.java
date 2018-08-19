@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import top.bootz.commons.helper.JsonHelper;
-import top.bootz.core.base.dto.RestMessage;
+import top.bootz.core.base.message.RestMessage;
 
 /**
  * 检查message资源文件中的json格式符不符合规范

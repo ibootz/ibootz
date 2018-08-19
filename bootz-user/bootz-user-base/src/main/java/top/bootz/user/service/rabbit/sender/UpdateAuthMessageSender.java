@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 
 import lombok.NoArgsConstructor;
 import top.bootz.commons.snowflake.IdGenerator;
-import top.bootz.user.service.mongo.RabbitMessageLogService;
-import top.bootz.user.service.rabbit.BaseMessageSender;
+import top.bootz.core.base.message.BaseMessageSender;
+import top.bootz.core.log.RabbitMessageLogService;
 
 /**
  * @Project : ibootz

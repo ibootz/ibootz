@@ -1,4 +1,4 @@
-package top.bootz.user.entity.mongo;
+package top.bootz.core.log;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,8 +12,9 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import top.bootz.core.base.dto.BaseMessage;
+
 import top.bootz.core.base.entity.BaseEntity;
+import top.bootz.core.base.message.RabbitMessage;
 
 import java.time.LocalDateTime;
 
@@ -54,7 +55,7 @@ public class RabbitMessageLog extends BaseEntity {
      * 发送的消息实体
      */
     @Indexed
-    private BaseMessage message;
+    private RabbitMessage message;
 
     /**
      * 发送阶段：是否成功发送到消息服务器
@@ -128,7 +129,7 @@ public class RabbitMessageLog extends BaseEntity {
     @CreatedDate
     private LocalDateTime createTime = LocalDateTime.now();
 
-    public RabbitMessageLog(String exchange, String routingKey, BaseMessage message, boolean sent) {
+    public RabbitMessageLog(String exchange, String routingKey, RabbitMessage message, boolean sent) {
         super();
         this.exchange = exchange;
         this.routingKey = routingKey;

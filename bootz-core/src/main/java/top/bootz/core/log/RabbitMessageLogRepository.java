@@ -1,11 +1,9 @@
-package top.bootz.user.repository.mongo;
+package top.bootz.core.log;
 
 import java.util.Optional;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
-
-import top.bootz.user.entity.mongo.RabbitMessageLog;
 
 /**
  * @Author : momogoing@163.com

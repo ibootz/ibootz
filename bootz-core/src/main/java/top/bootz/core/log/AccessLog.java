@@ -1,4 +1,4 @@
-package top.bootz.user.entity.mongo;
+package top.bootz.core.log;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;

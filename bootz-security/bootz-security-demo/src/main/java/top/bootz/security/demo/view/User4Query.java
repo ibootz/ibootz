@@ -1,10 +1,10 @@
-package top.bootz.security.demo.dto;
+package top.bootz.security.demo.view;
 
 /**
  * @author zhailiang
  *
  */
-public class UserQueryCondition {
+public class User4Query {
 
 	private String username;
 

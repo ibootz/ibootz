@@ -1,16 +1,15 @@
-package top.bootz.user.service.mongo;
+package top.bootz.core.log;
 
-import lombok.NoArgsConstructor;
+import java.util.Optional;
+
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import top.bootz.core.base.service.BaseMongoService;
-import top.bootz.user.entity.mongo.RabbitMessageLog;
-import top.bootz.user.repository.mongo.RabbitMessageLogRepository;
 
-import java.util.Optional;
+import lombok.NoArgsConstructor;
+import top.bootz.core.base.service.BaseMongoService;
 
 /**
  * @Author : momogoing@163.com

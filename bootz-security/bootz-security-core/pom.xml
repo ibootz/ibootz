@@ -23,27 +23,9 @@
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-amqp</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
 					<artifactId>
 						spring-boot-starter-data-elasticsearch
 					</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>
-						spring-boot-starter-data-mongodb
-					</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.querydsl</groupId>
-					<artifactId>querydsl-mongodb</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.querydsl</groupId>
-					<artifactId>querydsl-jpa</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>

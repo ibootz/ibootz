@@ -25,9 +25,11 @@ import top.bootz.commons.helper.BooleanHelper;
 import top.bootz.commons.helper.MapHelper;
 import top.bootz.commons.helper.RandomHelper;
 import top.bootz.commons.snowflake.IdGenerator;
-import top.bootz.core.base.dto.BaseMessage;
-import top.bootz.core.base.dto.RestMessage;
+import top.bootz.core.base.message.RabbitMessage;
+import top.bootz.core.base.message.RestMessage;
 import top.bootz.core.dictionary.AppEnum;
+import top.bootz.core.log.RabbitMessageLog;
+import top.bootz.core.log.RabbitMessageLogService;
 import top.bootz.user.commons.constants.RabbitConstants.Exchange;
 import top.bootz.user.commons.constants.RabbitConstants.RoutingKey;
 import top.bootz.user.controller.UserBaseController;
@@ -35,13 +37,11 @@ import top.bootz.user.entity.elastic.PingElastic;
 import top.bootz.user.entity.elastic.PingItem;
 import top.bootz.user.entity.elastic.PingItemTag;
 import top.bootz.user.entity.mongo.PingMongo;
-import top.bootz.user.entity.mongo.RabbitMessageLog;
 import top.bootz.user.entity.mysql.ping.Ping;
 import top.bootz.user.entity.rabbit.PingMessage;
 import top.bootz.user.entity.redis.PingCache;
 import top.bootz.user.service.elastic.PingElasticService;
 import top.bootz.user.service.mongo.PingMongoService;
-import top.bootz.user.service.mongo.RabbitMessageLogService;
 import top.bootz.user.service.mysql.PingService;
 import top.bootz.user.service.rabbit.sender.PingMessageSender;
 import top.bootz.user.service.redis.PingCacheService;
@@ -108,7 +108,7 @@ public class PingController extends UserBaseController {
 
 	private boolean testRabbitmq() throws InterruptedException {
 		String payload = "Just a ping!!!";
-		BaseMessage message = new PingMessage(AppEnum.USER.getName(), new String[] { AppEnum.ORDER.getName() }, -1L,
+		RabbitMessage message = new PingMessage(AppEnum.USER.getName(), new String[] { AppEnum.ORDER.getName() }, -1L,
 				LocalDateTime.now(), payload);
 		Long messageId = pingMessageSender.send(Exchange.DIRECT, RoutingKey.UC_DIRECT_PING, message,
 				MapHelper.emptyMap());
@@ -293,7 +293,6 @@ public class PingController extends UserBaseController {
 				log.error("ping id is null. {}", ping);
 				return false;
 			}
-			System.out.println("1");
 			Optional<Ping> pingOpt = pingService.find(ping.getId());
 			if (!pingOpt.isPresent()) {
 				log.error("ping is not found. {}");
@@ -302,7 +301,6 @@ public class PingController extends UserBaseController {
 
 			pingService.delete(pingOpt.get());
 
-			System.out.println("2");
 			pingOpt = pingService.find(ping.getId());
 			return !pingOpt.isPresent();
 		} catch (Exception e) {

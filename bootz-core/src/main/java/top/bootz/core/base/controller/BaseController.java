@@ -13,8 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import top.bootz.commons.constant.HttpConstants;
 import top.bootz.commons.constant.SecurityConstants;
 import top.bootz.commons.constant.SymbolConstants;
-import top.bootz.core.base.dto.ErrorMessage;
-import top.bootz.core.base.dto.RestMessage;
+import top.bootz.core.base.message.ErrorMessage;
+import top.bootz.core.base.message.RestMessage;
 import top.bootz.core.dictionary.MessageStatusEnum;
 import top.bootz.core.dictionary.SourceTypeEnum;
 

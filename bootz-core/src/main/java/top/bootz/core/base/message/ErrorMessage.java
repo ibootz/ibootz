@@ -1,4 +1,4 @@
-package top.bootz.core.base.dto;
+package top.bootz.core.base.message;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

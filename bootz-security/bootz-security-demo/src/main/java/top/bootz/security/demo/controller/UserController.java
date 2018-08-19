@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
-import top.bootz.security.demo.dto.UserQueryCondition;
 import top.bootz.security.demo.entity.User;
+import top.bootz.security.demo.view.User4Query;
 
 /**
  * @author zhailiang
@@ -49,7 +49,7 @@ public class UserController {
 
 	@GetMapping
 	@JsonView(User.UserSimpleView.class)
-	public List<User> query(UserQueryCondition condition,
+	public List<User> query(User4Query condition,
 			@PageableDefault(page = 1, size = 20, sort = "username,asc") Pageable pageable) {
 		List<User> users = new ArrayList<>();
 		users.add(new User());

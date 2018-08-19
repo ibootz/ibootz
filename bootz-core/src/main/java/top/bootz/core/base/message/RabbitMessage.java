@@ -1,4 +1,4 @@
-package top.bootz.core.base.dto;
+package top.bootz.core.base.message;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @NoArgsConstructor
-public class BaseMessage extends BaseEntity {
+public class RabbitMessage extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -58,7 +58,7 @@ public class BaseMessage extends BaseEntity {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime createTime = LocalDateTime.now();
 
-    public BaseMessage(String from, String[] to, Long createtor, LocalDateTime createTime) {
+    public RabbitMessage(String from, String[] to, Long createtor, LocalDateTime createTime) {
         super();
         this.from = from;
         this.to = to;

@@ -1,4 +1,4 @@
-package top.bootz.security.session;
+package top.bootz.security.session.controller;
 
 import java.io.IOException;
 
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
 import top.bootz.core.base.controller.BaseController;
-import top.bootz.core.base.dto.RestMessage;
+import top.bootz.core.base.message.RestMessage;
 
 /**
  * @Author : Zhangq <momogoing@163.com>

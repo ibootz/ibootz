@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import top.bootz.core.base.dto.BaseMessage;
+import top.bootz.core.base.message.RabbitMessage;
 
 /**
  * @Author : Zhangq <momogoing@163.com>
@@ -17,7 +17,7 @@ import top.bootz.core.base.dto.BaseMessage;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PingMessage extends BaseMessage {
+public class PingMessage extends RabbitMessage {
 
     private static final long serialVersionUID = 1L;
 

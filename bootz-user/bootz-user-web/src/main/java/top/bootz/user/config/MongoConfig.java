@@ -17,7 +17,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
  * @CreationDate : 2018年6月24日 下午9:13:22
  */
 @Configuration
-@EnableMongoRepositories(basePackages = { "top.bootz.user.repository.mongo" })
+@EnableMongoRepositories(basePackages = { "top.bootz.user.repository.mongo"})
 @EnableMongoAuditing(auditorAwareRef = "mongoAuditorProvider", dateTimeProviderRef = "mongoDateTimeProvider", modifyOnCreate = false)
 public class MongoConfig {
 
