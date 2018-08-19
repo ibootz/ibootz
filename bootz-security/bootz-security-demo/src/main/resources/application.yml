@@ -7,7 +7,7 @@ logging:
   level:
     root: info
     top.bootz: debug
-imooc:
-  security:
-    session:
-      loginPage: /html/login.html
+#bootz:
+#  security:
+#    session:
+#      loginPage: /html/login.html

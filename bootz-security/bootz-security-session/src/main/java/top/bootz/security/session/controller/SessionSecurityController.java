@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.extern.slf4j.Slf4j;
 import top.bootz.core.base.controller.BaseController;
 import top.bootz.core.base.message.RestMessage;
+import top.bootz.security.core.properties.SecurityProperties;
 
 /**
  * @Author : Zhangq <momogoing@163.com>
@@ -32,6 +34,9 @@ public class SessionSecurityController extends BaseController {
 	private RequestCache requestCache = new HttpSessionRequestCache();
 
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
+	@Autowired
+	private SecurityProperties securityProperties;
 
 	/**
 	 * 发起认证请求。
@@ -49,7 +54,7 @@ public class SessionSecurityController extends BaseController {
 	 */
 	@GetMapping("/authentication/require")
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
-	public RestMessage requireAuthentication(HttpServletRequest request, HttpServletResponse response)
+	public RestMessage<String> requireAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		SavedRequest savedRequest = requestCache.getRequest(request, response);
 		if (savedRequest != null) {
@@ -57,9 +62,13 @@ public class SessionSecurityController extends BaseController {
 			log.debug("引发跳转的请求是[" + targetUrl + "]");
 			if (StringUtils.endsWithIgnoreCase(targetUrl, ".html")) {
 				// 跳转地址 留给安全组件的调用方来提供
-				redirectStrategy.sendRedirect(request, response, "");
+				redirectStrategy.sendRedirect(request, response, securityProperties.getSession().getLoginPage());
 			}
 		}
+		
+		// for test
+		redirectStrategy.sendRedirect(request, response, securityProperties.getSession().getLoginPage());
+		
 		return buildSuccessResponse("访问的服务需要身份认证，请引导用户到登录页");
 	}
 

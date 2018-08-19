@@ -1,4 +1,4 @@
-package top.bootz.security.demo.view;
+package top.bootz.security.demo.web.view;
 
 /**
  * @author zhailiang

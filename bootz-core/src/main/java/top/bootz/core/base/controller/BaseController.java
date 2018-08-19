@@ -33,10 +33,11 @@ public class BaseController {
 	 *            业务实体
 	 * @return
 	 * @author John
+	 * @param <T>
 	 * @time 2018年6月18日 上午12:43:14
 	 */
-	protected RestMessage buildSuccessResponse(Serializable success) {
-		return new RestMessage(MessageStatusEnum.SUCCESS, success, null);
+	protected <T extends Serializable> RestMessage<T> buildSuccessResponse(T success) {
+		return new RestMessage<>(MessageStatusEnum.SUCCESS, success, null);
 	}
 
 	/**
@@ -63,8 +64,8 @@ public class BaseController {
 	 * @author John
 	 * @time 2018年6月18日 上午12:43:14
 	 */
-	protected RestMessage buildErrorResponse(ErrorMessage error) {
-		return new RestMessage(MessageStatusEnum.ERROR, null, error);
+	protected <T extends Serializable> RestMessage<T> buildErrorResponse(ErrorMessage error) {
+		return new RestMessage<>(MessageStatusEnum.ERROR, null, error);
 	}
 
 	/**
@@ -76,8 +77,8 @@ public class BaseController {
 	 * @author John
 	 * @time 2018年6月18日 上午12:43:14
 	 */
-	protected RestMessage buildWarningResponse(Serializable warning, ErrorMessage error) {
-		return new RestMessage(MessageStatusEnum.WARNING, warning, error);
+	protected <T extends Serializable> RestMessage<T> buildWarningResponse(T warning, ErrorMessage error) {
+		return new RestMessage<>(MessageStatusEnum.WARNING, warning, error);
 	}
 
 	/**

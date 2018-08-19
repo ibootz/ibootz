@@ -1,68 +1,80 @@
 package top.bootz.security.demo.entity;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.util.Set;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Past;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonView;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-/**
- * @author zhailiang
- *
- */
-public class User {
+@Data
+@Entity
+@NoArgsConstructor
+@Table(name = "demo_user")
+public class User implements Serializable {
 
-	public interface UserSimpleView {
-	};
+	private static final long serialVersionUID = 1L;
 
-	public interface UserDetailView extends UserSimpleView {
-	};
-
-	private String id;
+	protected Long id;
 
 	private String username;
 
-	@NotBlank(message = "密码不能为空")
 	private String password;
 
-	@Past(message = "生日必须是过去的时间")
-	private Date birthday;
+	private boolean accountExpired;
 
-	@JsonView(UserSimpleView.class)
-	public String getUsername() {
-		return username;
-	}
+	private boolean accountLocked;
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+	private boolean credentialsExpired;
 
-	@JsonView(UserDetailView.class)
-	public String getPassword() {
-		return password;
-	}
+	private Set<Role> roles;
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	@JsonView(UserSimpleView.class)
-	public String getId() {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", nullable = false, unique = true, updatable = false, insertable = false, columnDefinition = "int(11) default 0 comment '主键唯一标识'")
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	@Column(name = "username", nullable = false, columnDefinition = "varchar(64) default '' comment '用户名'")
+	public String getUsername() {
+		return this.username;
 	}
 
-	@JsonView(UserSimpleView.class)
-	public Date getBirthday() {
-		return birthday;
+	@Column(name = "password", nullable = false, columnDefinition = "varchar(255) default '' comment '密码'")
+	public String getPassword() {
+		return this.password;
 	}
 
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
+	@Column(name = "account_expired", nullable = false, columnDefinition = "boolean default false comment '账户是否过期'")
+	public boolean getAccountExpired() {
+		return this.accountExpired;
+	}
+
+	@Column(name = "account_locked", nullable = false, columnDefinition = "boolean default false comment '账户是否锁定'")
+	public boolean getAccountLocked() {
+		return this.accountLocked;
+	}
+
+	@Column(name = "credentials_expired", nullable = false, columnDefinition = "boolean default false comment '凭证是否过期'")
+	public boolean getCredentialsExpired() {
+		return this.credentialsExpired;
+	}
+
+	@ManyToMany
+	@JoinTable(joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
+			@JoinColumn(name = "role_id", referencedColumnName = "id") })
+	public Set<Role> getRoles() {
+		return roles;
 	}
 
 }
