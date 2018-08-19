@@ -86,7 +86,7 @@ public class PingController extends UserBaseController {
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public @ResponseBody RestMessage ping(HttpServletRequest request) throws InterruptedException {
+	public @ResponseBody RestMessage<Pong> ping(HttpServletRequest request) throws InterruptedException {
 		// 1. 测试Jpa相关配置和Mysql服务器
 		boolean mysql = testMysql();
 
