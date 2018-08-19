@@ -1,5 +1,7 @@
 package top.bootz.core.base.dto;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.AllArgsConstructor;
@@ -37,7 +39,7 @@ public class RestMessage extends BaseEntity {
      * 业务数据
      */
     @JsonInclude(value = Include.NON_EMPTY)
-    private Object data;
+    private Serializable data;
 
     /**
      * 如果status字段不是Success，该属性将会填充详细说明信息<br>

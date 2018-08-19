@@ -1,4 +1,4 @@
-package top.bootz.security.core;
+package top.bootz.security.core.properties;
 
 /**
  * @Author : Zhangq <momogoing@163.com>

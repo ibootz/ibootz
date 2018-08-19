@@ -1,4 +1,4 @@
-package top.bootz.security.demo.dto;
+package top.bootz.security.demo.entity;
 
 import java.util.Date;
 

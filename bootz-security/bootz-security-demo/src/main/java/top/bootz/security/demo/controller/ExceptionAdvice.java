@@ -1,4 +1,4 @@
-package top.bootz.security.demo.web;
+package top.bootz.security.demo.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import top.bootz.security.demo.exception.UserNotExistException;
+import top.bootz.security.core.exception.UserNotExistException;
 
 /**
  * @author zhailiang

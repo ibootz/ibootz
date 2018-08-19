@@ -1,4 +1,4 @@
-package top.bootz.security.demo.web;
+package top.bootz.security.demo.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
-import top.bootz.security.demo.dto.User;
 import top.bootz.security.demo.dto.UserQueryCondition;
+import top.bootz.security.demo.entity.User;
 
 /**
  * @author zhailiang

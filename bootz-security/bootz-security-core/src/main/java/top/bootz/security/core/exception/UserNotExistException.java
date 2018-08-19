@@ -1,4 +1,4 @@
-package top.bootz.security.demo.exception;
+package top.bootz.security.core.exception;
 
 /**
  * @author zhailiang

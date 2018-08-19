@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
@@ -16,9 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SessionSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        // @formatter:off
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		// @formatter:off
             http
                 .formLogin() // 开启表单认证
                     .loginPage("/authentication/require") // 指定登录页面
@@ -29,13 +29,14 @@ public class SessionSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                     .antMatchers("/favicon.ico", "/index.html", "/html/**", 
                             "/css/**", "/js/**", "/images/**", "/plugins/**", "/fonts/**").permitAll() // 不需要登录即可访问的路径
+                    .antMatchers("/authentication/require").permitAll()
                     .anyRequest().authenticated(); // 其他任何请求都需要身份认证
         // @formatter:on
-    }
+	}
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	}
 
 }

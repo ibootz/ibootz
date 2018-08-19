@@ -3,6 +3,10 @@ spring:
     name: bootz-security-demo
 server:
   port: 8060
+logging:
+  level:
+    root: info
+    top.bootz: debug
 imooc:
   security:
     session:
