@@ -17,9 +17,7 @@
 
     <modules>
         <module>bootz-user-commons</module>
-        <module>bootz-user-entity</module>
-        <module>bootz-user-repository</module>
-        <module>bootz-user-service</module>
+		<module>bootz-user-base</module>
         <module>bootz-user-web</module>
     </modules>
 

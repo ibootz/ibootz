@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 
 import top.bootz.commons.exception.BaseRuntimeException;
 
@@ -25,7 +24,6 @@ public final class JsonHelper {
 
     static {
         objectMapper.setDateFormat(new SimpleDateFormat(DATE_FORMAT_DATETIME));
-        objectMapper.registerModule(new JaxbAnnotationModule());
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

@@ -10,7 +10,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>bootz-user-entity</artifactId>
+    <artifactId>bootz-user-base</artifactId>
     <name>${project.artifactId}</name>
     <url>http://www.bootz.top</url>
 
