@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>top.bootz</groupId>
 		<artifactId>bootz-all</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>bootz-core</artifactId>
@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>top.bootz</groupId>
 			<artifactId>bootz-commons</artifactId>
-			<version>${project.version}</version>
+			<version>${bootz.project.version}</version>
 		</dependency>
 
 		<!-- spring boot -->
