@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.extern.slf4j.Slf4j;
 import top.bootz.core.base.controller.BaseController;
 import top.bootz.core.base.message.RestMessage;
 import top.bootz.security.core.properties.SecurityProperties;
@@ -27,7 +26,6 @@ import top.bootz.security.core.properties.SecurityProperties;
  * @CreationDate : 2018年8月19日 下午3:27:37
  */
 
-@Slf4j
 @RestController
 public class SessionSecurityController extends BaseController {
 
@@ -59,16 +57,11 @@ public class SessionSecurityController extends BaseController {
 		SavedRequest savedRequest = requestCache.getRequest(request, response);
 		if (savedRequest != null) {
 			String targetUrl = savedRequest.getRedirectUrl();
-			log.debug("引发跳转的请求是[" + targetUrl + "]");
 			if (StringUtils.endsWithIgnoreCase(targetUrl, ".html")) {
 				// 跳转地址 留给安全组件的调用方来提供
 				redirectStrategy.sendRedirect(request, response, securityProperties.getSession().getLoginPage());
 			}
 		}
-		
-		// for test
-		redirectStrategy.sendRedirect(request, response, securityProperties.getSession().getLoginPage());
-		
 		return buildSuccessResponse("访问的服务需要身份认证，请引导用户到登录页");
 	}
 

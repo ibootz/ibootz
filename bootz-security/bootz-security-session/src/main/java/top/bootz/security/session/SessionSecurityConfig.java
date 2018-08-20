@@ -10,6 +10,8 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import top.bootz.security.core.properties.SecurityProperties;
+import top.bootz.security.session.authentication.SessionAuthenticationFailureHandler;
+import top.bootz.security.session.authentication.SessionAuthenticationSuccessHandler;
 
 /**
  * @Author : Zhangq <momogoing@163.com>
@@ -22,6 +24,12 @@ public class SessionSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private SecurityProperties securityProperties;
 
+	@Autowired
+	private SessionAuthenticationSuccessHandler sessionAuthenticationSuccessHandler;
+
+	@Autowired
+	private SessionAuthenticationFailureHandler sessionAuthenticationFailureHandler;
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// @formatter:off
@@ -29,6 +37,8 @@ public class SessionSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin() // 开启表单认证
                     .loginPage("/authentication/require") // 指定登录页面或请求url
                     .loginProcessingUrl("/authentication/login") // 如果指定了自定义loginpage，那么该配置必不可少，否则默认和loginPage一样
+                    .successHandler(sessionAuthenticationSuccessHandler) // 设置登录认证成功之后的处理类
+                    .failureHandler(sessionAuthenticationFailureHandler) // 设置登录认证失败之后的处理类
                 .and()
                     .csrf().disable() // 禁用csrf检查
                 .authorizeRequests() // 授权配置

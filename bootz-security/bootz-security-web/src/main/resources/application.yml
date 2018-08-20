@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active:
+    - core
+    - home
+  application:
+    name: bootz-security-demo
+  messages:
+    basename: i18n/messages
+server:
+  port: 8060
+logging:
+  level:
+    root: info
+    top.bootz: debug
+bootz:
+  security:
+    session:
+      loginPage: /html/login.html

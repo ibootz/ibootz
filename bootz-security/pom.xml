@@ -22,7 +22,7 @@
 		<module>bootz-security-social</module>
 		<module>bootz-security-token</module>
 		<module>bootz-security-oauth2</module>
-		<module>bootz-security-demo</module>
+		<module>bootz-security-web</module>
 	</modules>
 
 </project>

@@ -34,5 +34,10 @@ public class ErrorMessage extends BaseEntity {
     /** 堆栈信息 */
     @JsonIgnore
     private Throwable throwable;
+    
+    public ErrorMessage(String code, String message) {
+    	this.code = code;
+    	this.message = message;
+    }
 
 }

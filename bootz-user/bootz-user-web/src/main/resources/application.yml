@@ -1,4 +1,8 @@
 spring:
+  profiles:
+    active:
+    - core
+    - home
   application:
     name: bootz-user
   cache:
@@ -88,7 +92,7 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     locale: zh_CN
   messages:
-    basename: i18n/messages,i18n/messages
+    basename: i18n/messages
   servlet:
     multipart:
       max-file-size: 10MB
