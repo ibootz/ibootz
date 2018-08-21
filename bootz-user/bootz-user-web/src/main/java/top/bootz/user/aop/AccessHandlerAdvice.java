@@ -1,4 +1,4 @@
-package top.bootz.security.web.aop;
+package top.bootz.user.aop;
 
 import java.lang.reflect.Method;
 
@@ -22,8 +22,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AccessHandlerAdvice {
 
-	private static final String CONTROLLER_EXECUTION = "execution(* top.bootz.security..*Controller.**(..)) "
-			+ " || execution(* top.bootz.security..controller..*.**(..))";
+	private static final String CONTROLLER_EXECUTION = "execution(* top.bootz..*Controller.**(..))";
 
 	@Pointcut(CONTROLLER_EXECUTION)
 	private void pointcutInControllerLayer() {

@@ -32,6 +32,7 @@ public class SessionAuthenticationFailureHandler extends SimpleUrlAuthentication
 
 		// 如果应用配置了采用json的方式来处理登录认证失败事件，那么这里返回json响应
 		if (LoginType.JOIN.equals(securityProperties.getSession().getLoginType())) {
+			log.debug("Return JSON response");
 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
 			response.addHeader("Content-type", MediaType.APPLICATION_JSON_UTF8_VALUE);
 			response.getWriter().write(JsonHelper.toJSON(exception));

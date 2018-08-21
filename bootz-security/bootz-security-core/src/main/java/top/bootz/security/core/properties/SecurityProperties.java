@@ -16,4 +16,6 @@ public class SecurityProperties {
 
 	private SessionProperties session = new SessionProperties();
 
+	private ValidateCodeProperties code = new ValidateCodeProperties();
+	
 }

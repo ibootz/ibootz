@@ -10,11 +10,11 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 public enum MessageStatusEnum {
 
-    SUCCESS("Success"),
+    SUCCESS("success"),
 
-    WARNING("Warning"),
+    WARNING("warning"),
 
-    ERROR("Error");
+    ERROR("error");
 
     private final String desc;
 

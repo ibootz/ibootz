@@ -1,4 +1,4 @@
-package top.bootz.security.web.aop;
+package top.bootz.user.aop;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;

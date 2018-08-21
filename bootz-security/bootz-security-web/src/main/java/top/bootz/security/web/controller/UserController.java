@@ -1,14 +1,13 @@
 package top.bootz.security.web.controller;
 
-import java.security.Principal;
-
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.extern.slf4j.Slf4j;
 import top.bootz.core.base.controller.BaseController;
 import top.bootz.core.base.message.RestMessage;
 
@@ -17,17 +16,13 @@ import top.bootz.core.base.message.RestMessage;
  * @CreationDate : 2018年7月16日 下午11:27:57
  */
 
-@Slf4j
 @RestController
+@RequestMapping("/user")
 public class UserController extends BaseController {
 
-	@GetMapping("/user/me")
-	public RestMessage<UsernamePasswordAuthenticationToken> user(HttpServletRequest request, Principal principal) {
-		UsernamePasswordAuthenticationToken authenticationToken = null;
-		if (principal instanceof UsernamePasswordAuthenticationToken) {
-			authenticationToken = (UsernamePasswordAuthenticationToken) principal;
-		}
-		return buildSuccessResponse(authenticationToken);
+	@GetMapping("/me")
+	public RestMessage<UserDetails> user(HttpServletRequest request, @AuthenticationPrincipal UserDetails userDetails) {
+		return buildSuccessResponse(userDetails);
 	}
 
 }

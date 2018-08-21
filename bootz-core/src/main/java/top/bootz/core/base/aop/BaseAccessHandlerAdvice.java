@@ -1,12 +1,14 @@
 package top.bootz.core.base.aop;
 
 import java.lang.reflect.Method;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -26,7 +28,6 @@ import lombok.extern.slf4j.Slf4j;
 import top.bootz.commons.constant.AppConstants;
 import top.bootz.commons.constant.ExceptionConstants;
 import top.bootz.commons.constant.SecurityConstants;
-import top.bootz.commons.exception.AdviceException;
 import top.bootz.commons.exception.ApiException;
 import top.bootz.commons.helper.DateHelper;
 import top.bootz.commons.helper.HttpHelper;
@@ -46,7 +47,8 @@ import top.bootz.core.log.AccessLogService;
 @Component
 public class BaseAccessHandlerAdvice {
 
-	private static final String CONTROLLER_EXECUTION = "execution(* top.bootz..controller..*.**(..))";
+	private static final String CONTROLLER_EXECUTION = "execution(* top.bootz..*Controller.**(..)) "
+			+ " || execution(* top.bootz..controller..*.**(..))";
 
 	@Autowired
 	private MessageSource messages;
@@ -76,8 +78,6 @@ public class BaseAccessHandlerAdvice {
 		Object object = null;
 		boolean successed = true;
 		Date exceptionTime = null;
-		String errMsg = "";
-		AdviceException adviceException = null;
 		AccessLog accessLog = new AccessLog();
 		long start = 0L;
 
@@ -129,8 +129,10 @@ public class BaseAccessHandlerAdvice {
 			successed = false;
 			exceptionTime = DateHelper.now();
 			tookMillSeconds = System.currentTimeMillis() - start;
-			errMsg = getErrMsg(request, e);
-			adviceException = new AdviceException(errMsg, e);
+			// errMsg
+			accessLog.setErrMsg(getErrMsg(request, e));
+			// adviceException
+			accessLog.setException(e);
 			log.error(e.getMessage(), e);
 			throw e;
 		} finally {
@@ -145,13 +147,10 @@ public class BaseAccessHandlerAdvice {
 			if (!accessLog.isSuccessed() && exceptionTime != null) {
 				accessLog.setExceptionTime(DateHelper.date2str(exceptionTime));
 			}
-			// errMsg
-			accessLog.setErrMsg(errMsg);
-			// adviceException
-			accessLog.setAdviceException(adviceException);
 			if (method != null) {
 				method.setAccessible(isAccessible);
 			}
+			accessLog.setCreateTime(LocalDateTime.now());
 
 			// 将访问日志保存到mongodb中
 			accessLogService.asyncSave(accessLog);
@@ -163,12 +162,12 @@ public class BaseAccessHandlerAdvice {
 	private void putInputParams(String[] paramNames, AccessLog accessLog, Object[] args) {
 		for (int i = 0; i < args.length; i++) {
 			Class<?> clz = args[i].getClass();
-			boolean isPolarisClass = clz.getName().startsWith("com.orion");
+			boolean isInnerAppClass = clz.getName().startsWith("com.orion");
 			boolean isSimpleClass = ReflectionHelper.isBaseClassOrString(clz) || ReflectionHelper.isCollection(clz)
 					|| ReflectionHelper.isMap(clz);
 			// 异常处理切面中方法的参数太过于复杂，这里没有必要作为日志打印详细信息，故排除掉
 			boolean isNotExceptionClass = !clz.getName().endsWith("Exception");
-			if ((isPolarisClass || isSimpleClass) && isNotExceptionClass) {
+			if ((isInnerAppClass || isSimpleClass) && isNotExceptionClass) {
 				accessLog.putInputParam(paramNames[i], ToStringHelper.toJSON(args[i], true));
 			} else {
 				accessLog.putInputParam(paramNames[i], args[i].toString());
@@ -182,6 +181,9 @@ public class BaseAccessHandlerAdvice {
 			ApiException apiException = (ApiException) e;
 			errMsg = messages.getMessage(apiException.getErrorKey(), apiException.getArgs(), e.getMessage(),
 					AppConstants.AppLocale.getDefault(request));
+			if (StringUtils.isBlank(errMsg)) {
+				errMsg = apiException.getErrorKey();
+			}
 		} else if (e instanceof NullPointerException) {
 			errMsg = "空指针异常";
 		} else {

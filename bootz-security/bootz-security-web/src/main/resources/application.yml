@@ -7,8 +7,17 @@ spring:
     name: bootz-security-demo
   messages:
     basename: i18n/messages
+  session:
+    timeout: 2h
+    redis:
+      cleanup-cron: 0 0 0/1 * * ?
+  http:
+    encoding:
+      force: true
 server:
   port: 8060
+  tomcat:
+    uri-encoding: UTF-8
 logging:
   level:
     root: info
@@ -17,3 +26,4 @@ bootz:
   security:
     session:
       loginPage: /html/login.html
+      loginType: JOIN

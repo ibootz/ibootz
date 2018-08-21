@@ -26,6 +26,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import lombok.extern.slf4j.Slf4j;
 import top.bootz.commons.constant.AppConstants;
 import top.bootz.commons.constant.ExceptionConstants;
 import top.bootz.commons.exception.ApiException;
@@ -45,6 +46,7 @@ import top.bootz.core.dictionary.MessageStatusEnum;
  *
  */
 
+@Slf4j
 public class BaseExceptionHandleAdvice {
 
 	protected MessageSource messages;
@@ -57,16 +59,16 @@ public class BaseExceptionHandleAdvice {
 	 * 处理Controller层主动抛出的API异常
 	 */
 	@ExceptionHandler(ApiException.class)
-	protected ResponseEntity<RestMessage<Null>> apiExceptionHandler(ApiException e, HttpServletRequest request,
+	public ResponseEntity<RestMessage<Null>> apiExceptionHandler(ApiException e, HttpServletRequest request,
 			HttpServletResponse response) {
-		String message = messages.getMessage(e.getErrorKey(), e.getArgs(), AppConstants.AppLocale.getDefault(request));
+		String message = messages.getMessage(e.getErrorKey(), e.getArgs(), e.getMessage(),
+				AppConstants.AppLocale.getDefault(request));
 		if (StringUtils.isBlank(message)) {
-			message = messages.getMessage(ExceptionConstants.ErrorMessageKey.API_EXCEPTION, e.getArgs(),
+			log.warn("errorKey [" + e.getErrorKey() + "] 在消息资源文件中没有找到对应的消息体");
+			message = messages.getMessage(ExceptionConstants.ErrorMessageKey.API_EXCEPTION, e.getArgs(), e.getMessage(),
 					AppConstants.AppLocale.getDefault(request));
 		}
-		ErrorMessage error = JsonHelper.fromJSON(message, ErrorMessage.class);
-		error.setMoreInfo(e.getMessage());
-		error.setThrowable(e);
+		ErrorMessage error = buildErrorMessage(message, e);
 		RestMessage<Null> restMessage = new RestMessage<>(MessageStatusEnum.ERROR, null, error);
 		return new ResponseEntity<>(restMessage, HttpStatus.valueOf(e.getHttpStatus()));
 	}

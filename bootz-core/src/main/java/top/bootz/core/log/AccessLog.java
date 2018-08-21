@@ -4,10 +4,6 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -18,10 +14,13 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import lombok.Getter;
 import lombok.Setter;
-import top.bootz.commons.exception.AdviceException;
 import top.bootz.core.base.entity.BaseEntity;
 
 /**
@@ -77,7 +76,7 @@ public class AccessLog extends BaseEntity {
 
 	@Transient
 	@JsonIgnore
-	private AdviceException adviceException; // 异常对象
+	private Throwable exception; // 异常对象
 
 	public void putInputParam(String key, String value) {
 		if (!inputParamMap.containsKey(key)) {
