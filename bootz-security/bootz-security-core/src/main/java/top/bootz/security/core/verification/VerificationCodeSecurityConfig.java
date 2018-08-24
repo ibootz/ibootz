@@ -15,18 +15,19 @@ import org.springframework.stereotype.Component;
 /**
  * 校验码相关安全配置
  * 
- * @author zhailiang
- *
+ * @author Zhangq - momogoing@163.com
+ * @datetime 2018年8月24日 下午8:23:03
  */
-@Component("validateCodeSecurityConfig")
-public class VerificationCodeSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
+@Component
+public class VerificationCodeSecurityConfig
+        extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
-	@Autowired
-	private Filter validateCodeFilter;
-	
-	@Override
-	public void configure(HttpSecurity http) throws Exception {
-		http.addFilterBefore(validateCodeFilter, AbstractPreAuthenticatedProcessingFilter.class);
-	}
-	
+    @Autowired
+    private Filter verificationCodeFilter;
+
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http.addFilterBefore(verificationCodeFilter, AbstractPreAuthenticatedProcessingFilter.class);
+    }
+
 }

@@ -37,7 +37,7 @@ public class SessionAuthenticationSuccessHandler extends SavedRequestAwareAuthen
 		log.debug("authentication success! authentication:{}", authInfo);
 
 		// 如果应用配置了采用json的方式来处理登录认证成功事件，那么这里返回json响应
-		if (LoginType.JOIN.equals(securityProperties.getSession().getLoginType())) {
+		if (LoginType.JSON.equals(securityProperties.getSession().getLoginType())) {
 			log.debug("Return JSON response");
 			response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 			response.getWriter().write(authInfo);

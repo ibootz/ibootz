@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import top.bootz.security.core.properties.SecurityProperties;
-import top.bootz.security.core.verification.captcha.CaptchaGenerator;
+import top.bootz.security.core.verification.image.ImageCodeGenerator;
 import top.bootz.security.core.verification.sms.DefaultSmsCodeSender;
 import top.bootz.security.core.verification.sms.SmsCodeSender;
 
@@ -19,31 +19,31 @@ import top.bootz.security.core.verification.sms.SmsCodeSender;
 @Configuration
 public class VerificationCodeBeanConfig {
 
-	@Autowired
-	private SecurityProperties securityProperties;
+    @Autowired
+    private SecurityProperties securityProperties;
 
-	/**
-	 * 图片验证码图片生成器
-	 * 
-	 * @return
-	 */
-	@Bean
-	@ConditionalOnMissingBean(name = "captchaGenerator")
-	public CaptchaGenerator captchaGenerator() {
-		CaptchaGenerator codeGenerator = new CaptchaGenerator();
-		codeGenerator.setSecurityProperties(securityProperties);
-		return codeGenerator;
-	}
+    /**
+     * 图片验证码图片生成器
+     * 
+     * @return
+     */
+    @Bean
+    @ConditionalOnMissingBean(name = "imageCoGenerator")
+    public ImageCodeGenerator imageCodeGenerator() {
+        ImageCodeGenerator codeGenerator = new ImageCodeGenerator();
+        codeGenerator.setSecurityProperties(securityProperties);
+        return codeGenerator;
+    }
 
-	/**
-	 * 短信验证码发送器
-	 * 
-	 * @return
-	 */
-	@Bean
-	@ConditionalOnMissingBean(SmsCodeSender.class)
-	public SmsCodeSender smsCodeSender() {
-		return new DefaultSmsCodeSender();
-	}
+    /**
+     * 短信验证码发送器
+     * 
+     * @return
+     */
+    @Bean
+    @ConditionalOnMissingBean(SmsCodeSender.class)
+    public SmsCodeSender smsCodeSender() {
+        return new DefaultSmsCodeSender();
+    }
 
 }

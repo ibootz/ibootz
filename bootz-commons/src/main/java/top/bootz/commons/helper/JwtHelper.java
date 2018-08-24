@@ -15,7 +15,7 @@ import org.springframework.security.jwt.crypto.sign.RsaVerifier;
 import com.alibaba.fastjson.JSONObject;
 
 import lombok.extern.slf4j.Slf4j;
-import top.bootz.commons.constant.SecurityConstants;
+import top.bootz.commons.constant.CommonSecurityConstants;
 
 @Slf4j
 public final class JwtHelper {
@@ -135,9 +135,9 @@ public final class JwtHelper {
         Map<String, Object> payloads = new HashMap<>();
         long createTime = Instant.now().toEpochMilli();
         payloads.put(CLAIMS_IAT, createTime); // 签发时间
-        long expirationTime = createTime + SecurityConstants.JWT_EXPIRATION;
+        long expirationTime = createTime + CommonSecurityConstants.JWT_EXPIRATION;
         payloads.put(CLAIMS_EXP, expirationTime); // 过期截止时间
-        long refreshEndTime = createTime + SecurityConstants.JWT_REFRESH_END_TIME;
+        long refreshEndTime = createTime + CommonSecurityConstants.JWT_REFRESH_END_TIME;
         payloads.put(CLAIMS_REF, refreshEndTime); // 刷新截止时间
         return payloads;
     }

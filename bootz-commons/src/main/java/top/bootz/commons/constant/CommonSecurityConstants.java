@@ -1,8 +1,8 @@
 package top.bootz.commons.constant;
 
-public final class SecurityConstants {
+public final class CommonSecurityConstants {
 
-    private SecurityConstants() {
+    private CommonSecurityConstants() {
     }
 
     /**
@@ -26,23 +26,37 @@ public final class SecurityConstants {
     public static final String AUTH_DB = "orion_auth";
 
     /**
-     * Spring Security
+     * header中保存的JWT的key
      */
-    public static final String HEADER_AUTH_TOKEN = "X-Auth-Token"; // header中保存的JWT的key
+    public static final String HEADER_AUTH_TOKEN = "X-Auth-Token";
 
-    public static final String HEADER_NEW_AUTH_TOKEN = "X-New-Auth-Token"; // reponse的header中保存自动续期之后新生成的Token头信息
+    /**
+     * reponse的header中保存自动续期之后新生成的Token头信息
+     */
+    public static final String HEADER_NEW_AUTH_TOKEN = "X-New-Auth-Token";
 
-    public static final String HEADER_SOURCE = "Source"; // 请求头标识客户端类型的代号(Desktop,
-                                                         // Android, IOS, H5...)
+    /**
+     * 请求头标识客户端类型的代号(Desktop, Android, IOS, H5...)
+     */
+    public static final String HEADER_SOURCE = "Source";
 
-    public static final long JWT_EXPIRATION = 12 * 60 * 60 * 1000L; // JWT过期时间：12小时(单位毫秒)
+    /**
+     * JWT过期时间：12小时(单位毫秒)
+     */
+    public static final long JWT_EXPIRATION = 12 * 60 * 60 * 1000L;
 
-    public static final long LEFT_TIME_FOR_TOKEN_EXPIRATION = 30 * 60 * 1000L; // 距离过期还剩的时间(单位毫秒)，用来确定自动刷新token的时间点:30分钟
+    /**
+     * 距离过期还剩的时间(单位毫秒)，用来确定自动刷新token的时间点:30分钟
+     */
+    public static final long LEFT_TIME_FOR_TOKEN_EXPIRATION = 30 * 60 * 1000L;
 
     public static final String PUBLIC_KEY_FILE_PATH = "rsa/publicKey.keystore";
 
     public static final String PRIVATE_KEY_FILE_PATH = "rsa/privateKey.keystore";
 
-    public static final long JWT_REFRESH_END_TIME = 7 * 24 * 60 * 60 * 1000L; // 可以使用过期token换取新token的最长时间区间:7天(单位毫秒)
+    /**
+     * 可以使用过期token换取新token的最长时间区间:7天(单位毫秒)
+     */
+    public static final long JWT_REFRESH_END_TIME = 7 * 24 * 60 * 60 * 1000L;
 
 }

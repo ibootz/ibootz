@@ -30,7 +30,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import lombok.extern.slf4j.Slf4j;
-import top.bootz.commons.constant.SecurityConstants;
+import top.bootz.commons.constant.CommonSecurityConstants;
 import top.bootz.commons.exception.BaseRuntimeException;
 
 /**
@@ -61,12 +61,12 @@ public class RsaHelper {
     /**
      * 公钥文件存储路径
      */
-    private static final String PUBLIC_KEY_FILE_PATH = getBaseClassPath() + SecurityConstants.PUBLIC_KEY_FILE_PATH;
+    private static final String PUBLIC_KEY_FILE_PATH = getBaseClassPath() + CommonSecurityConstants.PUBLIC_KEY_FILE_PATH;
 
     /**
      * 私钥文件存储路径
      */
-    private static final String PRIVATE_KEY_FILE_PATH = getBaseClassPath() + SecurityConstants.PRIVATE_KEY_FILE_PATH;
+    private static final String PRIVATE_KEY_FILE_PATH = getBaseClassPath() + CommonSecurityConstants.PRIVATE_KEY_FILE_PATH;
 
     /**
      * RSA最大加密明文大小

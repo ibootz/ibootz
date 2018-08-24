@@ -21,22 +21,22 @@ import top.bootz.security.session.authentication.SessionAuthenticationSuccessHan
 @Configuration
 public class SessionSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private SecurityProperties securityProperties;
+    @Autowired
+    private SecurityProperties securityProperties;
 
-	@Autowired
-	private SessionAuthenticationSuccessHandler sessionAuthenticationSuccessHandler;
+    @Autowired
+    private SessionAuthenticationSuccessHandler sessionAuthenticationSuccessHandler;
 
-	@Autowired
-	private SessionAuthenticationFailureHandler sessionAuthenticationFailureHandler;
+    @Autowired
+    private SessionAuthenticationFailureHandler sessionAuthenticationFailureHandler;
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		// @formatter:off
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        // @formatter:off
             http
                 .formLogin() // 开启表单认证
                     .loginPage("/authentication/require") // 指定登录页面或请求url
-                    .loginProcessingUrl("/authentication/login") // 如果指定了自定义loginpage，那么该配置必不可少，否则默认和loginPage一样
+                    .loginProcessingUrl("/authentication/form") // 如果指定了自定义loginpage，那么该配置必不可少，否则默认和loginPage一样
                     .successHandler(sessionAuthenticationSuccessHandler) // 设置登录认证成功之后的处理类
                     .failureHandler(sessionAuthenticationFailureHandler) // 设置登录认证失败之后的处理类
                 .and()
@@ -45,15 +45,15 @@ public class SessionSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.OPTIONS, "/**").permitAll() // options请求不认证
                     .antMatchers("/favicon.ico", "/index.html", "/html/login.html", 
                             "/css/**", "/js/**", "/images/**", "/plugins/**", "/fonts/**").permitAll() // 静态资源不认证
-                    .antMatchers("/authentication/require", "/authentication/login", 
+                    .antMatchers("/authentication/require", "/authentication/form", "/verification/**",
                     		securityProperties.getSession().getLoginPage()).permitAll() // 认证url本身不认证
                     .anyRequest().authenticated(); // 其他任何请求都需要身份认证
         // @formatter:on
-	}
+    }
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-	}
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
 
 }

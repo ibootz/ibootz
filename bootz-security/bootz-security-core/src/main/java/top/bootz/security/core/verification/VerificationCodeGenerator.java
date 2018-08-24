@@ -10,12 +10,14 @@ import org.springframework.web.context.request.ServletWebRequest;
  */
 public interface VerificationCodeGenerator {
 
-	/**
-	 * 生成校验码
-	 * 
-	 * @param request
-	 * @return
-	 */
-	VerificationCode generate(ServletWebRequest request);
+    String VERIFICATION_CODE_GENERATOR_SUFFIX = "CodeGenerator";
+
+    /**
+     * 生成校验码
+     * 
+     * @param request
+     * @return
+     */
+    VerificationCode generate(ServletWebRequest request);
 
 }

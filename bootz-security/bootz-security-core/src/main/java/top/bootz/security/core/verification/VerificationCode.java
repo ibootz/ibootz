@@ -21,19 +21,19 @@ import top.bootz.core.base.entity.BaseEntity;
 @EqualsAndHashCode(callSuper = false)
 public class VerificationCode extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String code;
+    private String code;
 
-	private LocalDateTime expireTime;
+    private LocalDateTime expireTime;
 
-	public VerificationCode(String code, int expireIn) {
-		this.code = code;
-		this.expireTime = LocalDateTime.now().plusSeconds(expireIn);
-	}
+    public VerificationCode(String code, int expireIn) {
+        this.code = code;
+        this.expireTime = LocalDateTime.now().plusSeconds(expireIn);
+    }
 
-	public boolean isExpried() {
-		return LocalDateTime.now().isAfter(expireTime);
-	}
+    public boolean isExpried() {
+        return LocalDateTime.now().isAfter(expireTime);
+    }
 
 }

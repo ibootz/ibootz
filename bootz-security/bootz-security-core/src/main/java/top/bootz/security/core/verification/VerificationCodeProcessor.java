@@ -8,11 +8,13 @@ import org.springframework.web.context.request.ServletWebRequest;
 /**
  * 校验码处理器，封装不同校验码的处理逻辑
  * 
- * @author zhailiang
- *
+ * @author Zhangq - momogoing@163.com
+ * @datetime 2018年8月24日 下午8:25:11
  */
 public interface VerificationCodeProcessor {
 
+    String VERIFICATION_CODE_PROCESSOR_SUFFIX = "CodeProcessor";
+    
 	/**
 	 * 创建校验码
 	 * 

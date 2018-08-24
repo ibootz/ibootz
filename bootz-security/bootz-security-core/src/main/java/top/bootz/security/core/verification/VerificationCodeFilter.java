@@ -25,111 +25,107 @@ import top.bootz.security.core.properties.SecurityProperties;
 /**
  * 校验验证码的过滤器
  * 
- * @author zhailiang
- *
+ * @author Zhangq - momogoing@163.com
+ * @datetime 2018年8月24日 下午8:26:34
  */
 @Component("verificationCodeFilter")
 public class VerificationCodeFilter extends OncePerRequestFilter implements InitializingBean {
 
-	/**
-	 * 验证码校验失败处理器
-	 */
-	@Autowired
-	private AuthenticationFailureHandler authenticationFailureHandler;
-	/**
-	 * 系统配置信息
-	 */
-	@Autowired
-	private SecurityProperties securityProperties;
-	/**
-	 * 系统中的校验码处理器
-	 */
-	@Autowired
-	private VerificationCodeProcessorHolder verificationCodeProcessorHolder;
-	/**
-	 * 存放所有需要校验验证码的url
-	 */
-	private Map<String, VerificationCodeType> urlMap = new HashMap<>();
-	/**
-	 * 验证请求url与配置的url是否匹配的工具类
-	 */
-	private AntPathMatcher pathMatcher = new AntPathMatcher();
+    /**
+     * 验证码校验失败处理器
+     */
+    @Autowired
+    private AuthenticationFailureHandler authenticationFailureHandler;
 
-	/**
-	 * 初始化要拦截的url配置信息
-	 */
-	@Override
-	public void afterPropertiesSet() throws ServletException {
-		super.afterPropertiesSet();
+    /**
+     * 系统配置信息
+     */
+    @Autowired
+    private SecurityProperties securityProperties;
 
-		urlMap.put(SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_FORM, VerificationCodeType.IMAGE);
-		addUrlToMap(securityProperties.getCode().getImage().getUrl(), VerificationCodeType.IMAGE);
+    /**
+     * 系统中的校验码处理器
+     */
+    @Autowired
+    private VerificationCodeProcessorHolder verificationCodeProcessorHolder;
 
-		urlMap.put(SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_MOBILE, VerificationCodeType.SMS);
-		addUrlToMap(securityProperties.getCode().getSms().getUrl(), VerificationCodeType.SMS);
-	}
+    /**
+     * 存放所有需要校验验证码的url
+     */
+    private Map<String, VerificationCodeType> urlMap = new HashMap<>();
 
-	/**
-	 * 讲系统中配置的需要校验验证码的URL根据校验的类型放入map
-	 * 
-	 * @param urlString
-	 * @param type
-	 */
-	protected void addUrlToMap(String urlString, VerificationCodeType type) {
-		if (StringUtils.isNotBlank(urlString)) {
-			String[] urls = StringUtils.splitByWholeSeparatorPreserveAllTokens(urlString, ",");
-			for (String url : urls) {
-				urlMap.put(url, type);
-			}
-		}
-	}
+    /**
+     * 验证请求url与配置的url是否匹配的工具类
+     */
+    private AntPathMatcher pathMatcher = new AntPathMatcher();
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.springframework.web.filter.OncePerRequestFilter#doFilterInternal(
-	 * javax.servlet.http.HttpServletRequest,
-	 * javax.servlet.http.HttpServletResponse, javax.servlet.FilterChain)
-	 */
-	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-			throws ServletException, IOException {
+    /**
+     * 初始化要拦截的url配置信息
+     */
+    @Override
+    public void afterPropertiesSet() throws ServletException {
+        super.afterPropertiesSet();
 
-		VerificationCodeType type = getValidateCodeType(request);
-		if (type != null) {
-			logger.info("校验请求(" + request.getRequestURI() + ")中的验证码,验证码类型" + type);
-			try {
-				verificationCodeProcessorHolder.findVerificationCodeProcessor(type)
-						.validate(new ServletWebRequest(request, response));
-				logger.info("验证码校验通过");
-			} catch (VerificationCodeException exception) {
-				authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
-				return;
-			}
-		}
+        urlMap.put(SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_FORM, VerificationCodeType.IMAGE);
+        addUrlToMap(securityProperties.getCode().getImageCode().getUrl(), VerificationCodeType.IMAGE);
 
-		chain.doFilter(request, response);
+        urlMap.put(SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_MOBILE, VerificationCodeType.SMS);
+        addUrlToMap(securityProperties.getCode().getSmsCode().getUrl(), VerificationCodeType.SMS);
+    }
 
-	}
+    /**
+     * 将系统中配置的需要校验验证码的URL根据校验的类型放入map
+     * 
+     * @param urlString
+     * @param type
+     */
+    protected void addUrlToMap(String urlString, VerificationCodeType type) {
+        if (StringUtils.isNotBlank(urlString)) {
+            String[] urls = StringUtils.splitByWholeSeparatorPreserveAllTokens(urlString, ",");
+            for (String url : urls) {
+                urlMap.put(url, type);
+            }
+        }
+    }
 
-	/**
-	 * 获取校验码的类型，如果当前请求不需要校验，则返回null
-	 * 
-	 * @param request
-	 * @return
-	 */
-	private VerificationCodeType getValidateCodeType(HttpServletRequest request) {
-		VerificationCodeType result = null;
-		if (!StringUtils.equalsIgnoreCase(request.getMethod(), "get")) {
-			Set<String> urls = urlMap.keySet();
-			for (String url : urls) {
-				if (pathMatcher.match(url, request.getRequestURI())) {
-					result = urlMap.get(url);
-				}
-			}
-		}
-		return result;
-	}
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+            throws ServletException, IOException {
+
+        VerificationCodeType type = getVerificationCodeType(request);
+        if (type != null) {
+            logger.info("校验请求(" + request.getRequestURI() + ")中的验证码,验证码类型" + type);
+            try {
+                verificationCodeProcessorHolder.findVerificationCodeProcessor(type)
+                        .validate(new ServletWebRequest(request, response));
+                logger.info("验证码校验通过");
+            } catch (VerificationCodeException exception) {
+                authenticationFailureHandler.onAuthenticationFailure(request, response, exception);
+                return;
+            }
+        }
+
+        chain.doFilter(request, response);
+
+    }
+
+    /**
+     * 获取校验码的类型，如果当前请求不需要校验，则返回null
+     * 
+     * @param request
+     * @return
+     */
+    private VerificationCodeType getVerificationCodeType(HttpServletRequest request) {
+        VerificationCodeType result = null;
+        if (!StringUtils.equalsIgnoreCase(request.getMethod(), "get")) {
+            Set<String> urls = urlMap.keySet();
+            for (String url : urls) {
+                if (pathMatcher.match(url, request.getRequestURI())) {
+                    result = urlMap.get(url);
+                }
+            }
+        }
+        return result;
+    }
 
 }

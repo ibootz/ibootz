@@ -27,7 +27,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import lombok.extern.slf4j.Slf4j;
 import top.bootz.commons.constant.AppConstants;
 import top.bootz.commons.constant.ExceptionConstants;
-import top.bootz.commons.constant.SecurityConstants;
+import top.bootz.commons.constant.CommonSecurityConstants;
 import top.bootz.commons.exception.ApiException;
 import top.bootz.commons.helper.DateHelper;
 import top.bootz.commons.helper.HttpHelper;
@@ -97,7 +97,7 @@ public class BaseAccessHandlerAdvice {
 			String returnType = methodSignature.getReturnType().getSimpleName();
 
 			// visitor
-			String token = request.getHeader(SecurityConstants.HEADER_AUTH_TOKEN);
+			String token = request.getHeader(CommonSecurityConstants.HEADER_AUTH_TOKEN);
 
 			// TODO 从token中获取用户信息，存入日志系统
 			// String username = this.tokenService.getUsernameFromToken(token);

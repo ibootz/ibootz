@@ -11,111 +11,113 @@ import org.springframework.web.context.request.ServletWebRequest;
 /**
  * 抽象的图片验证码处理器
  * 
- * @author zhailiang
- *
+ * @param <C>
+ * @author Zhangq - momogoing@163.com
+ * @datetime 2018年8月24日 下午8:46:06
  */
+
 public abstract class AbstractVerificationCodeProcessor<C extends VerificationCode>
-		implements VerificationCodeProcessor {
+        implements VerificationCodeProcessor {
 
-	/**
-	 * 收集系统中所有的 {@link VerificationCodeGenerator} 接口的实现。
-	 */
-	@Autowired
-	private Map<String, VerificationCodeGenerator> validateCodeGenerators;
+    /**
+     * 收集系统中所有的 {@link VerificationCodeGenerator} 接口的实现。
+     */
+    @Autowired
+    private Map<String, VerificationCodeGenerator> verificationCodeGenerators;
 
-	@Autowired
-	private VerificationCodeRepository validateCodeRepository;
+    @Autowired
+    private VerificationCodeRepository verificationCodeRepository;
 
-	@Override
-	public void create(ServletWebRequest request) throws Exception {
-		C validateCode = generate(request);
-		save(request, validateCode);
-		send(request, validateCode);
-	}
+    @Override
+    public void create(ServletWebRequest request) throws Exception {
+        C verificationCode = generate(request);
+        save(request, verificationCode);
+        send(request, verificationCode);
+    }
 
-	/**
-	 * 生成校验码
-	 * 
-	 * @param request
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	private C generate(ServletWebRequest request) {
-		String type = getVerificationCodeType(request).toString().toLowerCase();
-		String generatorName = type + VerificationCodeGenerator.class.getSimpleName();
-		VerificationCodeGenerator validateCodeGenerator = validateCodeGenerators.get(generatorName);
-		if (validateCodeGenerator == null) {
-			throw new VerificationCodeException("验证码生成器" + generatorName + "不存在");
-		}
-		return (C) validateCodeGenerator.generate(request);
-	}
+    /**
+     * 生成校验码
+     * 
+     * @param request
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    private C generate(ServletWebRequest request) {
+        String type = getVerificationCodeType().toString().toLowerCase();
+        String generatorName = type + VerificationCodeGenerator.VERIFICATION_CODE_GENERATOR_SUFFIX;
+        VerificationCodeGenerator verificationCodeGenerator = verificationCodeGenerators.get(generatorName);
+        if (verificationCodeGenerator == null) {
+            throw new VerificationCodeException("验证码生成器" + generatorName + "不存在");
+        }
+        return (C) verificationCodeGenerator.generate(request);
+    }
 
-	/**
-	 * 保存校验码
-	 * 
-	 * @param request
-	 * @param validateCode
-	 */
-	private void save(ServletWebRequest request, C validateCode) {
-		VerificationCode code = new VerificationCode(validateCode.getCode(), validateCode.getExpireTime());
-		validateCodeRepository.save(request, code, getVerificationCodeType(request));
-	}
+    /**
+     * 保存校验码
+     * 
+     * @param request
+     * @param verificationCode
+     */
+    private void save(ServletWebRequest request, C verificationCode) {
+        VerificationCode code = new VerificationCode(verificationCode.getCode(), verificationCode.getExpireTime());
+        verificationCodeRepository.save(request, code, getVerificationCodeType());
+    }
 
-	/**
-	 * 发送校验码，由子类实现
-	 * 
-	 * @param request
-	 * @param validateCode
-	 * @throws Exception
-	 */
-	protected abstract void send(ServletWebRequest request, C validateCode) throws Exception;
+    /**
+     * 发送校验码，由子类实现
+     * 
+     * @param request
+     * @param verificationCode
+     * @throws Exception
+     */
+    protected abstract void send(ServletWebRequest request, C verificationCode) throws Exception;
 
-	/**
-	 * 根据请求的url获取校验码的类型
-	 * 
-	 * @param request
-	 * @return
-	 */
-	private VerificationCodeType getVerificationCodeType(ServletWebRequest request) {
-		String type = StringUtils.substringBefore(getClass().getSimpleName(), "CodeProcessor");
-		return VerificationCodeType.valueOf(type.toUpperCase());
-	}
+    /**
+     * 根据请求的url获取校验码的类型
+     * 
+     * @return
+     */
+    private VerificationCodeType getVerificationCodeType() {
+        String type = StringUtils.substringBefore(getClass().getSimpleName(),
+                VerificationCodeProcessor.VERIFICATION_CODE_PROCESSOR_SUFFIX);
+        return VerificationCodeType.valueOf(type.toUpperCase());
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public void validate(ServletWebRequest request) {
+    @SuppressWarnings("unchecked")
+    @Override
+    public void validate(ServletWebRequest request) {
 
-		VerificationCodeType codeType = getVerificationCodeType(request);
+        VerificationCodeType codeType = getVerificationCodeType();
 
-		C codeInSession = (C) validateCodeRepository.get(request, codeType);
+        C codeInSession = (C) verificationCodeRepository.get(request, codeType);
 
-		String codeInRequest;
-		try {
-			codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(),
-					codeType.getParamNameOnValidate());
-		} catch (ServletRequestBindingException e) {
-			throw new VerificationCodeException("获取验证码的值失败");
-		}
+        String codeInRequest;
+        try {
+            codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(),
+                    codeType.getParamNameOnValidate());
+        } catch (ServletRequestBindingException e) {
+            throw new VerificationCodeException("获取验证码的值失败");
+        }
 
-		if (StringUtils.isBlank(codeInRequest)) {
-			throw new VerificationCodeException(codeType + "验证码的值不能为空");
-		}
+        if (StringUtils.isBlank(codeInRequest)) {
+            throw new VerificationCodeException(codeType + "验证码的值不能为空");
+        }
 
-		if (codeInSession == null) {
-			throw new VerificationCodeException(codeType + "验证码不存在");
-		}
+        if (codeInSession == null) {
+            throw new VerificationCodeException(codeType + "验证码不存在");
+        }
 
-		if (codeInSession.isExpried()) {
-			validateCodeRepository.remove(request, codeType);
-			throw new VerificationCodeException(codeType + "验证码已过期");
-		}
+        if (codeInSession.isExpried()) {
+            verificationCodeRepository.remove(request, codeType);
+            throw new VerificationCodeException(codeType + "验证码已过期");
+        }
 
-		if (!StringUtils.equals(codeInSession.getCode(), codeInRequest)) {
-			throw new VerificationCodeException(codeType + "验证码不匹配");
-		}
+        if (!StringUtils.equals(codeInSession.getCode(), codeInRequest)) {
+            throw new VerificationCodeException(codeType + "验证码不匹配");
+        }
 
-		validateCodeRepository.remove(request, codeType);
+        verificationCodeRepository.remove(request, codeType);
 
-	}
+    }
 
 }

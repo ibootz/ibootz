@@ -1,4 +1,4 @@
-package top.bootz.security.core.verification.captcha;
+package top.bootz.security.core.verification.image;
 
 import java.awt.image.BufferedImage;
 
@@ -18,15 +18,15 @@ import top.bootz.security.core.verification.VerificationCode;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Captcha extends VerificationCode {
+public class ImageCode extends VerificationCode {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private BufferedImage image;
+    private BufferedImage image;
 
-	public Captcha(BufferedImage image, String code, int expireIn) {
-		super(code, expireIn);
-		this.image = image;
-	}
+    public ImageCode(BufferedImage image, String code, int expireIn) {
+        super(code, expireIn);
+        this.image = image;
+    }
 
 }

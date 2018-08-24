@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 
 import lombok.extern.slf4j.Slf4j;
 import top.bootz.commons.constant.HttpConstants;
-import top.bootz.commons.constant.SecurityConstants;
+import top.bootz.commons.constant.CommonSecurityConstants;
 import top.bootz.commons.constant.SymbolConstants;
 import top.bootz.core.base.message.ErrorMessage;
 import top.bootz.core.base.message.RestMessage;
@@ -123,7 +123,7 @@ public class BaseController {
 	 */
 	protected SourceTypeEnum getSourceType(HttpServletRequest request) {
 		SourceTypeEnum sourceTypeEnum = SourceTypeEnum.UNKNOW;
-		String sourceStr = request.getHeader(SecurityConstants.HEADER_SOURCE);
+		String sourceStr = request.getHeader(CommonSecurityConstants.HEADER_SOURCE);
 		if (StringUtils.isNotBlank(sourceStr) && StringUtils.isNumeric(sourceStr)) {
 			sourceTypeEnum = SourceTypeEnum.getSourceTypeByCode(Integer.valueOf(sourceStr));
 		}

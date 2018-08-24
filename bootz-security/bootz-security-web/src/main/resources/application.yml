@@ -26,4 +26,4 @@ bootz:
   security:
     session:
       loginPage: /html/login.html
-      loginType: JOIN
+      loginType: JSON

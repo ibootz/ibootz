@@ -9,6 +9,6 @@ public class SessionProperties {
 	private String loginPage = "/html/default-login.html";
 
 	/** 登录认证成功或者失败之后，是采用跳转的方式还是采用返回json格式响应的方式来应对，如果应用未配置，默认返回json响应 */
-	private LoginType loginType = LoginType.JOIN;
+	private LoginType loginType = LoginType.JSON;
 
 }

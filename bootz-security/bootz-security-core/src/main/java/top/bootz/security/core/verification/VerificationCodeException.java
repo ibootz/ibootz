@@ -10,10 +10,10 @@ import org.springframework.security.core.AuthenticationException;
  */
 public class VerificationCodeException extends AuthenticationException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public VerificationCodeException(String msg) {
-		super(msg);
-	}
+    public VerificationCodeException(String msg) {
+        super(msg);
+    }
 
 }
