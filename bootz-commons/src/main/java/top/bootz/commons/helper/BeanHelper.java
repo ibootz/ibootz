@@ -41,7 +41,7 @@ public final class BeanHelper {
         for (String propertyName : properties) {
             try {
                 value = src.getPropertyValue(propertyName);
-                if (value != null && (value instanceof String)) {
+                if (value instanceof String) {
                     value = ((String) value).trim();
                 }
                 trg.setPropertyValue(propertyName, value);

@@ -1,11 +1,11 @@
 let Login = (function() {
-    let changeCaptcha = function(){
+    let changeCaptcha = function() {
         $("#captcha").click(function() {
             $(this).attr('src', '/verification/image?' + Math.floor(Math.random() * 100));
         })
     };
     return {
-        init: function(){
+        init : function() {
             changeCaptcha();
         }
     }
