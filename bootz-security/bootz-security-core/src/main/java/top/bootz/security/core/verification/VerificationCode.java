@@ -2,10 +2,8 @@ package top.bootz.security.core.verification;
 
 import java.time.LocalDateTime;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import top.bootz.core.base.entity.BaseEntity;
 
 /**
@@ -16,8 +14,6 @@ import top.bootz.core.base.entity.BaseEntity;
  */
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class VerificationCode extends BaseEntity {
 
@@ -27,9 +23,17 @@ public class VerificationCode extends BaseEntity {
 
     private LocalDateTime expireTime;
 
+    public VerificationCode() {
+    }
+
     public VerificationCode(String code, int expireIn) {
         this.code = code;
         this.expireTime = LocalDateTime.now().plusSeconds(expireIn);
+    }
+
+    public VerificationCode(String code, LocalDateTime expireIn) {
+        this.code = code;
+        this.expireTime = expireIn;
     }
 
     public boolean isExpried() {

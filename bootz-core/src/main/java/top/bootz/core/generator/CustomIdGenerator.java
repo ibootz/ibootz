@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Properties;
 
 import org.hibernate.HibernateException;
-import org.hibernate.MappingException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.Configurable;
 import org.hibernate.id.IdentifierGenerator;
@@ -22,23 +21,24 @@ import top.bootz.commons.snowflake.IdGenerator;
  */
 public class CustomIdGenerator implements IdentifierGenerator, Configurable {
 
-	@Override
-	public void configure(Type type, Properties params, ServiceRegistry serviceRegistry) throws MappingException {
-	}
+    @Override
+    public void configure(Type type, Properties params, ServiceRegistry serviceRegistry) {
+        // do nothing
+    }
 
-	@Override
-	public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
-		Long id;
-		try {
-			IdGenerator idGenerator = SpringHelper.getBean("idGenerator");
-			id = idGenerator.nextId();
-		} catch (Exception e) {
-			throw new HibernateException("", e);
-		}
-		if (id != 0) {
-			return id;
-		}
-		throw new HibernateException("Generated id is incorrect.");
-	}
+    @Override
+    public Serializable generate(SharedSessionContractImplementor session, Object object) {
+        Long id;
+        try {
+            IdGenerator idGenerator = SpringHelper.getBean("idGenerator");
+            id = idGenerator.nextId();
+        } catch (Exception e) {
+            throw new HibernateException("", e);
+        }
+        if (id != 0) {
+            return id;
+        }
+        throw new HibernateException("Generated id is incorrect.");
+    }
 
 }

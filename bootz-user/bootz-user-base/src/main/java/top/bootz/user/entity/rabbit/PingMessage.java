@@ -2,9 +2,7 @@ package top.bootz.user.entity.rabbit;
 
 import java.time.LocalDateTime;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import top.bootz.core.base.message.RabbitMessage;
 
@@ -15,8 +13,6 @@ import top.bootz.core.base.message.RabbitMessage;
 
 @Setter
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public class PingMessage extends RabbitMessage {
 
     private static final long serialVersionUID = 1L;

@@ -1,9 +1,7 @@
 package top.bootz.core.log;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.time.LocalDateTime;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -11,12 +9,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import top.bootz.core.base.entity.BaseEntity;
 import top.bootz.core.base.message.RabbitMessage;
-
-import java.time.LocalDateTime;
 
 /**
  * @Project : ibootz
@@ -26,11 +23,8 @@ import java.time.LocalDateTime;
  * @CreationDate : 2018-06-23 下午11:35
  */
 
-@Setter
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-@Document
+@Data
+@EqualsAndHashCode(callSuper=false)
 @CompoundIndexes({ @CompoundIndex(name = "idx_rml_exchange_routingkey", def = "{'exchange': 1, 'routingKey': 1}") })
 public class RabbitMessageLog extends BaseEntity {
 

@@ -56,17 +56,17 @@ public class ImageCodeGenerator implements VerificationCodeGenerator {
             g.drawLine(x, y, x + xl, y + yl);
         }
 
-        String sRand = "";
+        StringBuilder sRand = new StringBuilder();
         for (int i = 0; i < securityProperties.getCode().getImageCode().getLength(); i++) {
             String rand = String.valueOf(random.nextInt(10));
-            sRand += rand;
+            sRand.append(rand);
             g.setColor(new Color(20 + random.nextInt(110), 20 + random.nextInt(110), 20 + random.nextInt(110)));
             g.drawString(rand, 21 * i, 27);
         }
 
         g.dispose();
 
-        return new ImageCode(image, sRand, securityProperties.getCode().getImageCode().getExpireIn());
+        return new ImageCode(image, sRand.toString(), securityProperties.getCode().getImageCode().getExpireIn());
     }
 
     /**

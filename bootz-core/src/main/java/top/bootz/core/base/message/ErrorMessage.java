@@ -2,22 +2,17 @@ package top.bootz.core.base.message;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import top.bootz.core.base.entity.BaseEntity;
 
 /**
- * 
  * @author John
  * @time 2018年6月17日 下午11:46:10
  */
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
+@EqualsAndHashCode(callSuper=false)
 public class ErrorMessage extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -34,10 +29,10 @@ public class ErrorMessage extends BaseEntity {
     /** 堆栈信息 */
     @JsonIgnore
     private Throwable throwable;
-    
+
     public ErrorMessage(String code, String message) {
-    	this.code = code;
-    	this.message = message;
+        this.code = code;
+        this.message = message;
     }
 
 }

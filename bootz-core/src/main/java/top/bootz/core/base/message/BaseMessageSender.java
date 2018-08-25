@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.amqp.core.MessageProperties;
@@ -114,7 +113,7 @@ public class BaseMessageSender {
         }
 
         @Override
-        public Message postProcessMessage(Message msg) throws AmqpException {
+        public Message postProcessMessage(Message msg) {
             MessageProperties properties = msg.getMessageProperties();
             properties.setMessageId(String.valueOf(messageId));
             properties.setContentEncoding(rabbitTemplate.getEncoding());
