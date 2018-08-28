@@ -20,7 +20,7 @@ public class SessionVerificationCodeRepository implements VerificationCodeReposi
     /**
      * 验证码放入session时的前缀
      */
-    String SESSION_KEY_PREFIX = "SESSION_KEY_FOR_CODE_";
+    private static final String SESSION_KEY_PREFIX = "SESSION_KEY_FOR_CODE_";
 
     @Override
     public void save(ServletWebRequest request, VerificationCode code, VerificationCodeType verificationCodeType) {

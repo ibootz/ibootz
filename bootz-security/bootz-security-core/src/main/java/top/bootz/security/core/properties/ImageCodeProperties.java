@@ -4,7 +4,6 @@
 package top.bootz.security.core.properties;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * 图片验证码配置项
@@ -13,12 +12,7 @@ import lombok.EqualsAndHashCode;
  * @datetime 2018年8月24日 下午10:54:43
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-public class ImageCodeProperties extends SmsCodeProperties {
-
-    public ImageCodeProperties() {
-        setLength(4);
-    }
+public class ImageCodeProperties {
 
     /**
      * 图片宽
@@ -29,5 +23,20 @@ public class ImageCodeProperties extends SmsCodeProperties {
      * 图片高
      */
     private int height = 32;
+
+    /**
+     * 验证码长度
+     */
+    private int length = 6;
+
+    /**
+     * 过期时间，单位：秒
+     */
+    private int expireIn = 60;
+
+    /**
+     * 要拦截的url，多个url用逗号隔开，ant pattern
+     */
+    private String url;
 
 }

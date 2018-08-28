@@ -20,9 +20,9 @@ import top.bootz.core.base.message.RestMessage;
 @RequestMapping("/user")
 public class UserController extends BaseController {
 
-	@GetMapping("/me")
-	public RestMessage<UserDetails> user(HttpServletRequest request, @AuthenticationPrincipal UserDetails userDetails) {
-		return buildSuccessResponse(userDetails);
-	}
+    @GetMapping("/me")
+    public RestMessage<UserDetails> user(HttpServletRequest request, @AuthenticationPrincipal UserDetails userDetails) {
+        return buildSuccessResponse(userDetails);
+    }
 
 }

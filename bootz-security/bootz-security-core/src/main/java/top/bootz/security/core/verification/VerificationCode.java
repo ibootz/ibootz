@@ -14,7 +14,7 @@ import top.bootz.core.base.entity.BaseEntity;
  */
 
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class VerificationCode extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

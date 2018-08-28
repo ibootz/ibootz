@@ -17,7 +17,6 @@ import top.bootz.security.web.entity.SecurityUser;
 import top.bootz.security.web.entity.User;
 import top.bootz.security.web.service.UserService;
 
-
 @Service("userDetailsService")
 @Transactional(readOnly = true)
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -26,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserService userService;
 
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String userName) {
         User user = this.userService.findByUserName(userName);
         if (user == null) {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'.", userName));

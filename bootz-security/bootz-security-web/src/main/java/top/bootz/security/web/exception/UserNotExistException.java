@@ -7,11 +7,11 @@ import top.bootz.commons.exception.BaseRuntimeException;
 
 @Data
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class UserNotExistException extends BaseRuntimeException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String id;
+    private final String id;
 
 }

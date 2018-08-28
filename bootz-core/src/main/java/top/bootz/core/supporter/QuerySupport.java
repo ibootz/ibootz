@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import top.bootz.core.base.entity.BaseEntity;
 
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = true)
 public class QuerySupport<T extends Serializable> extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

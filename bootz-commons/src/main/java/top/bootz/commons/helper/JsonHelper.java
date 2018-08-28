@@ -3,6 +3,8 @@ package top.bootz.commons.helper;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -30,7 +32,7 @@ public final class JsonHelper {
     }
 
     public static <T> T fromJSON(String json, Class<T> beanClass) {
-        return JsonHelper.fromJSON(json, beanClass, new Class<?>[0]);
+        return JsonHelper.fromJSON(json, beanClass, ArrayUtils.EMPTY_CLASS_ARRAY);
     }
 
     /**

@@ -11,6 +11,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils.Null;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -47,11 +48,8 @@ import top.bootz.core.dictionary.MessageStatusEnum;
 @Slf4j
 public class BaseExceptionHandleAdvice {
 
+    @Autowired
     protected MessageSource messages;
-
-    public BaseExceptionHandleAdvice(MessageSource messages) {
-        this.messages = messages;
-    }
 
     /**
      * 处理Controller层主动抛出的API异常
@@ -66,7 +64,7 @@ public class BaseExceptionHandleAdvice {
             message = messages.getMessage(ExceptionConstants.ErrorMessageKey.API_EXCEPTION, e.getArgs(), e.getMessage(),
                     AppConstants.AppLocale.getDefault(request));
         }
-        ErrorMessage error = buildErrorMessage(message, e);
+        ErrorMessage error = buildErrorMessage(message, e, e.getErrorKey(), request);
         RestMessage<Null> restMessage = new RestMessage<>(MessageStatusEnum.ERROR, null, error);
         return new ResponseEntity<>(restMessage, HttpStatus.valueOf(e.getHttpStatus()));
     }
@@ -85,14 +83,14 @@ public class BaseExceptionHandleAdvice {
         for (FieldError fieldError : bindingResult.getFieldErrors()) {
             String message = messages.getMessage(fieldError.getDefaultMessage(), null, e.getMessage(),
                     AppConstants.AppLocale.getDefault(request));
-            ErrorMessage error = buildErrorMessage(message, e);
+            ErrorMessage error = buildErrorMessage(message, e, fieldError.getDefaultMessage(), request);
             RestMessage<Null> restMessage = new RestMessage<>(MessageStatusEnum.ERROR, null, error);
             restMessages.add(restMessage);
         }
         if (CollectionUtils.isEmpty(restMessages)) {
             String message = messages.getMessage(ExceptionConstants.ErrorMessageKey.BAD_REQUEST, null, e.getMessage(),
                     AppConstants.AppLocale.getDefault(request));
-            ErrorMessage error = buildErrorMessage(message, e);
+            ErrorMessage error = buildErrorMessage(message, e, ExceptionConstants.ErrorMessageKey.BAD_REQUEST, request);
             RestMessage<Null> restMessage = new RestMessage<>(MessageStatusEnum.ERROR, null, error);
             restMessages.add(restMessage);
         }
@@ -247,7 +245,8 @@ public class BaseExceptionHandleAdvice {
             HttpServletResponse response) {
         String message = messages.getMessage(ExceptionConstants.ErrorMessageKey.APPLICATION_EXCEPTION, null,
                 e.getMessage(), AppConstants.AppLocale.getDefault(request));
-        ErrorMessage error = buildErrorMessage(message, e);
+        ErrorMessage error = buildErrorMessage(message, e, ExceptionConstants.ErrorMessageKey.APPLICATION_EXCEPTION,
+                request);
         RestMessage<Null> restMessage = new RestMessage<>(MessageStatusEnum.ERROR, null, error);
         return new ResponseEntity<>(restMessage, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -260,7 +259,8 @@ public class BaseExceptionHandleAdvice {
             HttpServletResponse response) {
         String message = messages.getMessage(ExceptionConstants.ErrorMessageKey.INTERNAL_SERVER_ERROR, null,
                 e.getMessage(), AppConstants.AppLocale.getDefault(request));
-        ErrorMessage error = buildErrorMessage(message, e);
+        ErrorMessage error = buildErrorMessage(message, e, ExceptionConstants.ErrorMessageKey.INTERNAL_SERVER_ERROR,
+                request);
         RestMessage<Null> restMessage = new RestMessage<>(MessageStatusEnum.ERROR, null, error);
         return new ResponseEntity<>(restMessage, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -268,12 +268,18 @@ public class BaseExceptionHandleAdvice {
     protected ResponseEntity<RestMessage<Null>> buildResponseEntity(String errKey, HttpStatus httpStatus,
             HttpServletRequest request, Throwable e) {
         String message = messages.getMessage(errKey, null, e.getMessage(), AppConstants.AppLocale.getDefault(request));
-        ErrorMessage error = buildErrorMessage(message, e);
+        ErrorMessage error = buildErrorMessage(message, e, errKey, request);
         RestMessage<Null> restMessage = new RestMessage<>(MessageStatusEnum.ERROR, null, error);
         return new ResponseEntity<>(restMessage, httpStatus);
     }
 
-    protected ErrorMessage buildErrorMessage(String message, Throwable e) {
+    protected ErrorMessage buildErrorMessage(String message, Throwable e, String errKey, HttpServletRequest request) {
+        if (StringUtils.isBlank(message)) {
+            log.warn("errorKey [" + errKey + "] 在消息资源文件中没有找到对应的消息体");
+            message = messages.getMessage(ExceptionConstants.ErrorMessageKey.APPLICATION_EXCEPTION, null,
+                    e.getMessage(), AppConstants.AppLocale.getDefault(request));
+        }
+
         ErrorMessage error = null;
         if (JsonHelper.isJsonStr(message)) {
             error = JsonHelper.fromJSON(message, ErrorMessage.class);

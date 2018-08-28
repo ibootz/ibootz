@@ -18,6 +18,11 @@ public enum VerificationCodeType {
         public String getParamNameOnValidate() {
             return SecurityConstants.DEFAULT_PARAMETER_NAME_CODE_SMS;
         }
+
+        @Override
+        public String getDisplayName() {
+            return "短信验证码";
+        }
     },
 
     /**
@@ -28,6 +33,11 @@ public enum VerificationCodeType {
         public String getParamNameOnValidate() {
             return SecurityConstants.DEFAULT_PARAMETER_NAME_CODE_IMAGE;
         }
+
+        @Override
+        public String getDisplayName() {
+            return "图片验证码";
+        }
     };
 
     /**
@@ -36,5 +46,12 @@ public enum VerificationCodeType {
      * @return
      */
     public abstract String getParamNameOnValidate();
+
+    /**
+     * 获取中文展示名
+     * 
+     * @return
+     */
+    public abstract String getDisplayName();
 
 }

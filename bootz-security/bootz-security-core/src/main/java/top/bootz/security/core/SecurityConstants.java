@@ -7,7 +7,6 @@ import top.bootz.security.core.verification.VerificationCodeController;
 
 /**
  * @author zhailiang
- *
  */
 public final class SecurityConstants {
 
@@ -79,5 +78,8 @@ public final class SecurityConstants {
      * 获取第三方用户信息的url
      */
     public static final String DEFAULT_SOCIAL_USER_INFO_URL = "/social/user";
+
+    private SecurityConstants() {
+    }
 
 }

@@ -10,7 +10,6 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 
@@ -23,7 +22,6 @@ import top.bootz.security.core.verification.VerificationCodeGenerator;
  * @author Zhangq - momogoing@163.com
  * @datetime 2018年8月24日 下午9:58:53
  */
-@Component
 public class ImageCodeGenerator implements VerificationCodeGenerator {
 
     /**
@@ -38,6 +36,8 @@ public class ImageCodeGenerator implements VerificationCodeGenerator {
                 securityProperties.getCode().getImageCode().getWidth());
         int height = ServletRequestUtils.getIntParameter(request.getRequest(), "height",
                 securityProperties.getCode().getImageCode().getHeight());
+        int length = ServletRequestUtils.getIntParameter(request.getRequest(), "length",
+                securityProperties.getCode().getImageCode().getLength());
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         Graphics g = image.getGraphics();
@@ -57,7 +57,7 @@ public class ImageCodeGenerator implements VerificationCodeGenerator {
         }
 
         StringBuilder sRand = new StringBuilder();
-        for (int i = 0; i < securityProperties.getCode().getImageCode().getLength(); i++) {
+        for (int i = 0; i < length; i++) {
             String rand = String.valueOf(random.nextInt(10));
             sRand.append(rand);
             g.setColor(new Color(20 + random.nextInt(110), 20 + random.nextInt(110), 20 + random.nextInt(110)));

@@ -44,7 +44,7 @@ public abstract class AbstractVerificationCodeProcessor<C extends VerificationCo
     @SuppressWarnings("unchecked")
     private C generate(ServletWebRequest request) {
         String type = getVerificationCodeType().toString().toLowerCase();
-        String generatorName = type + VerificationCodeGenerator.VERIFICATION_CODE_GENERATOR_SUFFIX;
+        String generatorName = type + VerificationCodeProcessorHolder.VERIFICATION_CODE_GENERATOR_SUFFIX;
         VerificationCodeGenerator verificationCodeGenerator = verificationCodeGenerators.get(generatorName);
         if (verificationCodeGenerator == null) {
             throw new VerificationCodeException("验证码生成器" + generatorName + "不存在");
@@ -79,7 +79,7 @@ public abstract class AbstractVerificationCodeProcessor<C extends VerificationCo
      */
     private VerificationCodeType getVerificationCodeType() {
         String type = StringUtils.substringBefore(getClass().getSimpleName(),
-                VerificationCodeProcessor.VERIFICATION_CODE_PROCESSOR_SUFFIX);
+                VerificationCodeProcessorHolder.VERIFICATION_CODE_PROCESSOR_SUFFIX);
         return VerificationCodeType.valueOf(type.toUpperCase());
     }
 
@@ -100,20 +100,20 @@ public abstract class AbstractVerificationCodeProcessor<C extends VerificationCo
         }
 
         if (StringUtils.isBlank(codeInRequest)) {
-            throw new VerificationCodeException(codeType + "验证码的值不能为空");
+            throw new VerificationCodeException(codeType.getDisplayName() + "的值不能为空");
         }
 
         if (codeInSession == null) {
-            throw new VerificationCodeException(codeType + "验证码不存在");
+            throw new VerificationCodeException(codeType.getDisplayName() + "不存在");
         }
 
         if (codeInSession.isExpried()) {
             verificationCodeRepository.remove(request, codeType);
-            throw new VerificationCodeException(codeType + "验证码已过期");
+            throw new VerificationCodeException(codeType.getDisplayName() + "已过期");
         }
 
         if (!StringUtils.equals(codeInSession.getCode(), codeInRequest)) {
-            throw new VerificationCodeException(codeType + "验证码不匹配");
+            throw new VerificationCodeException(codeType.getDisplayName() + "不匹配");
         }
 
         verificationCodeRepository.remove(request, codeType);

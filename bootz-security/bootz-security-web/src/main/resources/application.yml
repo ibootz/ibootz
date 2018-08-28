@@ -8,9 +8,9 @@ spring:
   messages:
     basename: i18n/messages
   session:
-    timeout: 2h
+    timeout: 30s
     redis:
-      cleanup-cron: 0 0 0/1 * * ?
+      cleanup-cron: 0 0/1 * * * ?
   http:
     encoding:
       force: true
@@ -18,6 +18,8 @@ server:
   port: 8060
   tomcat:
     uri-encoding: UTF-8
+  error:
+    path: /html/error/404.html
 logging:
   level:
     root: info
@@ -27,3 +29,9 @@ bootz:
     session:
       loginPage: /html/login.html
       loginType: JSON
+    code:
+      imageCode:
+        width: 100
+        height: 32
+        length: 5
+        expire-in: 60

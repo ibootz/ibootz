@@ -1,7 +1,5 @@
 package top.bootz.user.aop;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -18,10 +16,5 @@ import top.bootz.core.base.aop.BaseExceptionHandleAdvice;
 
 @RestControllerAdvice(annotations = { RestController.class, Controller.class })
 public class ExceptionHandleAdvice extends BaseExceptionHandleAdvice {
-
-	@Autowired
-	public ExceptionHandleAdvice(MessageSource messages) {
-		super(messages);
-	}
 
 }

@@ -28,7 +28,8 @@ import top.bootz.security.core.properties.SecurityProperties;
  * @author Zhangq - momogoing@163.com
  * @datetime 2018年8月24日 下午8:26:34
  */
-@Component("verificationCodeFilter")
+
+@Component
 public class VerificationCodeFilter extends OncePerRequestFilter implements InitializingBean {
 
     /**
@@ -92,7 +93,7 @@ public class VerificationCodeFilter extends OncePerRequestFilter implements Init
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        VerificationCodeType type = getVerificationCodeType(request);
+        VerificationCodeType type = getVerificationCodeType(request); 
         if (type != null) {
             logger.info("校验请求(" + request.getRequestURI() + ")中的验证码,验证码类型" + type);
             try {

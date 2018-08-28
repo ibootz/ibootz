@@ -24,7 +24,7 @@ import top.bootz.core.base.message.RabbitMessage;
  */
 
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = true)
 @CompoundIndexes({ @CompoundIndex(name = "idx_rml_exchange_routingkey", def = "{'exchange': 1, 'routingKey': 1}") })
 public class RabbitMessageLog extends BaseEntity {
 

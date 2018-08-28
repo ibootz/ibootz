@@ -15,7 +15,6 @@ import top.bootz.core.base.entity.BaseMysqlEntity;
  * 关联表：用户-部门
  * 
  * @author John
- *
  */
 @Entity
 @Table(name = "uc_map_user_department", indexes = {
@@ -24,7 +23,7 @@ import top.bootz.core.base.entity.BaseMysqlEntity;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = { "userId", "departmentId" }, callSuper = false)
+@EqualsAndHashCode(of = { "userId", "departmentId" }, callSuper = true)
 public class MapUserDepartment extends BaseMysqlEntity {
 
     private static final long serialVersionUID = 1L;

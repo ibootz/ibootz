@@ -2,6 +2,7 @@ package top.bootz.core.base.message;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import top.bootz.core.base.entity.BaseEntity;
@@ -12,7 +13,8 @@ import top.bootz.core.base.entity.BaseEntity;
  */
 
 @Data
-@EqualsAndHashCode(callSuper=false)
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class ErrorMessage extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

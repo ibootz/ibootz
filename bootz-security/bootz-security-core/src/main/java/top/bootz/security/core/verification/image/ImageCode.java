@@ -13,7 +13,7 @@ import top.bootz.security.core.verification.VerificationCode;
  * @datetime 2018年8月21日 下午10:54:39
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class ImageCode extends VerificationCode {
 
     private static final long serialVersionUID = 1L;

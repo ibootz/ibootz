@@ -17,6 +17,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class VerificationCodeProcessorHolder {
 
+    public static final String VERIFICATION_CODE_PROCESSOR_SUFFIX = "CodeProcessor";
+
+    public static final String VERIFICATION_CODE_GENERATOR_SUFFIX = "CodeGenerator";
+
     @Autowired
     private Map<String, VerificationCodeProcessor> verificationCodeProcessors;
 
@@ -33,7 +37,7 @@ public class VerificationCodeProcessorHolder {
      * @return
      */
     public VerificationCodeProcessor findVerificationCodeProcessor(String type) {
-        String name = type.toLowerCase() + VerificationCodeProcessor.VERIFICATION_CODE_PROCESSOR_SUFFIX;
+        String name = type.toLowerCase() + VerificationCodeProcessorHolder.VERIFICATION_CODE_PROCESSOR_SUFFIX;
         VerificationCodeProcessor processor = verificationCodeProcessors.get(name);
         if (processor == null) {
             throw new VerificationCodeException("验证码处理器" + name + "不存在");

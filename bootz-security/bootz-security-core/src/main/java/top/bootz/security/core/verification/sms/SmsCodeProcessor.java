@@ -25,10 +25,10 @@ public class SmsCodeProcessor extends AbstractVerificationCodeProcessor<Verifica
     private SmsCodeSender smsCodeSender;
 
     @Override
-    protected void send(ServletWebRequest request, VerificationCode VerificationCode) throws Exception {
+    protected void send(ServletWebRequest request, VerificationCode verificationCode) throws Exception {
         String paramName = SecurityConstants.DEFAULT_PARAMETER_NAME_MOBILE;
         String mobile = ServletRequestUtils.getRequiredStringParameter(request.getRequest(), paramName);
-        smsCodeSender.send(mobile, VerificationCode.getCode());
+        smsCodeSender.send(mobile, verificationCode.getCode());
     }
 
 }

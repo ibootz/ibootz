@@ -9,15 +9,15 @@ import top.bootz.core.base.entity.BaseEntity;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class SortInfo extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String sortFiled;
+    private String sortFiled;
 
-	private String direction;
+    private String direction;
 
-	private Integer priority; // 排序优先级
+    private Integer priority; // 排序优先级
 
 }
