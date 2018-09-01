@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -39,7 +38,7 @@ public class SessionAuthenticationSuccessHandler extends SavedRequestAwareAuthen
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
-        UserDetails userDetails = (UserDetails) ((UsernamePasswordAuthenticationToken) authentication).getPrincipal();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         // 如果应用配置了采用json的方式来处理登录认证成功事件，那么这里返回json响应
         if (LoginType.JSON.equals(securityProperties.getSession().getLoginType())) {

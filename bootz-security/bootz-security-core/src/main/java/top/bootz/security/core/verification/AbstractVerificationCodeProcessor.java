@@ -19,6 +19,8 @@ import org.springframework.web.context.request.ServletWebRequest;
 public abstract class AbstractVerificationCodeProcessor<C extends VerificationCode>
         implements VerificationCodeProcessor {
 
+    public static final String VERIFICATION_CODE_GENERATOR_SUFFIX = "CodeGenerator";
+
     /**
      * 收集系统中所有的 {@link VerificationCodeGenerator} 接口的实现。
      */
@@ -44,7 +46,7 @@ public abstract class AbstractVerificationCodeProcessor<C extends VerificationCo
     @SuppressWarnings("unchecked")
     private C generate(ServletWebRequest request) {
         String type = getVerificationCodeType().toString().toLowerCase();
-        String generatorName = type + VerificationCodeProcessorHolder.VERIFICATION_CODE_GENERATOR_SUFFIX;
+        String generatorName = type + VERIFICATION_CODE_GENERATOR_SUFFIX;
         VerificationCodeGenerator verificationCodeGenerator = verificationCodeGenerators.get(generatorName);
         if (verificationCodeGenerator == null) {
             throw new VerificationCodeException("验证码生成器" + generatorName + "不存在");

@@ -1,4 +1,4 @@
-package top.bootz.security.web.controller;
+package top.bootz.security.web.controller.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

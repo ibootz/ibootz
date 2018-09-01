@@ -6,7 +6,10 @@ package top.bootz.security.core;
 import top.bootz.security.core.verification.VerificationCodeController;
 
 /**
- * @author zhailiang
+ * 安全认证相关的常量
+ * 
+ * @author Zhangq<momogoing@163.com>
+ * @datetime 2018年9月1日 下午5:53:04
  */
 public final class SecurityConstants {
 

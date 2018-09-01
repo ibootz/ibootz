@@ -7,6 +7,7 @@ public class SessionProperties {
 
     public static final int TWO_WEEKS_S = 1209600;
 
+    /** 系统管理员可以通过修改该值来使所有用户的记住我token失效 */
     public static final String BOOTZ_REMEMBER_ME = "bootz_remember_me";
 
     /** 登录页面路径，如果使用我们安全组件的应用没有配置，则使用此处配置的默认值 */

@@ -19,8 +19,6 @@ public class VerificationCodeProcessorHolder {
 
     public static final String VERIFICATION_CODE_PROCESSOR_SUFFIX = "CodeProcessor";
 
-    public static final String VERIFICATION_CODE_GENERATOR_SUFFIX = "CodeGenerator";
-
     @Autowired
     private Map<String, VerificationCodeProcessor> verificationCodeProcessors;
 

@@ -28,7 +28,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String userName) {
         User user = this.userService.findByUserName(userName);
         if (user == null) {
-            throw new UsernameNotFoundException(String.format("No user found with username '%s'.", userName));
+            user = this.userService.findByMobile(userName);
+        }
+        if (user == null) {
+            throw new UsernameNotFoundException(
+                    String.format("No user found with username or mobile ['%s'].", userName));
         }
         List<GrantedAuthority> auth = new ArrayList<>();
         for (Role role : user.getRoles()) {

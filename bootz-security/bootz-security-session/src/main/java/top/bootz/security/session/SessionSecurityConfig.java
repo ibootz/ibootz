@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 
+import top.bootz.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import top.bootz.security.core.properties.SecurityProperties;
 import top.bootz.security.core.verification.VerificationCodeFilter;
 import top.bootz.security.session.authentication.SessionAuthenticationFailureHandler;
@@ -40,38 +40,30 @@ public class SessionSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    /**
-     * 采用纯客户端token的方式来实现记住我的功能，不借助数据库来存储token，类似于jwt
-     * 
-     * @return
-     * @author Zhangq<momogoing@163.com>
-     * @datetime 2018年8月29日 上午12:09:08
-     */
-    @Bean
-    public TokenBasedRememberMeServices rememberMeServices() {
-        TokenBasedRememberMeServices rememberMeServices = new TokenBasedRememberMeServices(
-                securityProperties.getSession().getRememberMeKey(), userDetailsService);
-        rememberMeServices.setTokenValiditySeconds(securityProperties.getSession().getRememberMeSeconds());
-        return rememberMeServices;
-    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
-        http.addFilterBefore(verificationCodeFilter, UsernamePasswordAuthenticationFilter.class)
+        http.apply(smsCodeAuthenticationSecurityConfig)
+            .and()
+            .addFilterBefore(verificationCodeFilter, UsernamePasswordAuthenticationFilter.class)
             .formLogin() // 开启表单认证
                 .loginPage("/authentication/require") // 指定登录页面或请求url
                 .loginProcessingUrl("/authentication/form") // 如果指定了自定义loginpage，那么该配置必不可少，否则默认和loginPage一样
                 .successHandler(sessionAuthenticationSuccessHandler) // 设置登录认证成功之后的处理类
                 .failureHandler(sessionAuthenticationFailureHandler) // 设置登录认证失败之后的处理类
             .and()
-                .rememberMe()
-                    .rememberMeServices(rememberMeServices()) // 记住我
+                .rememberMe() // 记住我
+                    .key(securityProperties.getSession().getRememberMeKey())
+                    .tokenValiditySeconds(securityProperties.getSession().getRememberMeSeconds())
+                    .userDetailsService(userDetailsService)
             .and()
                 .csrf().disable() // 禁用csrf检查
             .authorizeRequests() // 授权配置

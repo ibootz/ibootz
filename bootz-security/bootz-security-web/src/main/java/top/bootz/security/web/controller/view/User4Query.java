@@ -1,4 +1,4 @@
-package top.bootz.security.web.view;
+package top.bootz.security.web.controller.view;
 
 /**
  * @author zhailiang

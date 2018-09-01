@@ -1,4 +1,4 @@
-package top.bootz.security.web.controller;
+package top.bootz.security.web.controller.rest;
 
 import javax.servlet.http.HttpServletRequest;
 

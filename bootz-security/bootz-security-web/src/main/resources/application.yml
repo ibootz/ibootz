@@ -5,10 +5,22 @@ spring:
     - home
   application:
     name: bootz-security-demo
+  jpa:
+    hibernate:
+      ddl-auto: update
+      use-new-id-generator-mappings: true
+    show-sql: false
+    properties:
+      hibernate.dialect.storage_engine: innodb
+      hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+      hibernate.ejb.naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      hibernate.cache.provider_class: org.hibernate.cache.NoCacheProvider
+      hibernate.format_sql: false
+      hibernate.ejb.entitymanager_factory_name: entityManagerFactory
   messages:
     basename: i18n/messages
   session:
-    timeout: 30s
+    timeout: 2h
     redis:
       cleanup-cron: 0 0/1 * * * ?
   http:
@@ -34,4 +46,4 @@ bootz:
         width: 100
         height: 32
         length: 5
-        expire-in: 60
+        expire-in: 120
