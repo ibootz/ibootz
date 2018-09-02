@@ -1,6 +1,6 @@
 package top.bootz.security.core.properties;
 
-public enum LoginType {
+public enum LoginResponseType {
 
 	REDIRECT, // 跳转到指定路径，适用于传统的Java web应用
 

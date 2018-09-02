@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import top.bootz.commons.helper.JsonHelper;
 import top.bootz.core.base.message.RestMessage;
 import top.bootz.core.dictionary.MessageStatusEnum;
-import top.bootz.security.core.properties.LoginType;
+import top.bootz.security.core.properties.LoginResponseType;
 import top.bootz.security.core.properties.SecurityProperties;
 
 /**
@@ -41,7 +41,7 @@ public class SessionAuthenticationSuccessHandler extends SavedRequestAwareAuthen
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         // 如果应用配置了采用json的方式来处理登录认证成功事件，那么这里返回json响应
-        if (LoginType.JSON.equals(securityProperties.getSession().getLoginType())) {
+        if (LoginResponseType.JSON.equals(securityProperties.getSession().getLoginType())) {
             response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
             RestMessage<UserDetails> restMessage = new RestMessage<>(MessageStatusEnum.SUCCESS, userDetails, null);
             response.getWriter().write(JsonHelper.toJSON(restMessage));

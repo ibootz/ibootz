@@ -28,6 +28,6 @@ let Login = (function() {
 })();
 
 jQuery(document).ready(function() {
-    Login.hideTab("usernameTab");
+    // Login.hideTab("usernameTab");
     Login.init();
 });

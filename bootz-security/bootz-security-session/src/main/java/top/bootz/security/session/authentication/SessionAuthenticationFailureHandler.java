@@ -23,7 +23,7 @@ import top.bootz.commons.helper.JsonHelper;
 import top.bootz.core.base.message.ErrorMessage;
 import top.bootz.core.base.message.RestMessage;
 import top.bootz.core.dictionary.MessageStatusEnum;
-import top.bootz.security.core.properties.LoginType;
+import top.bootz.security.core.properties.LoginResponseType;
 import top.bootz.security.core.properties.SecurityProperties;
 
 @Slf4j
@@ -40,7 +40,7 @@ public class SessionAuthenticationFailureHandler extends SimpleUrlAuthentication
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException e) throws IOException, ServletException {
         // 如果应用配置了采用json的方式来处理登录认证失败事件，那么这里返回json响应
-        if (LoginType.JSON.equals(securityProperties.getSession().getLoginType())) {
+        if (LoginResponseType.JSON.equals(securityProperties.getSession().getLoginType())) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.addHeader("Content-type", MediaType.APPLICATION_JSON_UTF8_VALUE);
             RestMessage<Null> restMessage = buildRestMessage(request, e);
