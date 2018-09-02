@@ -1,4 +1,4 @@
 /**
- * @author Zhangq<momogoing@163.com>
+ * .gitkeep
  */
 package top.bootz.security.social.qq;

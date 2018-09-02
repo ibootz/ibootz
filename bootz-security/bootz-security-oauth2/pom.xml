@@ -4,6 +4,7 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>bootz-security-oauth2</artifactId>
+	<packaging>pom</packaging>
 
 	<name>${project.artifactId}</name>
 	<description>Bootz project for Spring Boot</description>
@@ -14,6 +15,11 @@
 		<artifactId>bootz-security</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
+
+	<modules>
+		<module>bootz-security-social</module>
+		<module>bootz-security-token</module>
+	</modules>
 
 	<dependencies>
 		<dependency>
