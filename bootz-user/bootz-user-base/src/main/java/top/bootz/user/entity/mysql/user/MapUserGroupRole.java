@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import top.bootz.core.base.entity.BaseMysqlEntity;
+import top.bootz.core.base.entity.CommonEntity;
 
 /**
  * 关联表：用户组-角色
@@ -26,7 +26,7 @@ import top.bootz.core.base.entity.BaseMysqlEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = { "userGroupId", "roleId" }, callSuper = false)
-public class MapUserGroupRole extends BaseMysqlEntity {
+public class MapUserGroupRole extends CommonEntity {
 
     private static final long serialVersionUID = 1L;
 

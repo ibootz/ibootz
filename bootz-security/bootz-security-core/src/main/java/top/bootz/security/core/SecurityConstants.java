@@ -3,8 +3,6 @@
  */
 package top.bootz.security.core;
 
-import top.bootz.security.core.verification.VerificationCodeController;
-
 /**
  * 安全认证相关的常量
  * 
@@ -41,11 +39,14 @@ public final class SecurityConstants {
     public static final String DEFAULT_SIGN_IN_PROCESSING_URL_OPENID = "/authentication/openid";
 
     /**
-     * 默认登录页面
-     * 
-     * @see VerificationCodeController
+     * 默认注册页面
      */
-    public static final String DEFAULT_SIGN_IN_PAGE_URL = "/html/default-login.html";
+    public static final String DEFAULT_SIGNUP_PAGE_URL = "/pages/default-sign-up.html";
+
+    /**
+     * 默认登录页面
+     */
+    public static final String DEFAULT_LOGIN_PAGE_URL = "/pages/default-login.html";
 
     /**
      * 验证图片验证码时，http请求中默认的携带图片验证码信息的参数的名称
@@ -75,7 +76,7 @@ public final class SecurityConstants {
     /**
      * session失效默认的跳转地址
      */
-    public static final String DEFAULT_SESSION_INVALID_URL = "/html/session-invalid.html";
+    public static final String DEFAULT_SESSION_INVALID_URL = "/pages/session-invalid.html";
 
     /**
      * 获取第三方用户信息的url

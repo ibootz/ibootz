@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import lombok.Setter;
-import top.bootz.core.base.entity.BaseMysqlEntity;
+import top.bootz.core.base.entity.CommonEntity;
 
 /**
  * 用来测试数据库状态的表
@@ -16,7 +16,7 @@ import top.bootz.core.base.entity.BaseMysqlEntity;
 @Entity
 @Table(name = "uc_ping")
 @Setter
-public class Ping extends BaseMysqlEntity {
+public class Ping extends CommonEntity {
 
     private static final long serialVersionUID = 1L;
 

@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import top.bootz.core.base.entity.BaseMysqlEntity;
+import top.bootz.core.base.entity.CommonEntity;
 
 /**
  * 公司表
@@ -29,7 +29,7 @@ import top.bootz.core.base.entity.BaseMysqlEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = { "code" }, callSuper = false)
-public class Org extends BaseMysqlEntity {
+public class Org extends CommonEntity {
 
     private static final long serialVersionUID = 1L;
 

@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import top.bootz.core.base.entity.BaseMysqlEntity;
+import top.bootz.core.base.entity.CommonEntity;
 import top.bootz.core.converter.attribute.DisableTypeAttributeConverter;
 import top.bootz.core.dictionary.DisableTypeEnum;
 
@@ -30,7 +30,7 @@ import top.bootz.core.dictionary.DisableTypeEnum;
 @EqualsAndHashCode(of = { "code" }, callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Menu extends BaseMysqlEntity {
+public class Menu extends CommonEntity {
 
     private static final long serialVersionUID = 1L;
 

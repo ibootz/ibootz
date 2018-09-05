@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import top.bootz.core.base.entity.BaseMysqlEntity;
+import top.bootz.core.base.entity.CommonEntity;
 import top.bootz.core.converter.attribute.DisableTypeAttributeConverter;
 import top.bootz.core.dictionary.DisableTypeEnum;
 
@@ -23,7 +23,7 @@ import top.bootz.core.dictionary.DisableTypeEnum;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Url extends BaseMysqlEntity {
+public class Url extends CommonEntity {
 
     private static final long serialVersionUID = 1L;
 

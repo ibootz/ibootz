@@ -9,6 +9,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.social.security.SocialUserDetails;
+import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +21,7 @@ import top.bootz.security.web.service.UserService;
 
 @Service("userDetailsService")
 @Transactional(readOnly = true)
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService, SocialUserDetailsService {
 
     @Autowired
     private UserService userService;
@@ -34,6 +36,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException(
                     String.format("No user found with username or mobile ['%s'].", userName));
         }
+        List<GrantedAuthority> auth = new ArrayList<>();
+        for (Role role : user.getRoles()) {
+            auth.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        return new SecurityUser(user, auth);
+    }
+
+    @Override
+    public SocialUserDetails loadUserByUserId(String userId) {
+        User user = this.userService.find(Long.valueOf(userId)).orElseThrow(
+                () -> new RuntimeException(String.format("No user found with userId: ['%s'].", userId)));
         List<GrantedAuthority> auth = new ArrayList<>();
         for (Role role : user.getRoles()) {
             auth.add(new SimpleGrantedAuthority(role.getName()));

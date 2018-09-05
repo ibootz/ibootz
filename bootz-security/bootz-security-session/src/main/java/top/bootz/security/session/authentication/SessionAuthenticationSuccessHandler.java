@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component;
 import top.bootz.commons.helper.JsonHelper;
 import top.bootz.core.base.message.RestMessage;
 import top.bootz.core.dictionary.MessageStatusEnum;
-import top.bootz.security.core.properties.LoginResponseType;
 import top.bootz.security.core.properties.SecurityProperties;
+import top.bootz.security.core.properties.session.LoginResponseType;
 
 /**
  * 登录认证成功之后的回调处理器

@@ -22,6 +22,8 @@ public class SessionAuthorizeConfigProvider implements AuthorizeConfigProvider {
 
         // @formatter:off
 	    config.antMatchers(HttpMethod.GET, 
+	            "/index.htm",
+	            "/index.html",
 	            "/**/*.js",
 	            "/**/*.css",
 	            "/**/*.jpg",

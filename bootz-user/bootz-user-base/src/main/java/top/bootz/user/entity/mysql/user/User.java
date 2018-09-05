@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import top.bootz.core.base.entity.BaseMysqlEntity;
+import top.bootz.core.base.entity.CommonEntity;
 import top.bootz.core.converter.attribute.DisableTypeAttributeConverter;
 import top.bootz.core.converter.attribute.GenderAttributeConverter;
 import top.bootz.core.converter.attribute.LockStatusAttributeConverter;
@@ -34,7 +34,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"username"}, callSuper = false)
-public class User extends BaseMysqlEntity {
+public class User extends CommonEntity {
 
     private static final long serialVersionUID = 1L;
 

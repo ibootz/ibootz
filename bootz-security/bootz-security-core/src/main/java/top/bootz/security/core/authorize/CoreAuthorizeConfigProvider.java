@@ -27,14 +27,14 @@ public class CoreAuthorizeConfigProvider implements AuthorizeConfigProvider {
         // @formatter:off
         config
             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll() // options请求不认证
-            .antMatchers(
+            .antMatchers("/",
                 SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
                 SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_FORM,
                 SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_MOBILE,
                 SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_OPENID,
                 SecurityConstants.DEFAULT_VERIFICATION_CODE_URL_PREFIX + "/*",
-                securityProperties.getSession().getLoginPage()
-                // securityProperties.getSession().getSignUpUrl(),
+                securityProperties.getSession().getLoginPage(),
+                securityProperties.getSession().getSignUpUrl()
                 // securityProperties.getSession().getSession().getSessionInvalidUrl()
                 ).permitAll();
         // @formatter:on

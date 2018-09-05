@@ -6,11 +6,12 @@ import java.util.List;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.social.security.SocialUserDetails;
 
 import lombok.Data;
 
 @Data
-public class SecurityUser implements UserDetails, CredentialsContainer {
+public class SecurityUser implements UserDetails, SocialUserDetails, CredentialsContainer {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,18 +38,12 @@ public class SecurityUser implements UserDetails, CredentialsContainer {
 
     @Override
     public String getPassword() {
-        if (this.user != null) {
-            return this.user.getPassword();
-        }
-        return null;
+        return this.user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        if (this.user != null) {
-            return this.user.getUsername();
-        }
-        return null;
+        return this.user.getUsername();
     }
 
     @Override
@@ -75,6 +70,11 @@ public class SecurityUser implements UserDetails, CredentialsContainer {
     public void eraseCredentials() {
         if (user != null)
             user.setPassword(null);
+    }
+
+    @Override
+    public String getUserId() {
+        return String.valueOf(this.user.getId());
     }
 
 }

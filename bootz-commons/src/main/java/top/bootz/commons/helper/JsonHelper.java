@@ -36,12 +36,9 @@ public final class JsonHelper {
     }
 
     /**
-     * @param json
-     *            ： json源文件
-     * @param beanClass
-     *            ： 转换目标类
-     * @param elementClasses
-     *            ： 复杂对象的转换
+     * @param json           ： json源文件
+     * @param beanClass      ： 转换目标类
+     * @param elementClasses ： 复杂对象的转换
      * @return
      * @throws Exception
      */

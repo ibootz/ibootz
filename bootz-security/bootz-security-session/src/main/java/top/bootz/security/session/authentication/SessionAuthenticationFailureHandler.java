@@ -23,8 +23,8 @@ import top.bootz.commons.helper.JsonHelper;
 import top.bootz.core.base.message.ErrorMessage;
 import top.bootz.core.base.message.RestMessage;
 import top.bootz.core.dictionary.MessageStatusEnum;
-import top.bootz.security.core.properties.LoginResponseType;
 import top.bootz.security.core.properties.SecurityProperties;
+import top.bootz.security.core.properties.session.LoginResponseType;
 
 @Slf4j
 @Component

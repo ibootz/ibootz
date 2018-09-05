@@ -26,8 +26,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import lombok.extern.slf4j.Slf4j;
 import top.bootz.commons.constant.AppConstants;
-import top.bootz.commons.constant.ExceptionConstants;
 import top.bootz.commons.constant.CommonSecurityConstants;
+import top.bootz.commons.constant.ExceptionConstants;
 import top.bootz.commons.exception.ApiException;
 import top.bootz.commons.helper.DateHelper;
 import top.bootz.commons.helper.HttpHelper;
@@ -55,9 +55,6 @@ public class BaseAccessHandlerAdvice {
 
 	@Autowired
 	private AccessLogService accessLogService;
-
-	// @Autowired
-	// private TokenService tokenService;
 
 	@Pointcut(CONTROLLER_EXECUTION)
 	private void pointcutInControllerLayer() {
@@ -99,9 +96,8 @@ public class BaseAccessHandlerAdvice {
 			// visitor
 			String token = request.getHeader(CommonSecurityConstants.HEADER_AUTH_TOKEN);
 
-			// TODO 从token中获取用户信息，存入日志系统
-			// String username = this.tokenService.getUsernameFromToken(token);
-			// accessLog.setVisitor(username);
+			// 获取用户信息，存入日志系统（需要重构，后续从session，或者从token中获取）
+			
 
 			// token
 			accessLog.setToken(token);
@@ -153,7 +149,9 @@ public class BaseAccessHandlerAdvice {
 			accessLog.setCreateTime(LocalDateTime.now());
 
 			// 将访问日志保存到mongodb中
-			accessLogService.asyncSave(accessLog);
+			if (accessLogService != null) {
+			    accessLogService.asyncSave(accessLog);
+			}
 			log.info(accessLog.toJson());
 		}
 		return object;

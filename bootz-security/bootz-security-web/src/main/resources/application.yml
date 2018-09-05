@@ -27,11 +27,9 @@ spring:
     encoding:
       force: true
 server:
-  port: 8060
+  port: 80
   tomcat:
     uri-encoding: UTF-8
-  error:
-    path: /html/error/404.html
 logging:
   level:
     root: info
@@ -39,11 +37,17 @@ logging:
 bootz:
   security:
     session:
-      loginPage: /html/login.html
-      loginType: JSON
+      login-type: JSON
+      login-page: /pages/login.html
+      sign-up-url: /pages/sign-up.html
     code:
       imageCode:
         width: 100
         height: 32
         length: 5
         expire-in: 120
+    social:
+      filter-processes-url: /login
+      qq:
+        app-id: 101386962
+        app-secret: 2a0f820407df400b84a854d054be8b6a

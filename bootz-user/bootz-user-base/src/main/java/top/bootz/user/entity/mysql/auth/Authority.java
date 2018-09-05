@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import top.bootz.core.base.entity.BaseMysqlEntity;
+import top.bootz.core.base.entity.CommonEntity;
 import top.bootz.user.commons.converter.OperationAttributeConverter;
 import top.bootz.user.commons.converter.ResourceAttributeConverter;
 import top.bootz.user.commons.dictionary.OperationEnum;
@@ -28,7 +28,7 @@ import top.bootz.user.commons.dictionary.ResourceEnum;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Authority extends BaseMysqlEntity {
+public class Authority extends CommonEntity {
 
     private static final long serialVersionUID = 1L;
 

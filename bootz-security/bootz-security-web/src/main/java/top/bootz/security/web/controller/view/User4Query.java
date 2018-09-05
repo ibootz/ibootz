@@ -1,39 +1,19 @@
 package top.bootz.security.web.controller.view;
 
-/**
- * @author zhailiang
- *
- */
-public class User4Query {
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import top.bootz.core.base.entity.BaseEntity;
 
-	private String username;
+@Data
+@EqualsAndHashCode(callSuper = false)
+public class User4Query extends BaseEntity {
 
-	private int age;
+    private static final long serialVersionUID = 1L;
 
-	private int ageTo;
+    private String username;
 
-	public String getUsername() {
-		return username;
-	}
+    private int age;
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
-	}
-
-	public int getAgeTo() {
-		return ageTo;
-	}
-
-	public void setAgeTo(int ageTo) {
-		this.ageTo = ageTo;
-	}
+    private int ageTo;
 
 }
