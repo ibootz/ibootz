@@ -4,49 +4,51 @@
 package top.bootz.security.core.social.support;
 
 /**
- * @author zhailiang
- *
+ * 保存social登录后获取回来的用户信息
+ * 
+ * @author Zhangq<momogoing@163.com>
+ * @datetime 2018年9月11日 下午9:33:00
  */
 public class SocialUserInfo {
-	
-	private String providerId;
-	
-	private String providerUserId;
-	
-	private String nickname;
-	
-	private String headimg;
 
-	public String getProviderId() {
-		return providerId;
-	}
+    private String providerId;
 
-	public void setProviderId(String providerId) {
-		this.providerId = providerId;
-	}
+    private String providerUserId;
 
-	public String getProviderUserId() {
-		return providerUserId;
-	}
+    private String nickname;
 
-	public void setProviderUserId(String providerUserId) {
-		this.providerUserId = providerUserId;
-	}
+    private String headimg;
 
-	public String getNickname() {
-		return nickname;
-	}
+    public String getProviderId() {
+        return providerId;
+    }
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
+    public void setProviderId(String providerId) {
+        this.providerId = providerId;
+    }
 
-	public String getHeadimg() {
-		return headimg;
-	}
+    public String getProviderUserId() {
+        return providerUserId;
+    }
 
-	public void setHeadimg(String headimg) {
-		this.headimg = headimg;
-	}
-	
+    public void setProviderUserId(String providerUserId) {
+        this.providerUserId = providerUserId;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getHeadimg() {
+        return headimg;
+    }
+
+    public void setHeadimg(String headimg) {
+        this.headimg = headimg;
+    }
+
 }

@@ -1,10 +1,12 @@
 package top.bootz.security.web.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.social.security.SocialUserDetails;
 
@@ -19,13 +21,13 @@ public class SecurityUser implements UserDetails, SocialUserDetails, Credentials
 
     private List<GrantedAuthority> authorities;
 
-    public SecurityUser(User user, List<GrantedAuthority> authorities) {
-        this.user = user;
-        this.authorities = authorities;
-    }
-
     public SecurityUser(User user) {
         this.user = user;
+        List<GrantedAuthority> auth = new ArrayList<>();
+        for (Role role : user.getRoles()) {
+            auth.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        this.authorities = auth;
     }
 
     public SecurityUser() {

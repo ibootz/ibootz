@@ -47,6 +47,17 @@ public class SocialConfig extends SocialConfigurerAdapter {
         return new AuthenticationNameUserIdSource();
     }
 
+    /**
+     * 该工具类处理两件事情：
+     * <p>
+     * 1.用户使用社交账号登录之后跳转回我们的注册/绑定页面的时候，怎么拿到spring social返回来的信息
+     * <p>
+     * 2.怎么将我们系统用户表中的userId提供给spring socail，让其保存在UserConnection表中。
+     * 
+     * @param factoryLocator
+     * @return
+     * @datetime 2018年9月11日 下午9:16:28
+     */
     @Bean
     public ProviderSignInUtils providerSignInUtils(ConnectionFactoryLocator factoryLocator) {
         return new ProviderSignInUtils(factoryLocator, getUsersConnectionRepository(factoryLocator));

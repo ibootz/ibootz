@@ -12,8 +12,9 @@ let Login = (function() {
             let mobile = $("#mobile").val();
             if (!!mobile) {
                 $.ajax({
-                    url : "http://localhost:8060/verification/sms?mobile=" + mobile,
-                    type : 'GET'
+                    url : 'http://localhost:8060/verification/sms?mobile=' + mobile,
+                    type : 'GET',
+                    contentType : 'application/json; charset=UTF-8'
                 });
             }
         })

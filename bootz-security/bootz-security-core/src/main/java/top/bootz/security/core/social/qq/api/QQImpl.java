@@ -1,10 +1,8 @@
 package top.bootz.security.core.social.qq.api;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
 import org.springframework.social.oauth2.TokenStrategy;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -49,11 +47,8 @@ public class QQImpl extends AbstractOAuth2ApiBinding implements QQ {
     private String getOpenId(String accessToken) {
         String url = String.format(URL_GET_OPENID, accessToken);
         String result = getRestTemplate().getForObject(url, String.class);
-        log.debug("getOpenId result [" + result + "]");
-        JSONObject jsonObject = JSON.parseObject(result);
-        if (jsonObject.containsKey("openid")) {
-            log.debug("accessToken [" + accessToken + "] openId [" + openId + "]");
-            return jsonObject.getString("openid");
+        if (result.contains("openid")) {
+            return StringUtils.substringBetween(result, "\"openid\":\"", "\"}");
         }
         throw new RuntimeException("没有获取到openId, accessToken [" + accessToken + "]");
     }
