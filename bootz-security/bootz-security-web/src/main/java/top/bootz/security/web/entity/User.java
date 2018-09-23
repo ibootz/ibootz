@@ -4,10 +4,13 @@ import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -50,12 +53,12 @@ public class User implements Serializable {
         return this.username;
     }
 
-    @Column(name = "password", nullable = false, columnDefinition = "varchar(255) default '' comment '密码'")
+    @Column(name = "password", columnDefinition = "varchar(255) default '' comment '密码'")
     public String getPassword() {
         return this.password;
     }
 
-    @Column(name = "mobile", nullable = false, unique = true, columnDefinition = "varchar(16) default '' comment '电话'")
+    @Column(name = "mobile", unique = true, columnDefinition = "varchar(16) default '' comment '电话'")
     public String getMobile() {
         return this.mobile;
     }
@@ -76,6 +79,7 @@ public class User implements Serializable {
     }
 
     @ManyToMany
+    @JoinColumn(foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
     public Set<Role> getRoles() {
         return roles;
     }

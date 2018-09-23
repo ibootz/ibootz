@@ -2,10 +2,10 @@ let SignUp = (function() {
     let getSocialUserInfo = function() {
         $.ajax({
             type : 'GET',
-            url : "http://www.bootz.top/user/social/me",
-            dataType: 'json',
-            contentType : 'application/json; charset=UTF-8'
-        }).done(function(data){
+            url : Constants.domain + "/user/social/me",
+            dataType : 'json',
+            contentType : Constants.media_type_json
+        }).done(function(data) {
             console.log(data);
         });
     };

@@ -8,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 public final class ArrayHelper {
 
     private ArrayHelper() {
-
     }
 
     /**
@@ -21,7 +20,8 @@ public final class ArrayHelper {
         List<String> elems = new ArrayList<>();
         String elem = "";
         for (int i = 0; i < arr.length; i++) {
-            if (StringUtils.isNotBlank(elem = arr[i].trim())) {
+            elem = arr[i].trim();
+            if (StringUtils.isNotBlank(elem)) {
                 elems.add(elem);
             }
         }

@@ -1,7 +1,6 @@
 spring:
   profiles:
     active:
-    - core
     - home
   application:
     name: bootz-security-demo
@@ -40,6 +39,19 @@ bootz:
       login-type: JSON
       login-page: /pages/login.html
       sign-up-url: /pages/sign-up.html
+    cors:
+      allowed-methods:
+      - GET
+      - HEAD
+      - POST
+      - PUT
+      - DELETE
+      - OPTIONS
+      allowed-origins:
+      - bootz.top
+      - bootz.cn
+      - pinzhi365.com
+      max-age: 7200
     code:
       imageCode:
         width: 100

@@ -71,7 +71,7 @@ public class SessionSecurityController extends BaseController {
                 redirectStrategy.sendRedirect(request, response, securityProperties.getSession().getLoginPage());
             }
         }
-        return buildSuccessResponse("访问的服务需要身份认证，请引导用户到登录页");
+        return buildSimpleErrorResponse("你要访问的服务需要身份认证，请到登录页面进行认证");
     }
 
     /**
@@ -81,7 +81,7 @@ public class SessionSecurityController extends BaseController {
      * @return
      * @datetime 2018年9月11日 下午9:36:49
      */
-    @GetMapping("/social/me")
+    @GetMapping("/user/social/me")
     public SocialUserInfo getSocailUserInfo(HttpServletRequest request) {
         Connection<?> connection = providerSignInUtils.getConnectionFromSession(new ServletWebRequest(request));
         if (connection == null) {

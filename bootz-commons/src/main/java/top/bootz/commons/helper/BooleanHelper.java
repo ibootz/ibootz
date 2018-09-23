@@ -3,7 +3,6 @@ package top.bootz.commons.helper;
 /**
  * @Project : ibootz
  * @Package : top.bootz.commons.helper
- * @Description : TODO
  * @Author : momogoing@163.com
  * @CreationDate : 2018-06-29 下午9:01
  */
@@ -19,7 +18,7 @@ public class BooleanHelper {
      * @return
      */
     public static boolean toSafeBoolean(Boolean bool) {
-        return bool == null ? false : bool;
+        return bool != null && bool;
     }
 
 }

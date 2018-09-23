@@ -4,6 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import lombok.Data;
 import top.bootz.security.core.properties.code.VerificationCodeProperties;
+import top.bootz.security.core.properties.cors.CorsProperties;
 import top.bootz.security.core.properties.oauth2.OAuth2Properties;
 import top.bootz.security.core.properties.session.SessionProperties;
 import top.bootz.security.core.properties.social.SocialProperties;
@@ -38,5 +39,7 @@ public class SecurityProperties {
      * OAuth2认证服务器配置
      */
     private OAuth2Properties oauth2 = new OAuth2Properties();
+
+    private CorsProperties cors = new CorsProperties();
 
 }

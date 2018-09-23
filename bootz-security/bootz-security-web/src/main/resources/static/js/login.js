@@ -10,11 +10,12 @@ let Login = (function() {
     let getSmsCode = function() {
         $("#smsCodeBtn").click(function() {
             let mobile = $("#mobile").val();
+            let url = Constants.domain + '/verification/sms?mobile=' + mobile;
             if (!!mobile) {
                 $.ajax({
-                    url : 'http://localhost:8060/verification/sms?mobile=' + mobile,
+                    url : url,
                     type : 'GET',
-                    contentType : 'application/json; charset=UTF-8'
+                    contentType : Constants.media_type_json
                 });
             }
         })

@@ -16,7 +16,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import lombok.extern.slf4j.Slf4j;
 import top.bootz.core.base.controller.BaseController;
 import top.bootz.core.base.message.RestMessage;
-import top.bootz.core.base.view.SimpleTextData;
 import top.bootz.security.web.controller.view.User4Regist;
 import top.bootz.security.web.entity.User;
 import top.bootz.security.web.service.UserService;
@@ -50,7 +49,7 @@ public class RestUserController extends BaseController {
      * @datetime 2018年9月11日 下午9:13:10
      */
     @PostMapping("/socail/bind")
-    public RestMessage<SimpleTextData> regist(HttpServletRequest request, User4Regist user4Regist) {
+    public RestMessage<String> regist(HttpServletRequest request, User4Regist user4Regist) {
         log.debug(user4Regist.toJson());
         // 将用户填写的用户名到数据库查找到相关用户，然后将userId绑定到social使用的UserConnection表中
         User user = userService.findByUserName(user4Regist.getUsername());
@@ -59,7 +58,7 @@ public class RestUserController extends BaseController {
         }
 
         providerSignInUtils.doPostSignUp(String.valueOf(user.getId()), new ServletRequestAttributes(request));
-        return buildSuccessResponse(new SimpleTextData("绑定成功！"));
+        return buildSuccessResponse("绑定成功");
     }
 
 }

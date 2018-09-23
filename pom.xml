@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
@@ -18,33 +19,6 @@
 		<module>bootz-user</module>
 		<module>bootz-security</module>
 	</modules>
-
-	<repositories>
-		<repository>
-			<id>nexus</id>
-			<name>Nexus Repository</name>
-			<url>http://192.168.199.201:8081/repository/maven-public/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-
-	<distributionManagement>
-		<repository>
-			<id>maven-releases</id>
-			<name>Nexus Repository</name>
-			<url>http://192.168.199.201:8081/repository/maven-releases/</url>
-		</repository>
-		<snapshotRepository>
-			<id>maven-snapshots</id>
-			<name>Nexus Repository</name>
-			<url>http://192.168.199.201:8081/repository/maven-snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
 
 	<properties>
 		<bootz.project.version>1.0.0-SNAPSHOT</bootz.project.version>
@@ -152,5 +126,32 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<name>Nexus Repository</name>
+			<url>http://192.168.199.201:8081/repository/maven-public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<distributionManagement>
+		<repository>
+			<id>maven-releases</id>
+			<name>Nexus Repository</name>
+			<url>http://192.168.199.201:8081/repository/maven-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>maven-snapshots</id>
+			<name>Nexus Repository</name>
+			<url>http://192.168.199.201:8081/repository/maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 </project>

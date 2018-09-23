@@ -1,12 +1,12 @@
 let Index = (function() {
     let checkAuth = function() {
+        let url = Constants.domain + '/user/me';
         $.ajax({
             type : 'GET',
-            url : "http://www.bootz.top/user/me",
+            url : url,
             dataType : 'json',
-            contentType : 'application/json; charset=UTF-8'
+            contentType : Constants.media_type_json
         }).done(function(result) {
-            console.log(result);
             $('#unLogin').hide();
             $('#username').append(result.data.username);
             $('#logined').show();
