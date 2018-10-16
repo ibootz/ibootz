@@ -11,7 +11,7 @@ import lombok.Data;
 public class SocialProperties {
 
     /**
-     * 社交登录功能拦截的url
+     * 社交登录功能拦截的url，各个子项目可以自定义该参数
      */
     private String filterProcessesUrl = "/auth";
 

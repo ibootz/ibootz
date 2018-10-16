@@ -23,6 +23,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 import lombok.extern.slf4j.Slf4j;
 import top.bootz.core.base.controller.BaseController;
 import top.bootz.core.base.message.RestMessage;
+import top.bootz.security.core.SecurityConstants;
 import top.bootz.security.core.properties.SecurityProperties;
 import top.bootz.security.core.social.support.SocialUserInfo;
 
@@ -59,7 +60,7 @@ public class SessionSecurityController extends BaseController {
      * @Author : Zhangq <momogoing@163.com>
      * @CreationDate : 2018年8月19日 下午3:28:56
      */
-    @GetMapping("/authentication/require")
+    @GetMapping(value = SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public RestMessage<String> requireAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
@@ -81,7 +82,7 @@ public class SessionSecurityController extends BaseController {
      * @return
      * @datetime 2018年9月11日 下午9:36:49
      */
-    @GetMapping("/user/social/me")
+    @GetMapping(SecurityConstants.DEFAULT_SOCIAL_USER_INFO_URL)
     public SocialUserInfo getSocailUserInfo(HttpServletRequest request) {
         Connection<?> connection = providerSignInUtils.getConnectionFromSession(new ServletWebRequest(request));
         if (connection == null) {
@@ -94,6 +95,12 @@ public class SessionSecurityController extends BaseController {
         userInfo.setNickname(connection.getDisplayName());
         userInfo.setHeadimg(connection.getImageUrl());
         return userInfo;
+    }
+
+    @GetMapping(SecurityConstants.DEFAULT_SESSION_INVALID_URL)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public RestMessage<String> sessionInvalid(HttpServletRequest request, HttpServletResponse response) {
+        return buildSimpleErrorResponse("session失效，请重新登录！");
     }
 
 }

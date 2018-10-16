@@ -10,9 +10,27 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12" id="usernameTab">
-				<h2 class="text-center">默认绑定页</h2>
+			<h2 class="col-md-12 text-center">默认绑定页</h2>
+			<div class="col-md-6 mt-2" id="qqBindingTab">
+				<form action="http://www.bootz.top/connect/qq" method="post" autocomplete="off">
+					<button id="qqBinding" type="submit" class="btn btn-primary">QQ绑定</button>
+				</form>
 			</div>
+			<div class="col-md-6 mt-2" id="wxBindingTab">
+				<form action="http://www.pinzhi365.com/connect/weixin" method="post" autocomplete="off">
+					<button id="wxBinding" type="submit" class="btn btn-primary">微信绑定</button>
+				</form>
+			</div>
+<!-- 			<div class="col-md-6 mt-2"> -->
+<!-- 				<form action="http://www.bootz.top/login/qq" method="delete" autocomplete="off"> -->
+<!-- 					<button id="qqUnbind" type="submit" class="btn btn-primary">QQ解绑</button> -->
+<!-- 				</form> -->
+<!-- 			</div> -->
+<!-- 			<div class="col-md-6 mt-2" id="wxUnbindTab"> -->
+<!-- 				<form action="http://www.pinzhi365.com/connect/weixin" method="delete" autocomplete="off"> -->
+<!-- 					<button id="wxUnbind" type="submit" class="btn btn-primary">微信解绑</button> -->
+<!-- 				</form> -->
+<!-- 			</div> -->
 		</div>
 	</div>
 	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>

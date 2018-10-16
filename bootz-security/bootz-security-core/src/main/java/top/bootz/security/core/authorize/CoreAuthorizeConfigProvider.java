@@ -35,8 +35,8 @@ public class CoreAuthorizeConfigProvider implements AuthorizeConfigProvider {
                 SecurityConstants.DEFAULT_VERIFICATION_CODE_URL_PREFIX + "/*",
                 securityProperties.getSession().getLoginPage(), // 登录页面
                 securityProperties.getSession().getSignUpUrl(), // socail注册页面
-                "/user/socail/bind", "/user/social/me" // socail注册/绑定api
-                // securityProperties.getSession().getSession().getSessionInvalidUrl()
+                "/user/socail/bind", "/user/social/me", // socail注册/绑定api
+                 securityProperties.getSession().getSessionInvalidUrl()
                 ).permitAll();
         // @formatter:on
 

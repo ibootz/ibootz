@@ -17,10 +17,12 @@ import top.bootz.security.core.social.weixin.connect.WeixinConnectionFactory;
 /**
  * 微信登录配置
  * 
- * @author zhailiang
+ * @author Zhangq<momogoing@163.com>
+ * @datetime 2018年10月16日 下午8:37:25
  */
+
 @Configuration
-@ConditionalOnProperty(prefix = "bootz.security.socail.weixin", name = "app-id")
+@ConditionalOnProperty(prefix = "bootz.security.social.weixin", name = "app-id")
 public class WeixinConfig extends SocialConfigurerAdapter {
 
     @Autowired
@@ -32,9 +34,9 @@ public class WeixinConfig extends SocialConfigurerAdapter {
     }
 
     private ConnectionFactory<?> createConnectionFactory() {
-        WeixinProperties weixinConfig = securityProperties.getSocial().getWeixin();
-        return new WeixinConnectionFactory(weixinConfig.getProviderId(), weixinConfig.getAppId(),
-                weixinConfig.getAppSecret());
+        WeixinProperties weixinProperties = securityProperties.getSocial().getWeixin();
+        return new WeixinConnectionFactory(weixinProperties.getProviderId(), weixinProperties.getAppId(),
+                weixinProperties.getAppSecret());
     }
 
     /**

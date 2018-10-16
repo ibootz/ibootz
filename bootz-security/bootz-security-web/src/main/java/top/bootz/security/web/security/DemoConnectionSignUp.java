@@ -3,7 +3,6 @@ package top.bootz.security.web.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import top.bootz.commons.helper.CollectionHelper;
@@ -23,7 +22,7 @@ import top.bootz.security.web.service.UserService;
  * @datetime 2018年9月23日 上午8:53:56
  */
 
-@Component(value = "connectionSignUp")
+//@Component(value = "connectionSignUp")
 public class DemoConnectionSignUp implements ConnectionSignUp {
 
     private static final String ROLE_NORMAL = "NORMAL";

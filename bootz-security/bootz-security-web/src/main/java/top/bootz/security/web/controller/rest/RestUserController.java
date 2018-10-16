@@ -52,11 +52,8 @@ public class RestUserController extends BaseController {
     public RestMessage<String> regist(HttpServletRequest request, User4Regist user4Regist) {
         log.debug(user4Regist.toJson());
         // 将用户填写的用户名到数据库查找到相关用户，然后将userId绑定到social使用的UserConnection表中
-        User user = userService.findByUserName(user4Regist.getUsername());
-        if (user == null) {
-            throw new UsernameNotFoundException("用户名或者密码错误");
-        }
-
+        User user = userService.findByUserName(user4Regist.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("用户名或者密码错误"));
         providerSignInUtils.doPostSignUp(String.valueOf(user.getId()), new ServletRequestAttributes(request));
         return buildSuccessResponse("绑定成功");
     }

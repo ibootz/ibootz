@@ -1,5 +1,7 @@
 package top.bootz.security.web.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import top.bootz.security.web.entity.User;
@@ -11,8 +13,8 @@ import top.bootz.security.web.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findByUsername(String username);
+    Optional<User> findByUsername(String username);
 
-    User findByMobile(String mobile);
+    Optional<User> findByMobile(String mobile);
 
 }

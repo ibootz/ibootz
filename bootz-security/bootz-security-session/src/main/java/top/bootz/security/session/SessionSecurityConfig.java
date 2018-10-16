@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.session.InvalidSessionStrategy;
+import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 import org.springframework.social.security.SpringSocialConfigurer;
 
 import top.bootz.security.core.authentication.FormAuthenticationConfig;
@@ -41,6 +43,12 @@ public class SessionSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private SpringSocialConfigurer bootzSocialSecurityConfig;
+    
+    @Autowired
+    private SessionInformationExpiredStrategy sessionInformationExpiredStrategy;
+    
+    @Autowired
+    private InvalidSessionStrategy invalidSessionStrategy;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -48,17 +56,24 @@ public class SessionSecurityConfig extends WebSecurityConfigurerAdapter {
         formAuthenticationConfig.configure(http); // 表单认证
         
         http.apply(verificationCodeSecurityConfig) // 校验码相关安全配置(图形验证码和短信验证码)
-            .and()
-                .apply(smsCodeAuthenticationSecurityConfig) // 短信验证码登录配置
-            .and()
-                .apply(bootzSocialSecurityConfig) // 第三方社交网站登录配置
-            .and()
-                .rememberMe() // 记住我
-                    .key(securityProperties.getSession().getRememberMeKey())
-                    .tokenValiditySeconds(securityProperties.getSession().getRememberMeSeconds())
-                    .userDetailsService(userDetailsService)
-            .and()
-                .csrf().disable(); // 禁用csrf检查
+                .and()
+            .apply(smsCodeAuthenticationSecurityConfig) // 短信验证码登录配置
+                .and()
+            .apply(bootzSocialSecurityConfig) // 第三方社交网站登录配置
+                .and()
+            .rememberMe() // 记住我
+                .key(securityProperties.getSession().getRememberMeKey())
+                .tokenValiditySeconds(securityProperties.getSession().getRememberMeSeconds())
+                .userDetailsService(userDetailsService)
+                .and()
+            .sessionManagement()
+                .invalidSessionStrategy(invalidSessionStrategy)
+                .maximumSessions(securityProperties.getSession().getMaximumSessions())
+                .maxSessionsPreventsLogin(securityProperties.getSession().isMaxSessionsPreventsLogin())
+                .expiredSessionStrategy(sessionInformationExpiredStrategy)
+                .and()
+                .and()
+            .csrf().disable(); // 禁用csrf检查
         
         authorizeConfigManager.config(http.authorizeRequests()); // 授权配置
         // @formatter:on

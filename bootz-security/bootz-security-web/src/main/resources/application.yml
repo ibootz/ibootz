@@ -19,7 +19,7 @@ spring:
   messages:
     basename: i18n/messages
   session:
-    timeout: 2h
+    timeout: 1m
     redis:
       cleanup-cron: 0 0/1 * * * ?
   http:
@@ -39,6 +39,8 @@ bootz:
       login-type: JSON
       login-page: /pages/login.html
       sign-up-url: /pages/sign-up.html
+      max-sessions-prevents-login: true
+      maximum-sessions: 1
     cors:
       allowed-methods:
       - GET
@@ -48,9 +50,15 @@ bootz:
       - DELETE
       - OPTIONS
       allowed-origins:
-      - bootz.top
-      - bootz.cn
-      - pinzhi365.com
+      - www.bootz.top
+      - www.bootz.cn
+      - www.pinzhi365.com
+      - http://www.bootz.top
+      - http://www.bootz.cn
+      - http://www.pinzhi365.com
+      - https://www.bootz.top
+      - https://www.bootz.cn
+      - https://www.pinzhi365.com
       max-age: 7200
     code:
       imageCode:
@@ -63,3 +71,6 @@ bootz:
       qq:
         app-id: 101504242
         app-secret: 5520dc9cfbf426cce6280a1495c5c2d8
+      weixin:
+        app-id: wxd99431bbff8305a0
+        app-secret: 60f78681d063590a469f1b297feff3c4

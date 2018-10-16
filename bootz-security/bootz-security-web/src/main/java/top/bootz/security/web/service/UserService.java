@@ -16,11 +16,11 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User findByUserName(String userName) {
+    public Optional<User> findByUserName(String userName) {
         return this.userRepository.findByUsername(userName);
     }
 
-    public User findByMobile(String mobile) {
+    public Optional<User> findByMobile(String mobile) {
         return this.userRepository.findByMobile(mobile);
     }
 

@@ -76,12 +76,12 @@ public final class SecurityConstants {
     /**
      * session失效默认的跳转地址
      */
-    public static final String DEFAULT_SESSION_INVALID_URL = "/pages/session-invalid.html";
-
+    public static final String DEFAULT_SESSION_INVALID_URL = "/default-session-invalid.html";
+    
     /**
      * 获取第三方用户信息的url
      */
-    public static final String DEFAULT_SOCIAL_USER_INFO_URL = "/social/user";
+    public static final String DEFAULT_SOCIAL_USER_INFO_URL = "/user/social/me";
 
     private SecurityConstants() {
     }

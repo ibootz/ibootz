@@ -52,7 +52,7 @@ public class InitData implements CommandLineRunner {
         String[][] userDatas = { { "admin", "18550088473", "ADMIN,MANAGER" }, { "manager", "18550088474", "MANAGER" },
                 { "user", "18550088475", "NORMAL" } };
         for (String[] userData : userDatas) {
-            User user = userService.findByUserName(userData[0]);
+            User user = userService.findByUserName(userData[0]).orElse(null);
             if (user != null) {
                 continue;
             }

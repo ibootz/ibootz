@@ -22,14 +22,9 @@ public class UserDetailsServiceImpl implements UserDetailsService, SocialUserDet
 
     @Override
     public UserDetails loadUserByUsername(String userName) {
-        User user = this.userService.findByUserName(userName);
-        if (user == null) {
-            user = this.userService.findByMobile(userName);
-        }
-        if (user == null) {
-            throw new UsernameNotFoundException(
-                    String.format("No user found with username or mobile ['%s'].", userName));
-        }
+        User user = this.userService.findByUserName(userName).orElseGet(
+                () -> this.userService.findByMobile(userName).orElseThrow(() -> new UsernameNotFoundException(
+                        String.format("No user found with username or mobile ['%s'].", userName))));
         return new SecurityUser(user);
     }
 
