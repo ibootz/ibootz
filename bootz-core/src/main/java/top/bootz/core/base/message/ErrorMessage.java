@@ -19,6 +19,9 @@ public class ErrorMessage extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
+    /** 标准http状态码 */
+    private int httpStatus;
+    
     /** 应用内部自定义错误代码 */
     private String code;
 

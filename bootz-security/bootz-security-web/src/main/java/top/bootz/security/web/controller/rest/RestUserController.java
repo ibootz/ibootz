@@ -3,6 +3,7 @@ package top.bootz.security.web.controller.rest;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import lombok.extern.slf4j.Slf4j;
+import top.bootz.commons.constant.ExceptionConstants;
+import top.bootz.commons.exception.ApiException;
 import top.bootz.core.base.controller.BaseController;
 import top.bootz.core.base.message.RestMessage;
 import top.bootz.security.web.controller.view.User4Regist;
@@ -31,6 +34,9 @@ import top.bootz.security.web.service.UserService;
 public class RestUserController extends BaseController {
 
     @Autowired
+    protected MessageSource messages;
+
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -39,6 +45,10 @@ public class RestUserController extends BaseController {
     @GetMapping("/me")
     public RestMessage<UserDetails> getUserInfo(HttpServletRequest request,
             @AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails == null) {
+            throw new ApiException(ExceptionConstants.ErrorMessageKey.UNAUTHORIZED_EXCEPTION,
+                    "你要访问的服务需要身份认证，请到登录页面进行认证");
+        }
         return buildSuccessResponse(userDetails);
     }
 

@@ -1,6 +1,6 @@
 package top.bootz.commons.helper;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -8,6 +8,7 @@ import java.security.SecureRandom;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import top.bootz.commons.exception.BaseRuntimeException;
@@ -16,34 +17,42 @@ public final class AesHelper {
 
     private static final String ALGORITHM = "AES";
 
-    private static final String ALGORITHM_MODE = "AES/ECB/PKCS5Padding";
+    private static final String ALGORITHM_MODE = "AES/GCM/NoPadding";
 
-    private static final String ENCODE_RULES = "bjCUctiRaE1J1zJ0hEdwjrM82WKEmcm7SYhg=";
+    private static final int TAG_LENGTH_BIT = 128;
+
+    private static final int IV_LENGTH_BYTE = 12;
+
+    private static final String SEED_1 = "1HlQ19fuZsmoH7YexZmGjhRNJFmyCbHhAIauH9N3Pv8=";
+
+    private static final String SEED_2 = "97rQgHn9cUX2mthoUpmtLuZi/coKnCu+0rkqoPhySpg=";
 
     private AesHelper() {
     }
 
     /**
-     * @param byte[]
-     *            source 要被加密的字节数组
+     * @param byte[] source 要被加密的字节数组
      * @return byte[] 加密后的字节数组
      */
     public static byte[] encrypt(byte[] source) {
-        byte[] result = null;
         try {
-            SecretKey key = buildSecretKey();
-            Cipher cipher = Cipher.getInstance(ALGORITHM_MODE);
-            cipher.init(Cipher.ENCRYPT_MODE, key);
-            result = cipher.doFinal(source);
+            byte[] iv = getIv();
+            final Cipher cipher = Cipher.getInstance(ALGORITHM_MODE);
+            cipher.init(Cipher.ENCRYPT_MODE, buildSecretKey(), new GCMParameterSpec(TAG_LENGTH_BIT, iv));
+            byte[] encrypted = cipher.doFinal(source);
+
+            ByteBuffer byteBuffer = ByteBuffer.allocate(1 + iv.length + encrypted.length);
+            byteBuffer.put((byte) iv.length);
+            byteBuffer.put(iv);
+            byteBuffer.put(encrypted);
+            return byteBuffer.array();
         } catch (Exception e) {
             throw new BaseRuntimeException("Failed to encrypt the content!", e);
         }
-        return result;
     }
 
     /**
-     * @param String
-     *            source 要被加密的字符串
+     * @param String source 要被加密的字符串
      * @return String 加密后经过base64编码的字符串
      */
     public static String encryptToBase64(String source) {
@@ -51,26 +60,28 @@ public final class AesHelper {
     }
 
     /**
-     * @param byte[]
-     *            encryptedContent 要被解密的字节数组
+     * @param byte[] encryptedContent 要被解密的字节数组
      * @return String 解密后的字符串
      */
-    public static byte[] decrypt(byte[] encryptedContent) {
-        byte[] result = null;
+    public static byte[] decrypt(byte[] encryptedData) {
         try {
-            SecretKey key = buildSecretKey();
+            ByteBuffer byteBuffer = ByteBuffer.wrap(encryptedData);
+            int ivLength = byteBuffer.get();
+            byte[] iv = new byte[ivLength];
+            byteBuffer.get(iv);
+            byte[] encrypted = new byte[byteBuffer.remaining()];
+            byteBuffer.get(encrypted);
+
             Cipher cipher = Cipher.getInstance(ALGORITHM_MODE);
-            cipher.init(Cipher.DECRYPT_MODE, key);
-            result = cipher.doFinal(encryptedContent);
+            cipher.init(Cipher.DECRYPT_MODE, buildSecretKey(), new GCMParameterSpec(TAG_LENGTH_BIT, iv));
+            return cipher.doFinal(encrypted);
         } catch (Exception e) {
             throw new BaseRuntimeException("Failed to decrypt the encrypted content!", e);
         }
-        return result;
     }
 
     /**
-     * @param byte[]
-     *            base64Encrypted 要被解密的经过base64编码过的内容
+     * @param byte[] base64Encrypted 要被解密的经过base64编码过的内容
      * @return String 解密后的字符串
      */
     public static String decryptFromBase64(String base64Encrypted) {
@@ -83,13 +94,21 @@ public final class AesHelper {
         return result;
     }
 
-    private static SecretKey buildSecretKey() throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    private static byte[] getIv() throws NoSuchAlgorithmException {
+        byte[] iv = new byte[IV_LENGTH_BYTE];
+        SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+        random.setSeed(SEED_1.getBytes(StandardCharsets.UTF_8));
+        random.nextBytes(iv);
+        return iv;
+    }
+
+    private static SecretKey buildSecretKey() throws NoSuchAlgorithmException {
         // 构造密钥生成器，指定为AES算法,不区分大小写
         KeyGenerator keygen = KeyGenerator.getInstance(ALGORITHM);
 
         // 根据ecnodeRules规则初始化密钥生成器，生成一个128位的随机源,根据传入的字节数组
         SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
-        random.setSeed(ENCODE_RULES.getBytes(StandardCharsets.UTF_8));
+        random.setSeed(SEED_2.getBytes(StandardCharsets.UTF_8));
         keygen.init(128, random);
 
         // 产生原始对称密钥
@@ -102,11 +121,9 @@ public final class AesHelper {
         return new SecretKeySpec(raw, ALGORITHM);
     }
 
-    /*
-     * public static void main(String[] args) { String source =
-     * "中文English*&&$uawhuh2138761872ak97892389749(*&*(^@%^&%@!<>?<>:\"\"P{{P;,<，；’。；；】【132897897*（&……&！%@！）（*@！……%whukh21379287dawkuhku2h太多太多的中文需要测试1312983717dasjHLIJl213028^%$#（*781=2dawkuhadwadwduukw&*(*(7";
-     * String after = encryptToBase64(source); String before =
-     * decryptFromBase64(after); System.out.println(after);
-     * System.out.println(source); System.out.println(before); }
-     */
+    public static void main(String[] args) {
+        String source = "中文English*&&$uawhuh2138761872ak97892389749(*&*(^@%^&%@!<>?<>:\"\"P{{P;,<，；’。；；】【132897897*（&……&！%@！）（*@！……%whukh21379287dawkuhku2h太多太多的中文需要测试1312983717dasjHLIJl213028^%$#（*781=2dawkuhadwadwduukw&*(*(7中文English*&&$uawhuh2138761872ak97892389749(*&*(^@%^&%@!<>?<>:\\\"\\\"P{{P;,<，；’。；；】【132897897*（&……&！%@！）（*@！……%whukh21379287dawkuhku2h太多太多的中文需要测试1312983717dasjHLIJl213028^%$#（*781=2dawkuhadwadwduukw&*(*(7中文English*&&$uawhuh2138761872ak97892389749(*&*(^@%^&%@!<>?<>:\\\"\\\"P{{P;,<，；’。；；】【132897897*（&……&！%@！）（*@！……%whukh21379287dawkuhku2h太多太多的中文需要测试1312983717dasjHLIJl213028^%$#（*781=2dawkuhadwadwduukw&*(*(7中文English*&&$uawhuh2138761872ak97892389749(*&*(^@%^&%@!<>?<>:\\\"\\\"P{{P;,<，；’。；；】【132897897*（&……&！%@！）（*@！……%whukh21379287dawkuhku2h太多太多的中文需要测试1312983717dasjHLIJl213028^%$#（*781=2dawkuhadwadwduukw&*(*(7中文English*&&$uawhuh2138761872ak97892389749(*&*(^@%^&%@!<>?<>:\\\"\\\"P{{P;,<，；’。；；】【132897897*（&……&！%@！）（*@！……%whukh21379287dawkuhku2h太多太多的中文需要测试1312983717dasjHLIJl213028^%$#（*781=2dawkuhadwadwduukw&*(*(7中文English*&&$uawhuh2138761872ak97892389749(*&*(^@%^&%@!<>?<>:\\\"\\\"P{{P;,<，；’。；；】【132897897*（&……&！%@！）（*@！……%whukh21379287dawkuhku2h太多太多的中文需要测试1312983717dasjHLIJl213028^%$#（*781=2dawkuhadwadwduukw&*(*(7中文English*&&$uawhuh2138761872ak97892389749(*&*(^@%^&%@!<>?<>:\\\"\\\"P{{P;,<，；’。；；】【132897897*（&……&！%@！）（*@！……%whukh21379287dawkuhku2h太多太多的中文需要测试1312983717dasjHLIJl213028^%$#（*781=2dawkuhadwadwduukw&*(*(7中文English*&&$uawhuh2138761872ak97892389749(*&*(^@%^&%@!<>?<>:\\\"\\\"P{{P;,<，；’。；；】【132897897*（&……&！%@！）（*@！……%whukh21379287dawkuhku2h太多太多的中文需要测试1312983717dasjHLIJl213028^%$#（*781=2dawkuhadwadwduukw&*(*(7中文English*&&$uawhuh2138761872ak97892389749(*&*(^@%^&%@!<>?<>:\\\"\\\"P{{P;,<，；’。；；】【132897897*（&……&！%@！）（*@！……%whukh21379287dawkuhku2h太多太多的中文需要测试1312983717dasjHLIJl213028^%$#（*781=2dawkuhadwadwduukw&*(*(7";
+        System.out.println(decryptFromBase64(encryptToBase64(source)).equals(source));
+    }
+
 }

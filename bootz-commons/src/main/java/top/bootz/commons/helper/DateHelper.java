@@ -53,7 +53,7 @@ public final class DateHelper {
         if (date == null) {
             throw new IllegalArgumentException(ERROR_MSG_1);
         }
-        return new SimpleDateFormat(PatternConstants.DATE_FORMAT_PATTERN_1).format(date);
+        return new SimpleDateFormat(PatternConstants.DATE_FORMAT_PATTERN_8).format(date);
     }
 
     /**
@@ -72,7 +72,7 @@ public final class DateHelper {
         }
         Date date = null;
         try {
-            date = new SimpleDateFormat(PatternConstants.DATE_FORMAT_PATTERN_1).parse(str);
+            date = new SimpleDateFormat(PatternConstants.DATE_FORMAT_PATTERN_8).parse(str);
         } catch (ParseException e) {
             throw new BaseRuntimeException("日期解析失败 [" + e.getMessage() + "]", e);
         }

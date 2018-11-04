@@ -69,7 +69,7 @@ public class SessionSecurityController extends BaseController {
             String targetUrl = savedRequest.getRedirectUrl();
             if (StringUtils.endsWithIgnoreCase(targetUrl, ".html")) {
                 // 跳转地址 留给安全组件的调用方来提供
-                redirectStrategy.sendRedirect(request, response, securityProperties.getSession().getLoginPage());
+                redirectStrategy.sendRedirect(request, response, securityProperties.getSession().getSignInUrl());
             }
         }
         return buildSimpleErrorResponse("你要访问的服务需要身份认证，请到登录页面进行认证");

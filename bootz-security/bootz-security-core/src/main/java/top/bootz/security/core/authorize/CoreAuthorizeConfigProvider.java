@@ -35,7 +35,7 @@ public class CoreAuthorizeConfigProvider implements AuthorizeConfigProvider {
                 SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_MOBILE,
                 SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_OPENID,
                 SecurityConstants.DEFAULT_VERIFICATION_CODE_URL_PREFIX + "/*",
-                securityProperties.getSession().getLoginPage(), // 登录页面路径
+                securityProperties.getSession().getSignInUrl(), // 登录页面路径
                 securityProperties.getSession().getSignUpUrl(), // 注册页面路径
                 securityProperties.getSession().getSessionInvalidUrl() // session失效之后的处理路径
             ).permitAll();

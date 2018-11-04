@@ -70,7 +70,7 @@ public class AbstractSessionStrategy {
         String targetUrl;
 
         if (StringUtils.endsWithIgnoreCase(sourceUrl, ".html")) {
-            if (StringUtils.equals(sourceUrl, securityPropertie.getSession().getLoginPage())
+            if (StringUtils.equals(sourceUrl, securityPropertie.getSession().getSignInUrl())
                     || StringUtils.equals(sourceUrl, securityPropertie.getSession().getSignOutUrl())) {
                 targetUrl = sourceUrl;
             } else {

@@ -59,18 +59,13 @@ public class BaseExceptionHandleAdvice {
             HttpServletResponse response) {
         String message = messages.getMessage(e.getErrorKey(), e.getArgs(), e.getMessage(),
                 AppConstants.AppLocale.getDefault(request));
-        if (StringUtils.isBlank(message)) {
-            log.warn("errorKey [" + e.getErrorKey() + "] 在消息资源文件中没有找到对应的消息体");
-            message = messages.getMessage(ExceptionConstants.ErrorMessageKey.API_EXCEPTION, e.getArgs(), e.getMessage(),
-                    AppConstants.AppLocale.getDefault(request));
-        }
         ErrorMessage error = buildErrorMessage(message, e, e.getErrorKey(), request);
         RestMessage<Null> restMessage = new RestMessage<>(MessageStatusEnum.ERROR, null, error);
-        return new ResponseEntity<>(restMessage, HttpStatus.valueOf(e.getHttpStatus()));
+        return new ResponseEntity<>(restMessage, HttpStatus.valueOf(error.getHttpStatus()));
     }
 
     /**
-     * 400 - Spring validation Exception - 不符合验证规范
+     * 400 - Method Argument Not Valid - 不符合验证规范
      * 
      * @param ex
      * @return
@@ -98,7 +93,7 @@ public class BaseExceptionHandleAdvice {
     }
 
     /**
-     * 400 - Spring validation Exception - 不符合验证规范
+     * 400 - Type Mismatch Exception - 不符合验证规范
      * 
      * @param ex
      * @return
@@ -286,7 +281,7 @@ public class BaseExceptionHandleAdvice {
         } else {
             error = new ErrorMessage("0", message);
         }
-        if ("null".equalsIgnoreCase(e.getMessage()) || StringUtils.isBlank(e.getMessage())) {
+        if (e instanceof NullPointerException) {
             error.setMoreInfo("空指针异常");
         } else {
             error.setMoreInfo(e.getMessage());

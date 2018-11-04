@@ -55,9 +55,6 @@ public final class ExceptionConstants {
         /** 500 - 数据库访问异常 */
         public static final String DATA_ACCESS_EXCEPTION = "global.data_access_exception";
 
-        /** 500 - 全局异常处理程序抛出的异常 */
-        public static final String RESOLVE_EXCEPTION = "global.resolver_exception";
-
         /** 500 - 应用自定义异常 */
         public static final String APPLICATION_EXCEPTION = "global.application_exception";
 

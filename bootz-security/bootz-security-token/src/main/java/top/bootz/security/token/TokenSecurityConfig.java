@@ -1,0 +1,56 @@
+package top.bootz.security.token;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.social.security.SpringSocialConfigurer;
+
+import top.bootz.security.core.authentication.FormAuthenticationConfig;
+import top.bootz.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
+import top.bootz.security.core.authorize.AuthorizeConfigManager;
+import top.bootz.security.core.verification.VerificationCodeSecurityConfig;
+
+/**
+ * @Author : Zhangq <momogoing@163.com>
+ * @CreationDate : 2018年8月18日 下午7:56:17
+ */
+
+@Configuration
+public class TokenSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private FormAuthenticationConfig formAuthenticationConfig;
+
+    @Autowired
+    private AuthorizeConfigManager authorizeConfigManager;
+
+    @Autowired
+    private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+
+    @Autowired
+    private VerificationCodeSecurityConfig verificationCodeSecurityConfig;
+
+    @Autowired
+    private SpringSocialConfigurer bootzSocialSecurityConfig;
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        // @formatter:off
+        formAuthenticationConfig.configure(http);
+        
+        http.apply(verificationCodeSecurityConfig)
+                .and()
+            .apply(smsCodeAuthenticationSecurityConfig)
+                .and()
+            .apply(bootzSocialSecurityConfig)
+                .and()
+//            .apply(openIdAuthenticationSecurityConfig)
+//                .and()
+            .csrf().disable();
+        
+        authorizeConfigManager.config(http.authorizeRequests());
+        // @formatter:on
+    }
+
+}

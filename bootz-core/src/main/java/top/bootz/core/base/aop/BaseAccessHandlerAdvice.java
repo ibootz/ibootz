@@ -19,7 +19,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -71,7 +70,6 @@ public class BaseAccessHandlerAdvice {
 		HttpServletRequest request = null;
 		Method method = null;
 		boolean isAccessible = false;
-		long tookMillSeconds = 0;
 		Object object = null;
 		boolean successed = true;
 		Date exceptionTime = null;
@@ -83,7 +81,7 @@ public class BaseAccessHandlerAdvice {
 			if (requestOpt.isPresent()) {
 				request = requestOpt.get();
 			} else {
-				throw new ApiException(HttpStatus.BAD_REQUEST.value(), ExceptionConstants.ErrorMessageKey.BAD_REQUEST);
+				throw new ApiException(ExceptionConstants.ErrorMessageKey.BAD_REQUEST);
 			}
 
 			MethodSignature methodSignature = getMethodSignature(joinPoint);
@@ -118,18 +116,19 @@ public class BaseAccessHandlerAdvice {
 			// hasResponse
 			accessLog.setReturned(!"void".equalsIgnoreCase(returnType));
 			start = System.currentTimeMillis();
-
+			
 			object = joinPoint.proceed();
-			tookMillSeconds = System.currentTimeMillis() - start;
 		} catch (Throwable e) {
 			successed = false;
 			exceptionTime = DateHelper.now();
-			tookMillSeconds = System.currentTimeMillis() - start;
+			
 			// errMsg
 			accessLog.setErrMsg(getErrMsg(request, e));
 			// adviceException
 			accessLog.setException(e);
-			log.error(e.getMessage(), e);
+			if (!(e instanceof ApiException)) {
+			    log.error(e.getMessage(), e);
+			}
 			throw e;
 		} finally {
 			// response
@@ -137,7 +136,7 @@ public class BaseAccessHandlerAdvice {
 				accessLog.setResponse(ToStringHelper.toJSON(object, false));
 			}
 			// tookMillSeconds
-			accessLog.setTookMillSeconds(tookMillSeconds);
+			accessLog.setTookMillSeconds(System.currentTimeMillis() - start);
 			// successed
 			accessLog.setSuccessed(successed);
 			if (!accessLog.isSuccessed() && exceptionTime != null) {
@@ -159,6 +158,10 @@ public class BaseAccessHandlerAdvice {
 
 	private void putInputParams(String[] paramNames, AccessLog accessLog, Object[] args) {
 		for (int i = 0; i < args.length; i++) {
+		    if (args[i] == null) {
+		        accessLog.putInputParam("args_index_" + i, null);
+		        continue;
+		    }
 			Class<?> clz = args[i].getClass();
 			boolean isInnerAppClass = clz.getName().startsWith("com.orion");
 			boolean isSimpleClass = ReflectionHelper.isBaseClassOrString(clz) || ReflectionHelper.isCollection(clz)

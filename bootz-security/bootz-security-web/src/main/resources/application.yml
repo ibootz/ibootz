@@ -1,3 +1,14 @@
+server:
+  port: 80
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    session:
+      timeout: 30m
+logging:
+  level:
+    root: info
+    top.bootz: debug
 spring:
   profiles:
     active:
@@ -20,25 +31,28 @@ spring:
     basename: i18n/messages
   session:
     store-type: redis
-    timeout: 1m
+    timeout: 30m
     redis:
       cleanup-cron: 0 0/1 * * * ?
   http:
     encoding:
       force: true
-server:
-  port: 80
-  tomcat:
-    uri-encoding: UTF-8
-logging:
-  level:
-    root: info
-    top.bootz: debug
+security:
+  oauth2:
+    client:
+      client-id: bootz_web
+      client-secret: sec_bootz_web
+      registered-redirect-uri:
+      - http://www.example.com
+      scope:
+      - all
+      access-token-validity-seconds: 7200
+      refresh-token-validity-seconds: 604800
 bootz:
   security:
     session:
       login-type: JSON
-      login-page: /pages/login.html
+      sign-in-url: /pages/sign-in.html
       sign-up-url: /pages/sign-up.html
       max-sessions-prevents-login: false
       maximum-sessions: 1

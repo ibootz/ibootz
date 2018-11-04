@@ -11,8 +11,8 @@ import top.bootz.security.core.verification.VerificationCodeType;
 /**
  * 基于session的验证码存取器
  * 
- * @author zhailiang
- *
+ * @author Zhangq<momogoing@163.com>
+ * @datetime 2018年11月4日 下午5:00:05
  */
 @Component
 public class SessionVerificationCodeRepository implements VerificationCodeRepository {
