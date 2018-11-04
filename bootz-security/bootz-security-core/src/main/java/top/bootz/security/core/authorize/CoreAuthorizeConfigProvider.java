@@ -1,5 +1,6 @@
 package top.bootz.security.core.authorize;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
@@ -13,7 +14,8 @@ import top.bootz.security.core.properties.SecurityProperties;
 /**
  * 核心模块的授权配置提供器，安全模块涉及的url的授权配置在这里。
  * 
- * @author zhailiang
+ * @author Zhangq<momogoing@163.com>
+ * @datetime 2018年10月27日 上午9:13:11
  */
 @Component
 @Order(Integer.MIN_VALUE)
@@ -33,16 +35,15 @@ public class CoreAuthorizeConfigProvider implements AuthorizeConfigProvider {
                 SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_MOBILE,
                 SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_OPENID,
                 SecurityConstants.DEFAULT_VERIFICATION_CODE_URL_PREFIX + "/*",
-                securityProperties.getSession().getLoginPage(), // 登录页面
-                securityProperties.getSession().getSignUpUrl(), // socail注册页面
-                "/user/socail/bind", "/user/social/me", // socail注册/绑定api
-                 securityProperties.getSession().getSessionInvalidUrl()
-                ).permitAll();
+                securityProperties.getSession().getLoginPage(), // 登录页面路径
+                securityProperties.getSession().getSignUpUrl(), // 注册页面路径
+                securityProperties.getSession().getSessionInvalidUrl() // session失效之后的处理路径
+            ).permitAll();
         // @formatter:on
 
-//        if (StringUtils.isNotBlank(securityProperties.getSession().getSignOutUrl())) {
-//            config.antMatchers(securityProperties.getSession().getSignOutUrl()).permitAll();
-//        }
+        if (StringUtils.isNotBlank(securityProperties.getSession().getSignOutUrl())) {
+            config.antMatchers(securityProperties.getSession().getSignOutUrl()).permitAll();
+        }
 
         return false;
     }

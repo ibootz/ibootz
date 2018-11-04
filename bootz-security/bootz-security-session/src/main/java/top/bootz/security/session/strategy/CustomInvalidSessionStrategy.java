@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import top.bootz.security.core.properties.SecurityProperties;
 
 /**
+ * session失效时的处理策略
+ * 
  * @author Zhangq<momogoing@163.com>
  * @datetime 2018年10月17日 上午12:20:24
  */

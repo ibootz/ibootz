@@ -102,6 +102,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
@@ -114,6 +115,7 @@
 				<plugin>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-maven-plugin</artifactId>
+					<version>2.0.4.RELEASE</version>
 					<executions>
 						<execution>
 							<goals>
@@ -122,6 +124,21 @@
 							</goals>
 						</execution>
 					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.0.2</version>
+					<configuration>
+						<encoding>UTF-8</encoding>
+						<!-- 过滤后缀为pem、pfx的证书文件 -->
+						<nonFilteredFileExtensions>
+							<nonFilteredFileExtension>pem</nonFilteredFileExtension>
+							<nonFilteredFileExtension>pfx</nonFilteredFileExtension>
+							<nonFilteredFileExtension>p12</nonFilteredFileExtension>
+							<nonFilteredFileExtension>key</nonFilteredFileExtension>
+						</nonFilteredFileExtensions>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>

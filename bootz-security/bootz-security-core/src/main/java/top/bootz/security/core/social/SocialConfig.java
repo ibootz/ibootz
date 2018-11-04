@@ -96,6 +96,11 @@ public class SocialConfig extends SocialConfigurerAdapter {
         return new ProviderSignInUtils(factoryLocator, getUsersConnectionRepository(factoryLocator));
     }
 
+    /**
+     * Spring social主配置类 - SpringSocialConfigurer
+     * @return
+     * @datetime 2018年10月27日 上午9:45:19
+     */
     @Bean
     public SpringSocialConfigurer bootzSocialSecurityConfig() {
         String filterProcessesUrl = securityProperties.getSocial().getFilterProcessesUrl();

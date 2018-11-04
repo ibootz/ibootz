@@ -60,8 +60,7 @@ public class AbstractSessionStrategy {
     }
 
     protected void onSessionInvalid(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        log.info("session失效");
+        log.info("session invalid!");
 
         if (createNewSession) {
             request.getSession();
@@ -77,7 +76,7 @@ public class AbstractSessionStrategy {
             } else {
                 targetUrl = destinationUrl;
             }
-            log.info("跳转到:" + targetUrl);
+            log.debug("Redirecting to '" + destinationUrl + "'");
             redirectStrategy.sendRedirect(request, response, targetUrl);
         } else {
             Object result = buildResponseContent();

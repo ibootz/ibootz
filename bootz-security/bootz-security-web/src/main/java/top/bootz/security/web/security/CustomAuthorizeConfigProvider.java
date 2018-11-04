@@ -1,6 +1,5 @@
-package top.bootz.security.session.authorize;
+package top.bootz.security.web.security;
 
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
@@ -14,23 +13,13 @@ import top.bootz.security.core.authorize.AuthorizeConfigProvider;
  * @author zhailiang
  */
 @Component
-@Order(Integer.MIN_VALUE)
-public class SessionAuthorizeConfigProvider implements AuthorizeConfigProvider {
+public class CustomAuthorizeConfigProvider implements AuthorizeConfigProvider {
 
     @Override
     public boolean config(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry config) {
 
         // @formatter:off
-	    config.antMatchers(HttpMethod.GET, 
-    	            "/index.htm",
-    	            "/index.html",
-    	            "/**/*.js",
-    	            "/**/*.css",
-    	            "/**/*.jpg",
-    	            "/**/*.png",
-    	            "/**/*.gif",
-    	            "/**/*.ico").permitAll() // 静态资源不认证
-	            .antMatchers(HttpMethod.GET, "/user/social/me").permitAll(); // 社交用户信息绑定的路径授权 
+	    config.antMatchers(HttpMethod.POST, "/user/socail/bind").permitAll(); // 社交用户信息绑定的路径授权 
 	    // @formatter:on
 
         return false;

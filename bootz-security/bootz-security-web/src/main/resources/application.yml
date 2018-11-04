@@ -19,6 +19,7 @@ spring:
   messages:
     basename: i18n/messages
   session:
+    store-type: redis
     timeout: 1m
     redis:
       cleanup-cron: 0 0/1 * * * ?
@@ -39,8 +40,9 @@ bootz:
       login-type: JSON
       login-page: /pages/login.html
       sign-up-url: /pages/sign-up.html
-      max-sessions-prevents-login: true
+      max-sessions-prevents-login: false
       maximum-sessions: 1
+      sign-out-url: sign-out.html
     cors:
       allowed-methods:
       - GET

@@ -61,6 +61,7 @@ public abstract class AbstractVerificationCodeProcessor<C extends VerificationCo
      * @param verificationCode
      */
     private void save(ServletWebRequest request, C verificationCode) {
+        // 这里之所以转一道，是为了将生成的验证码图片对象ImageBuffer排除掉，不将其保存到redis-session中，因为该类不支持序列化，保存到redis时会报错
         VerificationCode code = new VerificationCode(verificationCode.getCode(), verificationCode.getExpireTime());
         verificationCodeRepository.save(request, code, getVerificationCodeType());
     }

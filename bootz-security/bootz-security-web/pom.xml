@@ -16,16 +16,17 @@
 	</parent>
 
 	<dependencies>
-		<dependency>
+		<!-- <dependency>
 			<groupId>top.bootz</groupId>
 			<artifactId>bootz-security-session</artifactId>
 			<version>${bootz.project.version}</version>
+		</dependency> -->
+
+		<dependency>
+			<groupId>top.bootz</groupId>
+			<artifactId>bootz-security-token</artifactId>
+			<version>${bootz.project.version}</version>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>top.bootz.security</groupId> -->
-		<!-- <artifactId>bootz-security-token</artifactId> -->
-		<!-- <version>${bootz.project.version}</version> -->
-		<!-- </dependency> -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

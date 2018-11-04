@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.session.InvalidSessionStrategy;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 import org.springframework.social.security.SpringSocialConfigurer;
@@ -49,6 +50,9 @@ public class SessionSecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Autowired
     private InvalidSessionStrategy invalidSessionStrategy;
+    
+    @Autowired
+    private LogoutSuccessHandler logoutSuccessHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -66,12 +70,17 @@ public class SessionSecurityConfig extends WebSecurityConfigurerAdapter {
                 .tokenValiditySeconds(securityProperties.getSession().getRememberMeSeconds())
                 .userDetailsService(userDetailsService)
                 .and()
-            .sessionManagement()
+            .sessionManagement() // session管理
                 .invalidSessionStrategy(invalidSessionStrategy)
                 .maximumSessions(securityProperties.getSession().getMaximumSessions())
                 .maxSessionsPreventsLogin(securityProperties.getSession().isMaxSessionsPreventsLogin())
                 .expiredSessionStrategy(sessionInformationExpiredStrategy)
                 .and()
+                .and()
+            .logout() // 登出
+                .logoutUrl("/singOut")
+                .logoutSuccessHandler(logoutSuccessHandler)
+                .deleteCookies("JSESSIONID")
                 .and()
             .csrf().disable(); // 禁用csrf检查
         
