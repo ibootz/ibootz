@@ -129,11 +129,21 @@ management:
         - OPTIONS
         - HEAD
         allowed-origins:
+        - http://www.bootz.top
+        - http://www.bootz.cn
+        - http://www.pinzhi365.com
+        - http://client-1.bootz.top
+        - http://client-2.bootz.top
+        - http://resource-1.bootz.top
+        - http://resource-2.bootz.top
         - https://www.bootz.top
-        - https://api-user.bootz.top
-        exposed-headers:
-        - X-Auth-Token
-        max-age: 24h
+        - https://www.bootz.cn
+        - https://www.pinzhi365.com
+        - https://client-1.bootz.top
+        - https://client-2.bootz.top
+        - https://resource-1.bootz.top
+        - https://resource-2.bootz.top
+        max-age: 3600L
       exposure:
         include: '*'
 custom:

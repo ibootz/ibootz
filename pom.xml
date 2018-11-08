@@ -35,14 +35,14 @@
 			<dependency>
 				<groupId>io.spring.platform</groupId>
 				<artifactId>platform-bom</artifactId>
-				<version>Cairo-SR3</version>
+				<version>Cairo-SR5</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>Finchley.SR1</version>
+				<version>Finchley.SR2</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -79,25 +79,6 @@
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
-		<resources>
-			<resource>
-				<filtering>true</filtering>
-				<directory>${basedir}/src/main/resources</directory>
-				<includes>
-					<include>**/application*.yml</include>
-					<include>**/application*.yaml</include>
-					<include>**/application*.properties</include>
-				</includes>
-			</resource>
-			<resource>
-				<directory>${basedir}/src/main/resources</directory>
-				<excludes>
-					<exclude>**/application*.yml</exclude>
-					<exclude>**/application*.yaml</exclude>
-					<exclude>**/application*.properties</exclude>
-				</excludes>
-			</resource>
-		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -115,7 +96,7 @@
 				<plugin>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-maven-plugin</artifactId>
-					<version>2.0.4.RELEASE</version>
+					<version>2.0.5.RELEASE</version>
 					<executions>
 						<execution>
 							<goals>
@@ -128,16 +109,9 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-resources-plugin</artifactId>
-					<version>3.0.2</version>
+					<version>3.1.0</version>
 					<configuration>
 						<encoding>UTF-8</encoding>
-						<!-- 过滤后缀为pem、pfx的证书文件 -->
-						<nonFilteredFileExtensions>
-							<nonFilteredFileExtension>pem</nonFilteredFileExtension>
-							<nonFilteredFileExtension>pfx</nonFilteredFileExtension>
-							<nonFilteredFileExtension>p12</nonFilteredFileExtension>
-							<nonFilteredFileExtension>key</nonFilteredFileExtension>
-						</nonFilteredFileExtensions>
 					</configuration>
 				</plugin>
 			</plugins>

@@ -1,6 +1,7 @@
 package top.bootz.core.tools;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,12 +26,12 @@ public class MessageChecker {
     }
 
     // 国际化资源文件路径，需根据实际情况自己配置。
-    private static final String MESSAGE_FILE_PATH = "I:/git_repository/orion/orion-manage/orion-user/src/main/resources/i18n/message.properties";
+    private static final String MESSAGE_FILE_PATH = "G:/messages.properties";
 
     public static void main(String[] args) {
         Properties prop = new Properties();
         boolean hasError = false;
-        try (InputStream inStream = new BufferedInputStream(new FileInputStream(MESSAGE_FILE_PATH))) {
+        try (InputStream inStream = new BufferedInputStream(new FileInputStream(new File(MESSAGE_FILE_PATH)))) {
             prop.load(inStream);
             for (Map.Entry<Object, Object> e : prop.entrySet()) {
                 String source = (String) e.getValue();

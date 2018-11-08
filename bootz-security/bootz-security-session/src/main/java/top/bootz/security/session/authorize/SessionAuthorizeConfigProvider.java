@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.stereotype.Component;
 
+import top.bootz.security.core.SecurityConstants;
 import top.bootz.security.core.authorize.AuthorizeConfigProvider;
 
 /**
@@ -30,7 +31,8 @@ public class SessionAuthorizeConfigProvider implements AuthorizeConfigProvider {
     	            "/**/*.png",
     	            "/**/*.gif",
     	            "/**/*.ico").permitAll() // 静态资源不认证
-	            .antMatchers(HttpMethod.GET, "/user/social/me").permitAll(); // 社交用户信息绑定的路径授权 
+	            .antMatchers(HttpMethod.GET, 
+	                    SecurityConstants.DEFAULT_SESSION_INVALID_URL).permitAll(); // session失效时默认跳转地址 
 	    // @formatter:on
 
         return false;

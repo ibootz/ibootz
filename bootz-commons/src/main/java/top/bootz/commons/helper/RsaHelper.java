@@ -343,16 +343,4 @@ public class RsaHelper {
         FileUtils.write(new File(filePath), publicKeyStr, StandardCharsets.UTF_8);
     }
 
-    public static void main(String[] args) {
-        // try {
-        // String privateKeyPath =
-        // "E:/GitRepo/backend/ibootz/bootz-user/bootz-user-web/src/main/resources/rsa/privateKey.keystore";
-        // String publicKeyPath =
-        // "E:/GitRepo/backend/ibootz/bootz-user/bootz-user-web/src/main/resources/rsa/publicKey.keystore";
-        // genKeyPair(privateKeyPath, publicKeyPath);
-        // } catch (Exception e) {
-        // e.printStackTrace();
-        // }
-    }
-
 }
