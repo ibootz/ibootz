@@ -19,7 +19,7 @@ public final class SecurityConstants {
     /**
      * 当请求需要身份认证时，默认跳转的url
      * 
-     * @see SecurityController
+     * @see CoreSecurityController
      */
     public static final String DEFAULT_UNAUTHENTICATION_URL = "/authentication/require";
 

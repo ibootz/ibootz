@@ -1,0 +1,99 @@
+server:
+  port: 5082
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    session:
+      timeout: 30m
+logging:
+  level:
+    root: info
+    top.bootz: debug
+spring:
+  profiles:
+    active:
+    - home
+  application:
+    name: bootz-security-token-client2
+  jpa:
+    hibernate:
+      ddl-auto: update
+      use-new-id-generator-mappings: true
+    show-sql: false
+    properties:
+      hibernate.dialect.storage_engine: innodb
+      hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+      hibernate.ejb.naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      hibernate.cache.provider_class: org.hibernate.cache.NoCacheProvider
+      hibernate.format_sql: false
+      hibernate.ejb.entitymanager_factory_name: entityManagerFactory
+  messages:
+    basename: i18n/messages
+  session:
+    store-type: redis
+    timeout: 30m
+    redis:
+      cleanup-cron: 0 0/1 * * * ?
+  http:
+    encoding:
+      force: true
+security:
+  oauth2:
+    client:
+      client-id: oauth2-read-write-client
+      client-secret: 123456
+      access-token-uri: http://oauth-server.bootz.top:5080/oauth/token
+      user-authorization-uri: http://oauth-server.bootz.top:5080/oauth/authorize
+      scope: read,write
+    resource:
+      token-info-uri: http://oauth-server.bootz.top:5080/oauth/check_token
+      prefer-token-info: true
+bootz:
+  security:
+    session:
+      login-type: JSON
+      sign-in-url: /pages/sign-in.html
+      sign-up-url: /pages/sign-up.html
+      max-sessions-prevents-login: false
+      maximum-sessions: 1
+      sign-out-url: sign-out.html
+    cors:
+      allowed-methods:
+      - GET
+      - HEAD
+      - POST
+      - PUT
+      - DELETE
+      - OPTIONS
+      allowed-origins:
+      - http://www.bootz.top
+      - http://www.bootz.cn
+      - http://www.pinzhi365.com
+      - http://oauth-server.bootz.top
+      - http://client-1.bootz.top
+      - http://client-2.bootz.top
+      - http://resource-1.bootz.top
+      - http://resource-2.bootz.top
+      - https://www.bootz.top
+      - https://www.bootz.cn
+      - https://www.pinzhi365.com
+      - https://oauth-server.bootz.top
+      - https://client-1.bootz.top
+      - https://client-2.bootz.top
+      - https://resource-1.bootz.top
+      - https://resource-2.bootz.top
+      max-age: 7200
+    code:
+      imageCode:
+        width: 100
+        height: 32
+        length: 5
+        expire-in: 120
+    social:
+      filter-processes-url: /login
+      qq:
+        app-id: 101504242
+        app-secret: 5520dc9cfbf426cce6280a1495c5c2d8
+      weixin:
+        app-id: wxd99431bbff8305a0
+        app-secret: 60f78681d063590a469f1b297feff3c4

@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.199.111:3306/demo_security?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=round&rewriteBatchedStatements=true
+    username: readwrite
+    password: nkEs8h6MdH!
+    driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    cluster:
+      nodes:
+      - 192.168.199.119:6379
+      - 192.168.199.119:6380
+      - 192.168.199.119:6381
+      - 192.168.199.120:6379
+      - 192.168.199.120:6380
+      - 192.168.199.120:6381
+      max-redirects: 3
+    jedis:
+      pool:
+        max-active: 10
+        max-wait: 10s
+        max-idle: 8
+        min-idle: 2
+    password: nkEs8h6MdH!
+    timeout: 10s
+  data:
+    mongodb:
+      uri: mongodb://readwrite:nkEs8h6MdH!@192.168.199.115:27017,192.168.199.116:27017,192.168.199.151:27017/bootz_v1
+      authentication-database: bootz_v1

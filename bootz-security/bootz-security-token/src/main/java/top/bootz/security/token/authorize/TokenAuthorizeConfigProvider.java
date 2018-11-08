@@ -19,20 +19,19 @@ public class TokenAuthorizeConfigProvider implements AuthorizeConfigProvider {
 
     @Override
     public boolean config(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry config) {
-
         // @formatter:off
-	    config.antMatchers(HttpMethod.GET, 
-    	            "/index.htm",
-    	            "/index.html",
-    	            "/**/*.js",
-    	            "/**/*.css",
-    	            "/**/*.jpg",
-    	            "/**/*.png",
-    	            "/**/*.gif",
-    	            "/**/*.ico").permitAll() // 静态资源不认证
-	            .antMatchers(HttpMethod.GET, "/oauth/authorize", "/oauth/token").permitAll() // oauth2相关的uri无需认证
-	            .antMatchers(HttpMethod.POST, "/oauth/authorize", "/oauth/token").permitAll();  
-	    // @formatter:on
+        
+        config.antMatchers(HttpMethod.GET, 
+                "/index.htm", 
+                "/index.html", 
+                "/**/*.js", 
+                "/**/*.css", 
+                "/**/*.jpg",
+                "/**/*.png", 
+                "/**/*.gif", 
+                "/**/*.ico").permitAll(); // 静态资源不认证
+//            .antMatchers("/oauth/**").permitAll(); // OAuth请求需要认证
+        // @formatter:on
 
         return false;
     }

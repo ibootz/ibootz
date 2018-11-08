@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.1.128:3306/demo_security?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=round&rewriteBatchedStatements=true
+    username: root
+    password: 1990912
+    driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    cluster:
+      nodes:
+      - 192.168.1.128:6379
+      - 192.168.1.128:6380
+      - 192.168.1.128:6381
+      - 192.168.1.128:6382
+      - 192.168.1.128:6383
+      - 192.168.1.128:6384
+      max-redirects: 3
+    jedis:
+      pool:
+        max-active: 10
+        max-wait: 10s
+        max-idle: 8
+        min-idle: 2
+    timeout: 10s
+  data:
+    mongodb:
+      uri: mongodb://root:1990912@192.168.1.128:27017/orion_v1

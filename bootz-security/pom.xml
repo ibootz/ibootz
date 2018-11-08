@@ -19,8 +19,13 @@
 	<modules>
 		<module>bootz-security-core</module>
 		<module>bootz-security-session</module>
+		<module>bootz-security-session-web</module>
 		<module>bootz-security-token</module>
-		<module>bootz-security-web</module>
+		<module>bootz-security-token-server</module>
+		<module>bootz-security-token-resource1</module>
+		<module>bootz-security-token-resource2</module>
+		<module>bootz-security-token-client1</module>
+		<module>bootz-security-token-client2</module>
 	</modules>
 
 </project>
