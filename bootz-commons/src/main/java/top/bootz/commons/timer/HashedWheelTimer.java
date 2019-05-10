@@ -771,7 +771,6 @@ public class HashedWheelTimer {
 		// 每格10秒，一共60个格，即时间轮转一圈理论最少需要10分钟
 		return new HashedWheelTimer(threadFactory, 10, TimeUnit.SECONDS, 6 * 10, 100000L);
 	}
-
 	
 	public int getId() {
 		return id;
